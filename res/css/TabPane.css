@@ -31,7 +31,7 @@
     -fx-text-fill: -color-green;
 } 
 
-.tab-pane .tab-content-area {
+.tab-pane .tab-content-area .scroll-pane VBox {
     -fx-background-color: -color-dark-gray;
 }
 
@@ -95,3 +95,55 @@
 	-fx-height: 1px;
 }
 
+.scroll-bar:horizontal .track,
+.scroll-bar:vertical .track{
+    -fx-background-color : -color-dark-gray;
+    -fx-border-color :transparent;
+    -fx-background-radius : 0.0em;
+    -fx-border-radius :2.0em;
+}
+
+
+.scroll-bar:horizontal .increment-button ,
+.scroll-bar:horizontal .decrement-button {
+    -fx-background-color :transparent;
+    -fx-background-radius : 0.0em;
+    -fx-padding :0.0 0.0 10.0 0.0;
+
+}
+
+.scroll-bar:vertical .increment-button ,
+.scroll-bar:vertical .decrement-button {
+    -fx-background-color :transparent;
+    -fx-background-radius : 0.0em;
+    -fx-padding :0.0 10.0 0.0 0.0;
+
+}
+
+ .scroll-bar .increment-arrow,
+ .scroll-bar .decrement-arrow{
+    -fx-shape : " ";    
+    -fx-padding :0.15em 0.0;
+}
+
+ .scroll-bar:vertical .increment-arrow,
+ .scroll-bar:vertical .decrement-arrow{
+    -fx-shape : " ";    
+    -fx-padding :0.0 0.15em;
+}
+
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    -fx-background-color : -color-light-gray;
+    -fx-background-insets : 4.0, 0.0, 0.0;
+    -fx-background-radius : 2.0em;
+}
+
+.scroll-bar:horizontal .thumb:hover,
+.scroll-bar:vertical .thumb:hover,
+.scroll-bar:horizontal .thumb:selected,
+.scroll-bar:vertical .thumb:selected {
+    -fx-background-color : -color-mid-gray;
+    -fx-background-insets : 4.0, 0.0, 0.0;
+    -fx-background-radius : 2.0em;
+}

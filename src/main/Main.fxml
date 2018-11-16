@@ -4,6 +4,7 @@
 <?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -12,7 +13,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" stylesheets="file:/home/martin/git/voting-ui/res/css/TabPane.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" stylesheets="file:/home/martin/git/voting-ui/res/css/TabPane.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.MainController">
    <children>
       <TabPane nodeOrientation="LEFT_TO_RIGHT" prefHeight="768.0" prefWidth="1024.0" side="LEFT" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <tabs>
@@ -25,51 +26,85 @@
                   </ImageView>
                </graphic>
                <content>
-                  <VBox prefHeight="200.0" prefWidth="100.0">
-                     <children>
-                        <Label id="section" prefHeight="48.0" prefWidth="264.0" text="Load Session">
-                           <VBox.margin>
-                              <Insets top="20.0" />
-                           </VBox.margin>
-                        </Label>
-                        <Separator prefHeight="1.0" prefWidth="854.0">
-                           <VBox.margin>
-                              <Insets top="6.0" />
-                           </VBox.margin>
-                        </Separator>
-                        <Label id="section-description" text="Choose a JSON or SES file to load the session input.">
+                  <ScrollPane fitToWidth="true">
+                     <content>
+                        <VBox>
+                           <children>
+                              <Label id="section" prefHeight="48.0" prefWidth="264.0" text="Load Session">
+                                 <VBox.margin>
+                                    <Insets top="20.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Separator prefHeight="1.0" prefWidth="854.0">
+                                 <VBox.margin>
+                                    <Insets top="6.0" />
+                                 </VBox.margin>
+                              </Separator>
+                              <Label id="section-description" text="Choose a JSON or SES file to load the session input.">
+                                 <padding>
+                                    <Insets top="20.0" />
+                                 </padding>
+                              </Label>
+                              <JFXButton fx:id="loadFileButton" onAction="#loadFile" prefHeight="32.0" prefWidth="120.0" text="Load from file">
+                                 <VBox.margin>
+                                    <Insets top="20.0" />
+                                 </VBox.margin>
+                              </JFXButton>
+                              <Label id="section" prefHeight="48.0" prefWidth="264.0" text="Questions">
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                                 <padding>
+                                    <Insets top="40.0" />
+                                 </padding>
+                              </Label>
+                              <Separator prefHeight="1.0" prefWidth="854.0">
+                                 <padding>
+                                    <Insets top="6.0" />
+                                 </padding>
+                              </Separator>
+                              <JFXTreeTableView fx:id="questionsTableView" editable="true">
+                                 <VBox.margin>
+                                    <Insets top="20.0" />
+                                 </VBox.margin>
+                              </JFXTreeTableView>
+                              <Label id="section" layoutX="26.0" layoutY="187.0" prefHeight="48.0" prefWidth="264.0" text="Alternatives">
+                                 <padding>
+                                    <Insets top="40.0" />
+                                 </padding>
+                              </Label>
+                              <Separator layoutX="26.0" layoutY="259.0" prefHeight="1.0" prefWidth="854.0">
+                                 <padding>
+                                    <Insets top="6.0" />
+                                 </padding>
+                              </Separator>
+                              <JFXTreeTableView fx:id="alternativesTableView" editable="true" layoutX="26.0" layoutY="282.0">
+                                 <VBox.margin>
+                                    <Insets top="20.0" />
+                                 </VBox.margin>
+                              </JFXTreeTableView>
+                              <Label id="section" layoutX="26.0" layoutY="169.0" prefHeight="48.0" prefWidth="264.0" text="Voters">
+                                 <padding>
+                                    <Insets top="40.0" />
+                                 </padding>
+                              </Label>
+                              <Separator layoutX="26.0" layoutY="249.0" prefHeight="1.0" prefWidth="854.0">
+                                 <padding>
+                                    <Insets top="6.0" />
+                                 </padding>
+                              </Separator>
+                              <JFXTreeTableView fx:id="votersTableView" editable="true" layoutX="26.0" layoutY="276.0">
+                                 <VBox.margin>
+                                    <Insets top="20.0" />
+                                 </VBox.margin>
+                              </JFXTreeTableView>
+                           </children>
                            <padding>
-                              <Insets top="20.0" />
+                              <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
                            </padding>
-                        </Label>
-                        <JFXButton prefHeight="32.0" prefWidth="120.0" text="Load from file">
-                           <VBox.margin>
-                              <Insets top="20.0" />
-                           </VBox.margin>
-                        </JFXButton>
-                        <Label id="section" prefHeight="48.0" prefWidth="264.0" text="Questions">
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                           <padding>
-                              <Insets top="40.0" />
-                           </padding>
-                        </Label>
-                        <Separator prefHeight="1.0" prefWidth="854.0">
-                           <padding>
-                              <Insets top="6.0" />
-                           </padding>
-                        </Separator>
-                        <JFXTreeTableView editable="true">
-                           <VBox.margin>
-                              <Insets top="20.0" />
-                           </VBox.margin>
-                        </JFXTreeTableView>
-                     </children>
-                     <padding>
-                        <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
-                     </padding>
-                  </VBox>
+                        </VBox>
+                     </content>
+                  </ScrollPane>
                </content>
             </Tab>
             <Tab text="Command">
