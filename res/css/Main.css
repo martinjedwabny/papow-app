@@ -31,7 +31,7 @@
     -fx-text-fill: -color-green;
 } 
 
-.tab-pane .tab-content-area .scroll-pane VBox {
+#tab-pane-wrapper {
     -fx-background-color: -color-dark-gray;
 }
 
@@ -147,3 +147,56 @@
     -fx-background-insets : 4.0, 0.0, 0.0;
     -fx-background-radius : 2.0em;
 }
+
+.table-view{
+   -fx-background-color: -color-dark-gray;
+}
+
+.table-view .column-header-background{
+    -fx-background-color: -color-dark-gray;
+}
+
+.table-view .column-header-background .label{
+    -fx-background-color: -color-dark-gray;
+    -fx-text-fill: white;
+}
+
+.table-view .column-header {
+    -fx-background-color: -color-dark-gray;
+}
+
+.table-view .table-cell{
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+	-fx-alignment: CENTER;
+}
+
+.table-row-cell{
+	-fx-border-width: 0 0 0 0;
+	-fx-cell-size: 40px;
+	-fx-padding: 10px 0px;
+	-fx-border-radius: 10px;
+}
+
+.table-column {
+	-fx-border-width: 0;
+}
+
+.table-column .label {
+	-fx-alignment: CENTER;
+	-fx-padding: 10px 0px;
+}
+
+.table-row-cell:even{
+    -fx-background-color: -color-dark-gray;
+}
+
+.table-row-cell:odd{
+    -fx-background-color: -color-mid-gray;
+    -fx-background-radius: 6;
+}
+
+.table-view *.filler{
+	-fx-border-width: 0;
+}
+

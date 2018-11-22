@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" stylesheets="file:/home/martin/git/voting-ui/res/css/Main.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.MainController">
+   <children>
+      <TabPane nodeOrientation="LEFT_TO_RIGHT" prefHeight="768.0" prefWidth="1024.0" side="LEFT" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <tabs>
+            <Tab text="Input">
+               <graphic>
+                  <ImageView id="tab-icon" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
+                     <image>
+                        <Image url="file:/home/martin/git/voting-ui/res/img/edit.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <content>
+                  <fx:include fx:id="inputTabView" source="InputTabView.fxml" />
+               </content>
+            </Tab>
+            <Tab text="Command">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+               </content>
+               <graphic>
+                  <ImageView id="tab-icon" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="file:/home/martin/git/voting-ui/res/img/sun.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Tab>
+            <Tab text="Result">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+               </content>
+               <graphic>
+                  <ImageView id="tab-icon" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="file:/home/martin/git/voting-ui/res/img/calendar-check.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Tab>
+         </tabs>
+      </TabPane>
+      <VBox prefWidth="100.0" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="3.0">
+         <children>
+            <JFXButton fx:id="loadFileButton" onAction="#loadFile" prefHeight="32.0" prefWidth="120.0" styleClass="load-session" text="Load session">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </JFXButton>
+            <JFXButton fx:id="saveFileButton" layoutX="10.0" layoutY="10.0" onAction="#saveFile" prefHeight="32.0" prefWidth="120.0" styleClass="save-session" text="Save Session">
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </JFXButton>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

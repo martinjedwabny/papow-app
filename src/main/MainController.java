@@ -1,41 +1,83 @@
 package main;
 
+import java.io.File;
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXTreeTableView;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.Stage;
+import main.java.base.session.Session;
+import main.java.io.reader.SessionReader;
 
-public class MainController {
+public class MainController implements Initializable {
+	/**
+	 * Constants
+	 */
+	private final String fileChooserMessage = "Open Resource File";
+	private final String jsonFileMessage = "JSON input file";
+	private final String sessionFileMessage = "Session file";
 	
+	/**
+	 * Data objects
+	 */
+	private Session session = new Session();
 	
+	/**
+	 * FXML window objects
+	 */
+	@FXML private AnchorPane mainPane;
+    @FXML private JFXButton loadFileButton;
+    @FXML private JFXButton saveFileButton;
+	@FXML private InputTabViewController inputTabViewController;
 
-	public MainController(JFXButton loadFileButton, JFXTreeTableView<?> questionsTableView,
-			JFXTreeTableView<?> alternativesTableView, JFXTreeTableView<?> votersTableView) {
-		super();
-		this.loadFileButton = loadFileButton;
-		this.questionsTableView = questionsTableView;
-		this.alternativesTableView = alternativesTableView;
-		this.votersTableView = votersTableView;
-		
-		FairBorda fb = new FairBorda();
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		//@TODO get this out, just for testing
+    	loadSession("res/json/sample.json");
 	}
 
-	@FXML
-    private JFXButton loadFileButton;
-
     @FXML
-    private JFXTreeTableView<?> questionsTableView;
+    private void loadFile(ActionEvent event) {
+    	FileChooser fileChooser = new FileChooser();
+    	fileChooser.setTitle(fileChooserMessage);
+    	fileChooser.getExtensionFilters().addAll(
+    			new ExtensionFilter(jsonFileMessage, "*.json"),
+    			new ExtensionFilter(sessionFileMessage, "*.ses"));
+    	File chosenFile = fileChooser.showOpenDialog((Stage) mainPane.getScene().getWindow());
+    	if (chosenFile != null) {
+    		loadSession(chosenFile.getAbsolutePath());
+        } else {
+        	loadSessionError();
+        }
+    }
+    
+    private void loadSession(String fileInputPath) {
+    	try {
+			Session newSession = SessionReader.read(fileInputPath);
+			session.setInput(newSession.getInput());
+			session.getInput().getQuestions().add(session.getInput().getQuestions().get(0));
+			session.setCommand(newSession.getCommand());
+			session.setResult(newSession.getResult());
+	    	inputTabViewController.setSession(session);
+		} catch (Exception e) {
+			loadSessionError();
+		}
+    }
 
-    @FXML
-    private JFXTreeTableView<?> alternativesTableView;
+	private void loadSessionError() {
+		// TODO Auto-generated method stub
+    	
+    }
+	
+	@FXML void saveFile(ActionEvent event) {
 
-    @FXML
-    private JFXTreeTableView<?> votersTableView;
-
-    @FXML
-    void loadFile(ActionEvent event) {
-    	System.out.print("Hola");
     }
 
 }
