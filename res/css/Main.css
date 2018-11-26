@@ -87,6 +87,21 @@
     -fx-background-color: white;
     -fx-background-radius: 30;
     -fx-text-fill: -color-dark-gray;
+	-jfx-disable-visual-focus: true;
+}
+
+#load-session-button {
+    -fx-background-color: transparent;
+    -fx-background-radius: 0;
+    -fx-text-fill: -color-light-gray;
+    -fx-graphic: url("../img/arrow-up.png");
+}
+
+#save-session-button {
+    -fx-background-color: transparent;
+    -fx-background-radius: 0;
+    -fx-text-fill: -color-light-gray;
+    -fx-graphic: url("../img/arrow-down.png");
 }
 
 .separator *.line {
@@ -102,7 +117,6 @@
     -fx-background-radius : 0.0em;
     -fx-border-radius :2.0em;
 }
-
 
 .scroll-bar:horizontal .increment-button ,
 .scroll-bar:horizontal .decrement-button {
