@@ -8,100 +8,105 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane stylesheets="@../../res/css/Main.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.InputTabViewController">
+<StackPane fx:id="mainPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.InputTabViewController">
    <children>
-      <ScrollPane id="tab-pane-wrapper" fitToWidth="true" layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <content>
-            <VBox id="tab-pane-wrapper">
-               <children>
-                  <Label id="section" prefHeight="48.0" prefWidth="264.0" text="Questions">
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </Label>
-                  <Separator prefHeight="1.0" prefWidth="854.0">
-                     <padding>
-                        <Insets top="6.0" />
-                     </padding>
-                  </Separator>
-                  <TableView fx:id="questionsTableView" editable="true">
-                     <VBox.margin>
-                        <Insets top="4.0" />
-                     </VBox.margin>
-                     <columns>
-                        <TableColumn fx:id="questionDescriptionColumn" editable="false" prefWidth="75.0" text="Description" />
-                        <TableColumn fx:id="questionAlternativesColumn" editable="false" prefWidth="75.0" text="Alternatives" />
-                        <TableColumn fx:id="questionVotesColumn" editable="false" prefWidth="75.0" text="Votes" />
-                     </columns>
-                     <columnResizePolicy>
-                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                     </columnResizePolicy>
-                  </TableView>
-                  <HBox prefWidth="854.0">
+      <AnchorPane stylesheets="@../../res/css/Main.css">
+         <children>
+            <ScrollPane id="tab-pane-wrapper" fitToWidth="true" layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <content>
+                  <VBox id="tab-pane-wrapper">
                      <children>
-                        <VBox prefWidth="400.0">
+                        <Label id="section" prefHeight="48.0" prefWidth="264.0" text="Questions">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Label>
+                        <Separator prefHeight="1.0" prefWidth="854.0">
+                           <padding>
+                              <Insets top="6.0" />
+                           </padding>
+                        </Separator>
+                        <TableView fx:id="questionsTableView" editable="true">
+                           <VBox.margin>
+                              <Insets top="4.0" />
+                           </VBox.margin>
+                           <columns>
+                              <TableColumn fx:id="questionDescriptionColumn" editable="false" prefWidth="75.0" text="Description" />
+                              <TableColumn fx:id="questionAlternativesColumn" editable="false" prefWidth="75.0" text="Alternatives" />
+                              <TableColumn fx:id="questionVotesColumn" editable="false" prefWidth="75.0" text="Votes" />
+                           </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                        <HBox>
                            <children>
-                              <Label id="section" prefHeight="48.0" prefWidth="264.0" text="Alternatives">
-                                 <padding>
-                                    <Insets top="40.0" />
-                                 </padding>
-                              </Label>
-                              <Separator prefHeight="1.0">
-                                 <padding>
-                                    <Insets top="6.0" />
-                                 </padding>
-                              </Separator>
-                              <TableView fx:id="alternativesTableView" editable="true">
-                                 <columns>
-                                    <TableColumn fx:id="alternativeNameColumn" prefWidth="75.0" text="Name" />
-                                 </columns>
-                                 <columnResizePolicy>
-                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                 </columnResizePolicy>
-                                 <VBox.margin>
-                                    <Insets top="4.0" />
-                                 </VBox.margin>
-                              </TableView>
+                              <VBox prefWidth="400.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label id="section" prefHeight="48.0" prefWidth="264.0" text="Alternatives">
+                                       <padding>
+                                          <Insets top="40.0" />
+                                       </padding>
+                                    </Label>
+                                    <Separator prefHeight="1.0">
+                                       <padding>
+                                          <Insets top="6.0" />
+                                       </padding>
+                                    </Separator>
+                                    <TableView fx:id="alternativesTableView" editable="true">
+                                       <columns>
+                                          <TableColumn fx:id="alternativeNameColumn" prefWidth="75.0" text="Name" />
+                                       </columns>
+                                       <columnResizePolicy>
+                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                       </columnResizePolicy>
+                                       <VBox.margin>
+                                          <Insets top="4.0" />
+                                       </VBox.margin>
+                                    </TableView>
+                                 </children>
+                              </VBox>
+                              <VBox prefWidth="400.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label id="section" prefHeight="48.0" prefWidth="264.0" text="Voters">
+                                       <padding>
+                                          <Insets top="40.0" />
+                                       </padding>
+                                    </Label>
+                                    <Separator prefHeight="1.0">
+                                       <padding>
+                                          <Insets top="6.0" />
+                                       </padding>
+                                    </Separator>
+                                    <TableView fx:id="votersTableView" editable="true">
+                                       <columnResizePolicy>
+                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                       </columnResizePolicy>
+                                       <columns>
+                                          <TableColumn fx:id="voterNameColumn" prefWidth="75.0" text="Name" />
+                                       </columns>
+                                       <VBox.margin>
+                                          <Insets top="4.0" />
+                                       </VBox.margin>
+                                    </TableView>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets left="27.0" />
+                                 </HBox.margin>
+                              </VBox>
                            </children>
-                        </VBox>
-                        <VBox prefWidth="400.0">
-                           <children>
-                              <Label id="section" prefHeight="48.0" prefWidth="264.0" text="Voters">
-                                 <padding>
-                                    <Insets top="40.0" />
-                                 </padding>
-                              </Label>
-                              <Separator prefHeight="1.0">
-                                 <padding>
-                                    <Insets top="6.0" />
-                                 </padding>
-                              </Separator>
-                              <TableView fx:id="votersTableView" editable="true">
-                                 <columnResizePolicy>
-                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                 </columnResizePolicy>
-                                 <columns>
-                                    <TableColumn fx:id="voterNameColumn" prefWidth="75.0" text="Name" />
-                                 </columns>
-                                 <VBox.margin>
-                                    <Insets top="4.0" />
-                                 </VBox.margin>
-                              </TableView>
-                           </children>
-                           <HBox.margin>
-                              <Insets left="27.0" />
-                           </HBox.margin>
-                        </VBox>
+                        </HBox>
                      </children>
-                  </HBox>
-               </children>
-               <padding>
-                  <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
-               </padding>
-            </VBox>
-         </content>
-      </ScrollPane>
+                     <padding>
+                        <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
+                     </padding>
+                  </VBox>
+               </content>
+            </ScrollPane>
+         </children>
+      </AnchorPane>
    </children>
-</AnchorPane>
+</StackPane>
