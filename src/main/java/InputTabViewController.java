@@ -1,7 +1,7 @@
 /**
  * 
  */
-package main;
+package main.java;
 
 import java.io.IOException;
 import java.net.URL;
@@ -118,7 +118,6 @@ public class InputTabViewController implements Initializable {
             String name = event.getNewValue();
             ((AlternativeTableData) event.getTableView().getItems()
                 .get(event.getTablePosition().getRow())).setName(name);
-            alternativesTableView.refresh();
         });
 	}
 	
@@ -131,7 +130,6 @@ public class InputTabViewController implements Initializable {
             String name = event.getNewValue();
             ((VoterTableData) event.getTableView().getItems()
                 .get(event.getTablePosition().getRow())).setName(name);
-            votersTableView.refresh();
         });
 	}
 

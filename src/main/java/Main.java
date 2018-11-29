@@ -1,4 +1,4 @@
-package main;
+package main.java;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -10,7 +10,7 @@ public class Main extends Application {
 
 	@Override
     public void start(Stage stage) throws Exception {
-		Parent root = FXMLLoader.load(getClass().getResource("MainView.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("/main/fxml/MainView.fxml"));
         Scene scene = new Scene(root);
         stage.setTitle("Voting UI");
         stage.setScene(scene);

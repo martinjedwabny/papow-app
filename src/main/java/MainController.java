@@ -1,4 +1,4 @@
-package main;
+package main.java;
 
 import java.io.File;
 import java.net.URL;
@@ -40,7 +40,7 @@ public class MainController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		//@TODO get this out, just for testing
-    	loadSession("res/json/sample.json");
+    	loadSession("src/main/json/sample.json");
 	}
 
     @FXML

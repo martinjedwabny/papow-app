@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 
 
-<StackPane prefHeight="600.0" prefWidth="600.0" stylesheets="@../../res/css/Main.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane prefHeight="600.0" prefWidth="600.0" stylesheets="/main/css/Main.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox id="tab-pane-wrapper" prefWidth="600.0">
          <padding>

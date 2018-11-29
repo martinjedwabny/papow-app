@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" stylesheets="file:/home/martin/git/voting-ui/res/css/Main.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.MainController">
+<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" stylesheets="/main/css/Main.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.MainController">
    <children>
       <TabPane nodeOrientation="LEFT_TO_RIGHT" prefHeight="768.0" prefWidth="1024.0" side="LEFT" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <tabs>
@@ -17,7 +17,7 @@
                <graphic>
                   <ImageView id="tab-icon" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
                      <image>
-                        <Image url="file:/home/martin/git/voting-ui/res/img/edit.png" />
+                        <Image url="/main/img/edit.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -32,7 +32,7 @@
                <graphic>
                   <ImageView id="tab-icon" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="file:/home/martin/git/voting-ui/res/img/sun.png" />
+                        <Image url="/main/img/sun.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -44,7 +44,7 @@
                <graphic>
                   <ImageView id="tab-icon" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="file:/home/martin/git/voting-ui/res/img/calendar-check.png" />
+                        <Image url="/main/img/calendar-check.png" />
                      </image>
                   </ImageView>
                </graphic>
