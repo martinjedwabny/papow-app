@@ -7,10 +7,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDialog;
-import com.jfoenix.controls.JFXDialogLayout;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,17 +14,10 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import main.java.base.Question;
 import main.java.base.session.Session;
 
@@ -75,9 +64,7 @@ public class InputTabViewController implements Initializable {
 		questionsTableView.setRowFactory( tv -> {
 			TableRow<QuestionTableData> row = new TableRow<>();
 			row.setOnMouseClicked(event -> {
-				QuestionTableData rowData = row.getItem();
-				showInfoDialog();
-				System.out.println(rowData);
+				showQuestionEditDialog(row.getItem().getQuestion());
 			});
 			return row ;
 		});
@@ -94,16 +81,16 @@ public class InputTabViewController implements Initializable {
 	}
 
 
-	private void showInfoDialog() {
+	private void showQuestionEditDialog(Question question) {
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("QuestionEdit.fxml"));
-			loader.setController(new QuestionEditViewController(new Question(), session.getInput().getAlternatives()));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/fxml/QuestionEdit.fxml"));
 			StackPane content = loader.load();
-			EventHandler<ActionEvent> confirmHandler = new EventHandler<ActionEvent>() {
+			((QuestionEditViewController) loader.getController()).setQuestion(question);
+			((QuestionEditViewController) loader.getController()).setAlternatives(this.session.getInput().getAlternatives());
+			DialogBuilder.showConfirmCancelDialog(content, this.mainPane, new EventHandler<ActionEvent>() {
 			    @Override public void handle(ActionEvent e) {
 			    }
-			};
-			DialogBuilder.showInfoDialog(confirmHandler, content, this.mainPane);
+			});
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

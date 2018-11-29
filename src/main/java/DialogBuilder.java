@@ -12,7 +12,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
 public class DialogBuilder {
-	public static void showInfoDialog(EventHandler<ActionEvent> confirmHandler, Pane content, StackPane parent) {
+	public static void showConfirmCancelDialog(Pane content, StackPane parent, EventHandler<ActionEvent> confirmHandler) {
 		JFXDialog dialog = new JFXDialog(parent, content, JFXDialog.DialogTransition.CENTER);
 		JFXButton confirmButton = new JFXButton("Confirm");
 		confirmButton.setOnAction(confirmHandler);

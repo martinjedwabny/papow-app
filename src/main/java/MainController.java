@@ -20,9 +20,9 @@ public class MainController implements Initializable {
 	/**
 	 * Constants
 	 */
-	private final String fileChooserMessage = "Open Resource File";
-	private final String jsonFileMessage = "JSON input file";
-	private final String sessionFileMessage = "Session file";
+	private static final String FILE_CHOOSER_MESSAGE = "Open Resource File";
+	private static final String JSON_FILE_MESSAGE = "JSON input file";
+	private static final String SESSION_FILE_MESSAGE = "Session file";
 	
 	/**
 	 * Data objects
@@ -46,10 +46,10 @@ public class MainController implements Initializable {
     @FXML
     private void loadFile(ActionEvent event) {
     	FileChooser fileChooser = new FileChooser();
-    	fileChooser.setTitle(fileChooserMessage);
+    	fileChooser.setTitle(FILE_CHOOSER_MESSAGE);
     	fileChooser.getExtensionFilters().addAll(
-    			new ExtensionFilter(jsonFileMessage, "*.json"),
-    			new ExtensionFilter(sessionFileMessage, "*.ses"));
+    			new ExtensionFilter(JSON_FILE_MESSAGE, "*.json"),
+    			new ExtensionFilter(SESSION_FILE_MESSAGE, "*.ses"));
     	File chosenFile = fileChooser.showOpenDialog((Stage) mainPane.getScene().getWindow());
     	if (chosenFile != null) {
     		loadSession(chosenFile.getAbsolutePath());
