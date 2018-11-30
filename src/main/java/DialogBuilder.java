@@ -23,8 +23,11 @@ public class DialogBuilder {
 		    }
 		});
 		HBox buttonsContainer = new HBox(10.0, confirmButton, cancelButton);
-		buttonsContainer.setAlignment(Pos.BOTTOM_CENTER);
-		buttonsContainer.setPadding(new Insets(0,0,10,0));
+		buttonsContainer.setMaxHeight(20.0);
+		buttonsContainer.setAlignment(Pos.CENTER);
+		HBox.setMargin(confirmButton, new Insets(10.0));
+		HBox.setMargin(cancelButton, new Insets(10.0));
+		StackPane.setAlignment(buttonsContainer, Pos.BOTTOM_CENTER);
 		content.getChildren().add(buttonsContainer);
 		dialog.show();
 	}

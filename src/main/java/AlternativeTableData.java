@@ -14,6 +14,13 @@ public class AlternativeTableData {
 	}
 
 	/**
+	 * @return the alternative
+	 */
+	public Alternative getAlternative() {
+		return alternative;
+	}
+
+	/**
 	 * @return the name
 	 */
 	public StringProperty getName() {

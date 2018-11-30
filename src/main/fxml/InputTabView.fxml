@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -42,6 +43,18 @@
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                         </TableView>
+                        <HBox alignment="BOTTOM_RIGHT" spacing="10.0">
+                           <children>
+                              <JFXButton onMouseClicked="#addQuestion" text="Add" />
+                              <JFXButton onMouseClicked="#deleteQuestion" text="Delete" />
+                           </children>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </HBox>
                         <HBox>
                            <children>
                               <VBox prefWidth="400.0" HBox.hgrow="ALWAYS">
@@ -67,6 +80,18 @@
                                           <Insets top="4.0" />
                                        </VBox.margin>
                                     </TableView>
+                                    <HBox alignment="BOTTOM_RIGHT" spacing="10.0">
+                                       <children>
+                                          <JFXButton onMouseClicked="#addAlternative" text="Add" />
+                                          <JFXButton onMouseClicked="#deleteAlternative" text="Delete" />
+                                       </children>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </HBox>
                                  </children>
                               </VBox>
                               <VBox prefWidth="400.0" HBox.hgrow="ALWAYS">
@@ -92,6 +117,18 @@
                                           <Insets top="4.0" />
                                        </VBox.margin>
                                     </TableView>
+                                    <HBox alignment="BOTTOM_RIGHT" spacing="10.0">
+                                       <children>
+                                          <JFXButton onMouseClicked="#addVoter" text="Add" />
+                                          <JFXButton onMouseClicked="#deleteVoter" text="Delete" />
+                                       </children>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </HBox>
                                  </children>
                                  <HBox.margin>
                                     <Insets left="27.0" />

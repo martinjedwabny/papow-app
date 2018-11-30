@@ -62,7 +62,6 @@ public class MainController implements Initializable {
     	try {
 			Session newSession = SessionReader.read(fileInputPath);
 			session.setInput(newSession.getInput());
-			session.getInput().getQuestions().add(session.getInput().getQuestions().get(0));
 			session.setCommand(newSession.getCommand());
 			session.setResult(newSession.getResult());
 	    	inputTabViewController.setSession(session);

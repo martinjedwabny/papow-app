@@ -6,6 +6,7 @@ package main.java;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,8 +18,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import main.java.base.Alternative;
 import main.java.base.Question;
+import main.java.base.Voter;
 import main.java.base.session.Session;
 
 /**
@@ -85,8 +89,7 @@ public class InputTabViewController implements Initializable {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/fxml/QuestionEdit.fxml"));
 			StackPane content = loader.load();
-			((QuestionEditViewController) loader.getController()).setQuestion(question);
-			((QuestionEditViewController) loader.getController()).setAlternatives(this.session.getInput().getAlternatives());
+			((QuestionEditViewController) loader.getController()).setupView(question, question.getAlternatives(), question.getVotes());;
 			DialogBuilder.showConfirmCancelDialog(content, this.mainPane, new EventHandler<ActionEvent>() {
 			    @Override public void handle(ActionEvent e) {
 			    }
@@ -135,5 +138,69 @@ public class InputTabViewController implements Initializable {
 			this.voters.add(new VoterTableData(voter));
 		});
 	}
+	
+    @FXML
+    void addAlternative(MouseEvent event) {
+    	Alternative a = new Alternative("Name");
+    	AlternativeTableData item = new AlternativeTableData(a);
+        alternativesTableView.getSelectionModel().clearSelection();
+        alternativesTableView.getItems().add(item);
+        alternativesTableView.getSelectionModel().select(
+        		alternativesTableView.getItems().size() - 1, 
+        		alternativesTableView.getFocusModel().getFocusedCell().getTableColumn());
+        alternativesTableView.scrollTo(item);
+        this.session.getInput().addAlternative(a);
+    }
+
+    @FXML
+    void deleteAlternative(MouseEvent event) {
+    	ObservableList<AlternativeTableData> selectedItems = alternativesTableView.getSelectionModel().getSelectedItems();
+    	selectedItems.stream().forEach(item -> this.session.getInput().removeAlternative(item.getAlternative()));
+		alternativesTableView.getItems().removeAll(selectedItems);
+    	alternativesTableView.getSelectionModel().clearSelection();
+    }
+
+    @FXML
+    void addQuestion(MouseEvent event) {
+    	Question q = new Question("Name");
+    	QuestionTableData item = new QuestionTableData(q);
+        questionsTableView.getSelectionModel().clearSelection();
+        questionsTableView.getItems().add(item);
+        questionsTableView.getSelectionModel().select(
+        		questionsTableView.getItems().size() - 1, 
+        		questionsTableView.getFocusModel().getFocusedCell().getTableColumn());
+        questionsTableView.scrollTo(item);
+        this.session.getInput().addQuestion(q);
+    }
+
+    @FXML
+    void deleteQuestion(MouseEvent event) {
+    	ObservableList<QuestionTableData> selectedItems = questionsTableView.getSelectionModel().getSelectedItems();
+    	selectedItems.stream().forEach(item -> this.session.getInput().removeQuestion(item.getQuestion()));
+		alternativesTableView.getItems().removeAll(selectedItems);
+    	questionsTableView.getSelectionModel().clearSelection();
+    }
+
+    @FXML
+    void addVoter(MouseEvent event) {
+    	Voter v = new Voter("Name");
+		VoterTableData item = new VoterTableData(v);
+        votersTableView.getSelectionModel().clearSelection();
+        votersTableView.getItems().add(item);
+        votersTableView.getSelectionModel().select(
+        		votersTableView.getItems().size() - 1, 
+        		votersTableView.getFocusModel().getFocusedCell().getTableColumn());
+        votersTableView.scrollTo(item);
+        this.session.getInput().addVoter(v);
+    }
+
+    @FXML
+    void deleteVoter(MouseEvent event) {
+    	ObservableList<VoterTableData> selectedItems = votersTableView.getSelectionModel().getSelectedItems();
+    	selectedItems.stream().forEach(item -> this.session.getInput().removeVoter(item.getVoter()));
+		votersTableView.getItems().removeAll(selectedItems);
+    	votersTableView.getSelectionModel().clearSelection();
+    	System.out.println(this.session.getInput().getVoters().size());
+    }
 
 }
