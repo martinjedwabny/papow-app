@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 import main.java.base.session.Session;
 import main.java.io.reader.SessionReader;
 
-public class MainController implements Initializable {
+public class MainViewController implements Initializable {
 	/**
 	 * Constants
 	 */

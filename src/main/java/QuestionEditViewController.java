@@ -43,7 +43,7 @@ public class QuestionEditViewController {
 		return null;
 	}
 	
-	public void setupView(Question question, Vector<Alternative> alternatives, Set<Vote> votes) {
+	public void setupView(Question question, Vector<Alternative> alternatives) {
 		setQuestion(question);
 		setAlternatives(alternatives, question.getAlternatives());
 		setVotes(question.getVotes());

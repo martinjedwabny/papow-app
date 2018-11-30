@@ -87,9 +87,9 @@ public class InputTabViewController implements Initializable {
 
 	private void showQuestionEditDialog(Question question) {
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/fxml/QuestionEdit.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/fxml/QuestionEditView.fxml"));
 			StackPane content = loader.load();
-			((QuestionEditViewController) loader.getController()).setupView(question, question.getAlternatives(), question.getVotes());;
+			((QuestionEditViewController) loader.getController()).setupView(question, this.session.getInput().getAlternatives());;
 			DialogBuilder.showConfirmCancelDialog(content, this.mainPane, new EventHandler<ActionEvent>() {
 			    @Override public void handle(ActionEvent e) {
 			    }
