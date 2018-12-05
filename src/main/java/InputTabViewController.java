@@ -6,7 +6,9 @@ package main.java;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
+import java.util.Vector;
+
+import com.jfoenix.controls.JFXDialog;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,6 +23,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import main.java.base.Alternative;
+import main.java.base.CategoryFamily;
 import main.java.base.Question;
 import main.java.base.Voter;
 import main.java.base.session.Session;
@@ -36,13 +39,18 @@ public class InputTabViewController implements Initializable {
 	 */
 	private Session session = new Session();
 
+	/**
+	 * TableView list objects
+	 */
 	private ObservableList<QuestionTableData> questions = FXCollections.observableArrayList();
 	private ObservableList<AlternativeTableData> alternatives = FXCollections.observableArrayList();
 	private ObservableList<VoterTableData> voters = FXCollections.observableArrayList();
-	
 
+	/**
+	 * UI objects
+	 */
     @FXML private StackPane mainPane;
-
+    
     @FXML private TableView<QuestionTableData> questionsTableView;
     @FXML private TableColumn<QuestionTableData, String> questionDescriptionColumn;
     @FXML private TableColumn<QuestionTableData, String> questionAlternativesColumn;
@@ -64,6 +72,13 @@ public class InputTabViewController implements Initializable {
     	setupVotersTableView();
 	}
 
+	/**
+	 * 
+	 * 
+	 * TableView Setup
+	 * 
+	 * 
+	 */
 	private void setupQuestionTableView() {
 		questionsTableView.setRowFactory( tv -> {
 			TableRow<QuestionTableData> row = new TableRow<>();
@@ -82,21 +97,6 @@ public class InputTabViewController implements Initializable {
     	questionVotesColumn.setCellValueFactory(cellData -> {
     		return cellData.getValue().getVotes();
     	});
-	}
-
-
-	private void showQuestionEditDialog(Question question) {
-		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/fxml/QuestionEditView.fxml"));
-			StackPane content = loader.load();
-			((QuestionEditViewController) loader.getController()).setupView(question, this.session.getInput().getAlternatives());;
-			DialogBuilder.showConfirmCancelDialog(content, this.mainPane, new EventHandler<ActionEvent>() {
-			    @Override public void handle(ActionEvent e) {
-			    }
-			});
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 	private void setupAlternativeTableView() {
@@ -123,22 +123,77 @@ public class InputTabViewController implements Initializable {
         });
 	}
 
+	/**
+	 * 
+	 * 
+	 * Question edit handler (opens popup dialog)
+	 * 
+	 * 
+	 */
+	private void showQuestionEditDialog(Question question) {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/fxml/QuestionEditView.fxml"));
+			StackPane content = loader.load();
+			QuestionEditViewController controller = (QuestionEditViewController) loader.getController();
+			controller.setupView(question, this.session.getInput().getAlternatives(), this.session.getInput().getFamilies());
+			DialogBuilder.showConfirmCancelDialog(content, this.mainPane, new EventHandler<ActionEvent>() {
+			    @Override public void handle(ActionEvent e) {
+			    	Question editedQuestion = controller.getEditedQuestion();
+			    	Vector<CategoryFamily> editedCategories = controller.getEditedCategories();
+			    	question.setDescription(editedQuestion.getDescription());
+			    	question.setVotes(editedQuestion.getVotes());
+			    	question.setAlternatives(editedQuestion.getAlternatives());
+			    	session.getInput().setFamilies(editedCategories);
+			    	setQuestionsFromSession(session);
+			    }
+			});
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 
+	 * 
+	 * Session setup (feed data to TableViews)
+	 * 
+	 * 
+	 */
 	public void setSession(Session session) {
 		this.session = session;
-		questions.clear();
-		session.getInput().getQuestions().forEach(question -> {
-			this.questions.add(new QuestionTableData(question));
-		});
-		alternatives.clear();
-		session.getInput().getAlternatives().forEach(alternative -> {
-			this.alternatives.add(new AlternativeTableData(alternative));
-		});
+		setQuestionsFromSession(session);
+		setAlternativesFromSession(session);
+		setVotersFromSession(session);
+	}
+
+	private void setVotersFromSession(Session session) {
 		voters.clear();
 		session.getInput().getVoters().forEach(voter -> {
 			this.voters.add(new VoterTableData(voter));
 		});
 	}
-	
+
+	private void setAlternativesFromSession(Session session) {
+		alternatives.clear();
+		session.getInput().getAlternatives().forEach(alternative -> {
+			this.alternatives.add(new AlternativeTableData(alternative));
+		});
+	}
+
+	private void setQuestionsFromSession(Session session) {
+		questions.clear();
+		session.getInput().getQuestions().forEach(question -> {
+			this.questions.add(new QuestionTableData(question));
+		});
+	}
+
+	/**
+	 * 
+	 * 
+	 * TableView Add/Delete Button handlers
+	 * 
+	 * 
+	 */
     @FXML
     void addAlternative(MouseEvent event) {
     	Alternative a = new Alternative("Name");
@@ -158,6 +213,7 @@ public class InputTabViewController implements Initializable {
     	selectedItems.stream().forEach(item -> this.session.getInput().removeAlternative(item.getAlternative()));
 		alternativesTableView.getItems().removeAll(selectedItems);
     	alternativesTableView.getSelectionModel().clearSelection();
+    	setQuestionsFromSession(session);
     }
 
     @FXML
@@ -200,7 +256,7 @@ public class InputTabViewController implements Initializable {
     	selectedItems.stream().forEach(item -> this.session.getInput().removeVoter(item.getVoter()));
 		votersTableView.getItems().removeAll(selectedItems);
     	votersTableView.getSelectionModel().clearSelection();
-    	System.out.println(this.session.getInput().getVoters().size());
+    	setQuestionsFromSession(session);
     }
 
 }

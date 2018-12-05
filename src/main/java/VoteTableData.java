@@ -18,6 +18,13 @@ public class VoteTableData {
 	}
 
 	/**
+	 * @return the vote
+	 */
+	public Vote getVote() {
+		return vote;
+	}
+
+	/**
 	 * @return the voter
 	 */
 	public StringProperty getVoter() {

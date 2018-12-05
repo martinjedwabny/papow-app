@@ -15,7 +15,12 @@ public class DialogBuilder {
 	public static void showConfirmCancelDialog(Pane content, StackPane parent, EventHandler<ActionEvent> confirmHandler) {
 		JFXDialog dialog = new JFXDialog(parent, content, JFXDialog.DialogTransition.CENTER);
 		JFXButton confirmButton = new JFXButton("Confirm");
-		confirmButton.setOnAction(confirmHandler);
+		confirmButton.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override public void handle(ActionEvent e) {
+		    	confirmHandler.handle(e);
+		    	dialog.close();
+		    }
+		});
 		JFXButton cancelButton = new JFXButton("Cancel");
 		cancelButton.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
