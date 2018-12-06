@@ -84,9 +84,9 @@ public class QuestionEditViewController {
 			BooleanProperty cb = this.selectedAlternativeMap.get(item.getName());
 			cb.addListener((obs,wasSelected,nowSelected) -> {
 				if (nowSelected)
-					addAlternativeToQuestion(item);
+					addAlternativeToQuestion(item.getName());
 				else
-					removeAlternativeFromQuestion(item);
+					removeAlternativeFromQuestion(item.getName());
 			});
 			return cb;
 		}));
@@ -131,13 +131,13 @@ public class QuestionEditViewController {
 		this.questionCopy.setDescription(description);
 	}
 
-	private void addAlternativeToQuestion(Alternative alternative) {
-		this.questionCopy.addAlternative(alternative);
+	private void addAlternativeToQuestion(String alternative) {
+		this.questionCopy.addAlternative(this.nametoAlternative.get(alternative));
 		updateVoteTableViewItems(this.questionCopy.getVotes());
 	}
 	
-	private void removeAlternativeFromQuestion(Alternative alternative) {
-		this.questionCopy.removeAlternative(alternative);
+	private void removeAlternativeFromQuestion(String alternative) {
+		this.questionCopy.removeAlternative(this.nametoAlternative.get(alternative));
 		updateVoteTableViewItems(this.questionCopy.getVotes());
 	}
 
