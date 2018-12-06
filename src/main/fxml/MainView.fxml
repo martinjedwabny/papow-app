@@ -11,9 +11,9 @@
 
 <AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" stylesheets="/main/css/Main.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.MainViewController">
    <children>
-      <TabPane nodeOrientation="LEFT_TO_RIGHT" prefHeight="768.0" prefWidth="1024.0" side="LEFT" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <TabPane id="tab-pane-wrapper" nodeOrientation="LEFT_TO_RIGHT" prefHeight="768.0" prefWidth="1024.0" side="LEFT" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <tabs>
-            <Tab text="Input">
+            <Tab id="tab-pane-wrapper" text="Input">
                <graphic>
                   <ImageView id="tab-icon" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
                      <image>
@@ -25,7 +25,7 @@
                   <fx:include fx:id="inputTabView" source="InputTabView.fxml" />
                </content>
             </Tab>
-            <Tab text="Command">
+            <Tab id="tab-pane-wrapper" text="Command">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                </content>
@@ -36,8 +36,11 @@
                      </image>
                   </ImageView>
                </graphic>
+               <content>
+                  <fx:include fx:id="commandTabView" source="CommandTabView.fxml" />
+               </content>
             </Tab>
-            <Tab text="Result">
+            <Tab id="tab-pane-wrapper" text="Result">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                </content>

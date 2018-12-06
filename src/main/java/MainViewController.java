@@ -36,6 +36,7 @@ public class MainViewController implements Initializable {
     @FXML private JFXButton loadFileButton;
     @FXML private JFXButton saveFileButton;
 	@FXML private InputTabViewController inputTabViewController;
+	@FXML private CommandTabViewController commandTabViewController;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -65,6 +66,7 @@ public class MainViewController implements Initializable {
 			session.setCommand(newSession.getCommand());
 			session.setResult(newSession.getResult());
 	    	inputTabViewController.setSession(session);
+	    	commandTabViewController.setSession(session);
 		} catch (Exception e) {
 			loadSessionError();
 		}
