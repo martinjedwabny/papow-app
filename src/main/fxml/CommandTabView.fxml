@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
@@ -30,7 +31,7 @@
                               <Insets top="6.0" />
                            </padding>
                         </Separator>
-                        <ListView fx:id="votingRuleListView" prefHeight="300.0">
+                        <ListView fx:id="votingRuleListView" prefHeight="100.0">
                            <VBox.margin>
                               <Insets top="10.0" />
                            </VBox.margin>
@@ -52,6 +53,14 @@
                         </TreeView>
                         <HBox alignment="BOTTOM_RIGHT" spacing="10.0">
                            <children>
+                              <ComboBox fx:id="criterionTypeComboBox" prefWidth="150.0" />
+                              <ComboBox fx:id="criterionFamilyComboBox" layoutX="581.0" layoutY="10.0" prefWidth="150.0" />
+                              <Label alignment="TOP_CENTER" contentDisplay="TOP" text="=" textFill="WHITE">
+                                 <padding>
+                                    <Insets bottom="4.0" />
+                                 </padding>
+                              </Label>
+                              <ComboBox fx:id="criterionCategoryComboBox" layoutX="560.0" layoutY="10.0" prefWidth="150.0" />
                               <JFXButton onMouseClicked="#addCriterion" text="Add" />
                               <JFXButton onMouseClicked="#deleteCriterion" text="Delete" />
                            </children>
@@ -59,7 +68,7 @@
                               <Insets />
                            </opaqueInsets>
                            <VBox.margin>
-                              <Insets top="10.0" />
+                              <Insets top="30.0" />
                            </VBox.margin>
                         </HBox>
                      </children>

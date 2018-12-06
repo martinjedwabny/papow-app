@@ -238,3 +238,32 @@
 	-fx-text-fill: white;
 }
 
+.tree-view, .tree-cell {
+	-fx-background-color: -color-primary-1;
+	-fx-text-fill: white;
+}
+
+.tree-cell:selected {
+	-fx-text-fill: -color-secondary-1;
+}
+
+.combo-box-popup .list-cell {    
+    -fx-background-color: -color-primary-1;    
+    -fx-text-fill: white;
+}
+
+.combo-box-base {
+	-fx-background-insets: 0 0 0 0, 0, 1, 2;
+	-fx-background-radius: 3px, 3px, 2px, 1px;
+	-fx-border-color: -color-primary-3;
+    -fx-background-color: -color-primary-1;
+}
+
+.combo-box .arrow{
+    -fx-background-color: -color-primary-3;
+}
+
+.combo-box .arrow-button{
+    -fx-background-color: -color-primary-1;
+}
+

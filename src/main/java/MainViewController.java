@@ -13,7 +13,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
+import main.java.base.criterion.CriterionOr;
+import main.java.base.criterion.CriterionTrue;
 import main.java.base.session.Session;
+import main.java.base.session.SessionCommand;
 import main.java.io.reader.SessionReader;
 
 public class MainViewController implements Initializable {
@@ -65,12 +68,18 @@ public class MainViewController implements Initializable {
 			session.setInput(newSession.getInput());
 			session.setCommand(newSession.getCommand());
 			session.setResult(newSession.getResult());
+			setCriterionToDefault(newSession.getCommand());
 	    	inputTabViewController.setSession(session);
 	    	commandTabViewController.setSession(session);
 		} catch (Exception e) {
 			loadSessionError();
 		}
     }
+
+	private void setCriterionToDefault(SessionCommand command) {
+		if (command.getCriterion() == null || command.getCriterion() instanceof CriterionTrue)
+			command.setCriterion(new CriterionOr());
+	}
 
 	private void loadSessionError() {
 		// TODO Auto-generated method stub

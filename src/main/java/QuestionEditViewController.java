@@ -50,7 +50,6 @@ public class QuestionEditViewController {
     
     private HashMap<String, BooleanProperty> selectedAlternativeMap = new HashMap<String, BooleanProperty>();
     
-
 	public Question getEditedQuestion() {
 		return this.questionCopy;
 	}
