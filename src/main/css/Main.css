@@ -9,6 +9,14 @@
 	-color-secondary-3: #FFE400;
 }
 
+.menu-item {
+    -fx-background-color: -color-primary-1;
+}
+
+.context-menu {
+    -fx-background-color: -color-primary-1;
+}
+
 .tab-pane {
     -fx-tab-min-height: 80px;
     -fx-tab-max-height: 80px;
@@ -228,6 +236,74 @@
     -fx-background-color: -color-secondary-2;
     -fx-alignment: center;
 }
+
+/* Tree Table View */
+
+.tree-table-view{
+   -fx-background-color: -color-primary-1;
+}
+
+.tree-table-view .column-header-background{
+    -fx-background-color: -color-primary-1;
+}
+
+.tree-table-view .column-header-background .label{
+    -fx-background-color: -color-primary-1;
+    -fx-text-fill: white;
+}
+
+.tree-table-view .column-header {
+    -fx-background-color: -color-primary-1;
+}
+
+.tree-table-view .tree-table-cell{
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+	-fx-alignment: CENTER;
+}
+
+.tree-table-view .column-header-background {
+    -fx-border-width: 0px;
+}
+
+.tree-table-column {
+	-fx-border-width: 0;
+}
+
+.tree-table-column .label {
+	-fx-alignment: CENTER;
+	-fx-padding: 10px 0px;
+}
+
+.tree-table-row-cell:even{
+    -fx-background-color: -color-primary-1;
+    -fx-background-radius: 6;
+}
+
+.tree-table-row-cell:odd{
+    -fx-background-color: -color-primary-2;
+    -fx-background-radius: 6;
+}
+
+.tree-table-row-cell:selected {
+   -fx-background-color: -color-secondary-2;
+   -fx-background-radius: 6;
+}
+
+.tree-table-view *.filler{
+	-fx-border-width: 0;
+}
+
+.tree-table-view .filler{
+    -fx-background-color: -color-primary-1;
+}
+
+.table-row-cell .cell .text-field{
+    -fx-background-color: -color-secondary-2;
+    -fx-alignment: center;
+}
+
+/* List View */
 
 .list-view, .list-cell {
 	-fx-background-color: -color-primary-1;
