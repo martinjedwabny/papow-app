@@ -14,15 +14,18 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.CheckBoxListCell;
+import javafx.scene.input.MouseEvent;
 import main.java.base.Alternative;
 import main.java.base.Category;
 import main.java.base.CategoryFamily;
 import main.java.base.Question;
 import main.java.base.Vote;
+import main.java.base.Voter;
 import main.java.base.ordering.Ballot;
 import main.java.io.reader.BallotReader;
 import main.java.io.reader.CategoryReader;
@@ -41,10 +44,13 @@ public class QuestionEditViewController {
     private TableColumn<VoteTableData, String> ballotColumn;
     @FXML
     private TableColumn<VoteTableData, String> categoryColumn;
+    @FXML
+    private ComboBox<Voter> voterComboBox;
     
     private Question questionCopy;
     private Map<String, Alternative> nametoAlternative;
-    private Vector<CategoryFamily> categoriesCopy;
+    private Vector<CategoryFamily> categories;
+    private Vector<Voter> voters; 
     
     private ObservableList<VoteTableData> votesTableList = FXCollections.observableArrayList();
     
@@ -55,16 +61,18 @@ public class QuestionEditViewController {
 	}
 	
 	public Vector<CategoryFamily> getEditedCategories () {
-		return this.categoriesCopy;
+		return this.categories;
 	}
 	
-	public void setupView(Question question, Vector<Alternative> alternatives, Vector<CategoryFamily> categories) {
+	public void setupView(Question question, Vector<Alternative> alternatives, Vector<CategoryFamily> categories, Vector<Voter> voters) {
 		this.questionCopy = new Question(question);
 		this.nametoAlternative = alternatives.stream().collect(Collectors.toMap(Alternative::getName, a -> a));
-		this.categoriesCopy = categories;
+		this.categories = categories;
+		this.voters = voters;
 		setQuestionDescriptionField(this.questionCopy);
 		setAlternativesListView(alternatives, this.questionCopy.getAlternatives());
-		setVoteTableView(this.questionCopy.getVotes());
+		setVoteTableView();
+		setVoterComboBox();
 	}
 
 	private void setQuestionDescriptionField(Question question) {
@@ -93,8 +101,8 @@ public class QuestionEditViewController {
 		alternativeListView.prefHeightProperty().bind(Bindings.size(alternativeListView.getItems()).multiply(28));
 	}
 
-	private void setVoteTableView(Set<Vote> votes) {
-		updateVoteTableViewItems(votes);
+	private void setVoteTableView() {
+		updateVoteTableViewItems();
 		votesTableView.setItems(votesTableList);
 		voterColumn.setCellFactory(column -> EditCell.createStringEditCell());
 		voterColumn.setCellValueFactory(cellData -> {
@@ -122,8 +130,16 @@ public class QuestionEditViewController {
         });
 	}
 
-	private void updateVoteTableViewItems(Set<Vote> votes) {
-		votesTableList.setAll(votes.stream().map(VoteTableData::new).collect(Collectors.toList()));
+	private void setVoterComboBox() {
+		this.voterComboBox.setItems(FXCollections.observableArrayList(
+				this.voters.stream().filter(vr -> 
+				!this.questionCopy.getVotes().stream().anyMatch(vt -> 
+				vt.getVoter().equals(vr))).collect(Collectors.toList())));
+		this.voterComboBox.getSelectionModel().selectFirst();
+	}
+
+	private void updateVoteTableViewItems() {
+		votesTableList.setAll(this.questionCopy.getVotes().stream().map(VoteTableData::new).collect(Collectors.toList()));
 	}
 
 	private void updateQuestionDescription(String description) {
@@ -132,26 +148,51 @@ public class QuestionEditViewController {
 
 	private void addAlternativeToQuestion(String alternative) {
 		this.questionCopy.addAlternative(this.nametoAlternative.get(alternative));
-		updateVoteTableViewItems(this.questionCopy.getVotes());
+		updateVoteTableViewItems();
 	}
 	
 	private void removeAlternativeFromQuestion(String alternative) {
 		this.questionCopy.removeAlternative(this.nametoAlternative.get(alternative));
-		updateVoteTableViewItems(this.questionCopy.getVotes());
+		updateVoteTableViewItems();
 	}
 
 	private void updateVoteFromBallotString(String ballotString, Vote vote) {
 		Ballot updatedBallot = BallotReader.fromString(ballotString, this.nametoAlternative);
 		if (updatedBallot != null)
 			vote.setRanking(updatedBallot);
-		updateVoteTableViewItems(this.questionCopy.getVotes());
+		updateVoteTableViewItems();
 	}
 
 	private void updateVoteFromCategoryString(String categoryString, Vote vote) {
-		Map<CategoryFamily, Category> updatedCategories = CategoryReader.updateAndGetFromString(this.categoriesCopy, categoryString);
+		Map<CategoryFamily, Category> updatedCategories = CategoryReader.updateAndGetFromString(this.categories, categoryString);
 		if (updatedCategories != null)
 			vote.setCategories(updatedCategories);
-		updateVoteTableViewItems(this.questionCopy.getVotes());
+		updateVoteTableViewItems();
 	}
+	
+	@FXML
+    void addVote(MouseEvent event) {
+		Voter voter = this.voterComboBox.getSelectionModel().getSelectedItem();
+		if (voter == null)
+			return;
+		Map<Alternative, Integer> rankForElement = new HashMap<Alternative, Integer>();
+		this.questionCopy.getAlternatives().forEach(a -> rankForElement.put(a, 1));
+		Vote vote = new Vote(voter, new Ballot(rankForElement), new HashMap<CategoryFamily, Category>());
+		this.questionCopy.addVote(vote);
+		this.votesTableList.add(new VoteTableData(vote));
+		this.voterComboBox.getItems().remove(voter);
+    }
+
+    @FXML
+    void removeVote(MouseEvent event) {
+    	VoteTableData item = this.votesTableView.getSelectionModel().getSelectedItem();
+    	if (item == null)
+    		return;
+    	Vote vote = item.getVote();
+    	this.questionCopy.removeVote(vote);
+    	this.votesTableList.remove(item);
+    	this.voterComboBox.getItems().add(vote.getVoter());
+    	this.voterComboBox.getSelectionModel().selectFirst();
+    }
 
 }

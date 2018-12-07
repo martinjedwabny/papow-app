@@ -22,7 +22,6 @@ import main.java.base.criterion.Criterion;
 import main.java.base.criterion.CriterionAnd;
 import main.java.base.criterion.CriterionEquals;
 import main.java.base.criterion.CriterionOr;
-import main.java.base.criterion.CriterionTrue;
 import main.java.base.rules.VotingRule;
 import main.java.base.rules.iterative.InstantRunoff;
 import main.java.base.rules.scoring.BordaFair;
@@ -31,9 +30,12 @@ import main.java.base.rules.scoring.BordaPessimistic;
 import main.java.base.rules.scoring.Copeland;
 import main.java.base.rules.scoring.KApproval;
 import main.java.base.session.Session;
-import main.java.io.reader.CriterionReader;
 
 public class CommandTabViewController {
+
+	private static final String CRITERION_OR_MESSAGE = "Any of:";
+	private static final String CRITERION_AND_MESSAGE = "All of:";
+	private static final String CRITERION_EQUALS_MESSAGE = "Equals";
 	
 	private Session session;
 
@@ -114,12 +116,13 @@ public class CommandTabViewController {
 	}
 
 	private void setCriterionTypeComboBox() {
-		this.criterionTypeComboBox.setItems(FXCollections.observableArrayList("Any of","All of","Equals"));
+		this.criterionTypeComboBox.setItems(FXCollections.observableArrayList(
+				CRITERION_OR_MESSAGE, CRITERION_AND_MESSAGE, CRITERION_EQUALS_MESSAGE));
 		this.criterionTypeComboBox.getSelectionModel().selectFirst();
 		this.criterionFamilyComboBox.setDisable(true);
 		this.criterionCategoryComboBox.setDisable(true);
 		this.criterionTypeComboBox.setOnAction(event -> {
-			if (this.criterionTypeComboBox.getSelectionModel().getSelectedItem().equals("Equals")) {
+			if (this.criterionTypeComboBox.getSelectionModel().getSelectedItem().equals(CRITERION_EQUALS_MESSAGE)) {
 				this.criterionFamilyComboBox.setDisable(false);
 				this.criterionCategoryComboBox.setDisable(false);
 			} else {
@@ -135,11 +138,11 @@ public class CommandTabViewController {
     	if (item == null || !item.canHaveChlidren())
     		return;
     	Criterion criterion = null;
-    	if (this.criterionTypeComboBox.getSelectionModel().getSelectedItem() == "Any of")
+    	if (this.criterionTypeComboBox.getSelectionModel().getSelectedItem() == CRITERION_OR_MESSAGE)
     		criterion = new CriterionOr();
-    	if (this.criterionTypeComboBox.getSelectionModel().getSelectedItem() == "All of")
+    	if (this.criterionTypeComboBox.getSelectionModel().getSelectedItem() == CRITERION_AND_MESSAGE)
     		criterion = new CriterionAnd();
-    	if (this.criterionTypeComboBox.getSelectionModel().getSelectedItem() == "Equals")
+    	if (this.criterionTypeComboBox.getSelectionModel().getSelectedItem() == CRITERION_EQUALS_MESSAGE)
     		criterion = new CriterionEquals(
     				this.criterionFamilyComboBox.getSelectionModel().getSelectedItem().getDescription(),
     				this.criterionCategoryComboBox.getSelectionModel().getSelectedItem().getDescription());
