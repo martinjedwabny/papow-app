@@ -1,7 +1,5 @@
 package main.java;
 
-import org.scenicview.ScenicView;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,7 +15,6 @@ public class Main extends Application {
         stage.setTitle("Voting UI");
         stage.setScene(scene);
         stage.show();
-//        ScenicView.show(scene);
     }
 	
 	public static void main(String[] args) {

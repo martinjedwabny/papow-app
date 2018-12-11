@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane fx:id="mainPane" maxHeight="1.7976931348623157E308" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.CommandTabViewController">
+   <children>
+      <AnchorPane maxHeight="1.7976931348623157E308" stylesheets="/main/css/Main.css">
+         <children>
+            <ScrollPane id="tab-pane-wrapper" fitToWidth="true" layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <content>
+                  <VBox id="tab-pane-wrapper" maxHeight="1.7976931348623157E308">
+                     <children>
+                        <Label id="section" prefHeight="48.0" prefWidth="264.0" text="Voting rules">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Label>
+                        <Separator prefHeight="1.0" prefWidth="854.0">
+                           <padding>
+                              <Insets top="6.0" />
+                           </padding>
+                        </Separator>
+                        <ListView fx:id="votingRuleListView" prefHeight="100.0">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </ListView>
+                        <Label id="section" layoutX="26.0" layoutY="26.0" prefHeight="48.0" prefWidth="340.0" text="Vote filtering criterions">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Separator layoutX="26.0" layoutY="74.0" prefHeight="1.0" prefWidth="854.0">
+                           <padding>
+                              <Insets top="6.0" />
+                           </padding>
+                        </Separator>
+                        <TreeView fx:id="criterionTreeView" prefHeight="300.0">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </TreeView>
+                        <HBox alignment="BOTTOM_RIGHT" spacing="10.0">
+                           <children>
+                              <ComboBox fx:id="criterionTypeComboBox" prefWidth="150.0" />
+                              <ComboBox fx:id="criterionFamilyComboBox" layoutX="581.0" layoutY="10.0" prefWidth="150.0" />
+                              <Label alignment="TOP_CENTER" contentDisplay="TOP" text="=" textFill="WHITE">
+                                 <padding>
+                                    <Insets bottom="4.0" />
+                                 </padding>
+                              </Label>
+                              <ComboBox fx:id="criterionCategoryComboBox" layoutX="560.0" layoutY="10.0" prefWidth="150.0" />
+                              <JFXButton onMouseClicked="#addCriterion" text="Add" />
+                              <JFXButton onMouseClicked="#deleteCriterion" text="Delete" />
+                           </children>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <VBox.margin>
+                              <Insets top="30.0" />
+                           </VBox.margin>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
+                     </padding>
+                  </VBox>
+               </content>
+            </ScrollPane>
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>

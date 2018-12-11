@@ -49,7 +49,7 @@ public class ResultTabViewController {
 		setResultTreeTableItems();
 	}
 
-	private void setResultTreeTableItems() {
+	public void setResultTreeTableItems() {
 		Map<Question, List<Vote>> validVotes = this.session.getResult().getValidVotes();
 		Map<Question, Map<VotingRule, Ballot>> results = this.session.getResult().getResults();
 		ObservableList<QuestionTreeTableData> items = FXCollections.observableArrayList();
@@ -95,8 +95,4 @@ public class ResultTabViewController {
                 return column.getComputedValue(param);
         });
     }
-
-	public void updateResultItems() {
-		setResultTreeTableItems();
-	}
 }
