@@ -20,6 +20,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import main.java.base.Alternative;
@@ -83,7 +84,11 @@ public class InputTabViewController implements Initializable {
 		questionsTableView.setRowFactory( tv -> {
 			TableRow<QuestionTableData> row = new TableRow<>();
 			row.setOnMouseClicked(event -> {
-				showQuestionEditDialog(row.getItem().getQuestion());
+				if(event.getButton().equals(MouseButton.PRIMARY)){
+		            if(event.getClickCount() == 2) {
+						showQuestionEditDialog(row.getItem().getQuestion());
+		            }
+		        }
 			});
 			return row ;
 		});
@@ -97,6 +102,7 @@ public class InputTabViewController implements Initializable {
     	questionVotesColumn.setCellValueFactory(cellData -> {
     		return cellData.getValue().getVotes();
     	});
+    	questionsTableView.getSortOrder().add(questionDescriptionColumn);
 	}
 
 	private void setupAlternativeTableView() {
@@ -110,6 +116,7 @@ public class InputTabViewController implements Initializable {
                 .get(event.getTablePosition().getRow())).setName(name);
             updateQuestionTableItems();
         });
+		alternativesTableView.getSortOrder().add(alternativeNameColumn);
 	}
 	
 	private void setupVotersTableView() {
@@ -122,6 +129,7 @@ public class InputTabViewController implements Initializable {
             ((VoterTableData) event.getTableView().getItems()
                 .get(event.getTablePosition().getRow())).setName(name);
         });
+		votersTableView.getSortOrder().add(voterNameColumn);
 	}
 
 	/**
@@ -234,7 +242,7 @@ public class InputTabViewController implements Initializable {
     void deleteQuestion(MouseEvent event) {
     	ObservableList<QuestionTableData> selectedItems = questionsTableView.getSelectionModel().getSelectedItems();
     	selectedItems.stream().forEach(item -> this.session.getInput().removeQuestion(item.getQuestion()));
-		alternativesTableView.getItems().removeAll(selectedItems);
+    	questionsTableView.getItems().removeAll(selectedItems);
     	questionsTableView.getSelectionModel().clearSelection();
     }
 

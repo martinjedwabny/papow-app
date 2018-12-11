@@ -2,7 +2,6 @@ package main.java;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.Vector;
 import java.util.stream.Collectors;
 
@@ -97,7 +96,7 @@ public class QuestionEditViewController {
 			});
 			return cb;
 		}));
-		alternativeListView.setItems(FXCollections.observableArrayList(alternatives));
+		alternativeListView.setItems(FXCollections.observableArrayList(alternatives).sorted((a,b) -> a.getName().compareToIgnoreCase(b.getName())));
 		alternativeListView.prefHeightProperty().bind(Bindings.size(alternativeListView.getItems()).multiply(28));
 	}
 
@@ -128,6 +127,7 @@ public class QuestionEditViewController {
                 .get(event.getTablePosition().getRow())).getVote();
             updateVoteFromCategoryString(categoryString, vote);
         });
+		votesTableView.getSortOrder().add(voterColumn);
 	}
 
 	private void setVoterComboBox() {
@@ -139,7 +139,9 @@ public class QuestionEditViewController {
 	}
 
 	private void updateVoteTableViewItems() {
-		votesTableList.setAll(this.questionCopy.getVotes().stream().map(VoteTableData::new).collect(Collectors.toList()));
+		votesTableList.setAll(this.questionCopy.getVotes().stream().
+				map(VoteTableData::new).
+				collect(Collectors.toList()));
 	}
 
 	private void updateQuestionDescription(String description) {

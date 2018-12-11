@@ -36,7 +36,7 @@
                               <Insets top="10.0" />
                            </VBox.margin>
                         </ListView>
-                        <Label id="section" layoutX="26.0" layoutY="26.0" prefHeight="48.0" prefWidth="340.0" text="Vote filtering criterions">
+                        <Label id="section" layoutX="26.0" layoutY="26.0" prefHeight="48.0" prefWidth="340.0" text="Filtering criteria">
                            <VBox.margin>
                               <Insets top="10.0" />
                            </VBox.margin>

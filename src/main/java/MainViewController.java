@@ -23,12 +23,14 @@ import main.java.base.session.Session;
 import main.java.base.session.SessionCommand;
 import main.java.base.session.SessionRunner;
 import main.java.io.reader.SessionReader;
+import main.java.io.writer.SessionWriter;
 
 public class MainViewController implements Initializable {
 	/**
 	 * Constants
 	 */
-	private static final String FILE_CHOOSER_MESSAGE = "Open Resource File";
+	private static final String FILE_CHOOSER_LOAD_MESSAGE = "Open Resource File";
+	private static final String FILE_CHOOSER_SAVE_MESSAGE = "Save Resource File";
 	private static final String JSON_FILE_MESSAGE = "JSON input file";
 	private static final String SESSION_FILE_MESSAGE = "Session file";
 	
@@ -77,10 +79,10 @@ public class MainViewController implements Initializable {
 	@FXML
     private void loadFile(ActionEvent event) {
     	FileChooser fileChooser = new FileChooser();
-    	fileChooser.setTitle(FILE_CHOOSER_MESSAGE);
+    	fileChooser.setTitle(FILE_CHOOSER_LOAD_MESSAGE);
     	fileChooser.getExtensionFilters().addAll(
-    			new ExtensionFilter(JSON_FILE_MESSAGE, "*.json"),
-    			new ExtensionFilter(SESSION_FILE_MESSAGE, "*.ses"));
+    			new ExtensionFilter(SESSION_FILE_MESSAGE, "*.ses"),
+    			new ExtensionFilter(JSON_FILE_MESSAGE, "*.json"));
     	File chosenFile = fileChooser.showOpenDialog((Stage) mainPane.getScene().getWindow());
     	if (chosenFile != null) {
     		loadSession(chosenFile.getAbsolutePath());
@@ -115,7 +117,23 @@ public class MainViewController implements Initializable {
     }
 	
 	@FXML void saveFile(ActionEvent event) {
-
+		FileChooser fileChooser = new FileChooser();
+    	fileChooser.setTitle(FILE_CHOOSER_SAVE_MESSAGE);
+    	fileChooser.getExtensionFilters().add(
+    			new ExtensionFilter(SESSION_FILE_MESSAGE, "*.ses"));
+    	File chosenFile = fileChooser.showSaveDialog((Stage) mainPane.getScene().getWindow());
+    	if (chosenFile != null) {
+            try {
+                SessionWriter.write(this.session, chosenFile.getAbsolutePath());
+            } catch (Exception ex) {
+            	saveSessionError();
+            }
+        }
     }
+
+	private void saveSessionError() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }
