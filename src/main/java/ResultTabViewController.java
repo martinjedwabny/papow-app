@@ -49,6 +49,7 @@ public class ResultTabViewController {
 		setResultTreeTableItems();
 	}
 
+	@SuppressWarnings("unchecked")
 	public void setResultTreeTableItems() {
 		Map<Question, List<Vote>> validVotes = this.session.getResult().getValidVotes();
 		Map<Question, Map<VotingRule, Ballot>> results = this.session.getResult().getResults();

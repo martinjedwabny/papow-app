@@ -1,7 +1,6 @@
 package main.java;
 
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -9,7 +8,6 @@ import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import main.java.base.Alternative;
 import main.java.base.Question;
 import main.java.base.Voter;
 import main.java.base.ordering.Ballot;

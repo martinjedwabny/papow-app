@@ -8,8 +8,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Vector;
 
-import com.jfoenix.controls.JFXDialog;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -203,7 +201,8 @@ public class InputTabViewController implements Initializable {
 	 * 
 	 * 
 	 */
-    @FXML
+    @SuppressWarnings("unchecked")
+	@FXML
     void addAlternative(MouseEvent event) {
     	Alternative a = new Alternative("Name");
     	AlternativeTableData item = new AlternativeTableData(a);
@@ -225,7 +224,8 @@ public class InputTabViewController implements Initializable {
     	updateQuestionTableItems();
     }
 
-    @FXML
+    @SuppressWarnings("unchecked")
+	@FXML
     void addQuestion(MouseEvent event) {
     	Question q = new Question("Name");
     	QuestionTableData item = new QuestionTableData(q);
@@ -246,7 +246,8 @@ public class InputTabViewController implements Initializable {
     	questionsTableView.getSelectionModel().clearSelection();
     }
 
-    @FXML
+    @SuppressWarnings("unchecked")
+	@FXML
     void addVoter(MouseEvent event) {
     	Voter v = new Voter("Name");
 		VoterTableData item = new VoterTableData(v);

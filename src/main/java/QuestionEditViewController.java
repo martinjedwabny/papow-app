@@ -15,6 +15,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.CheckBoxListCell;
@@ -102,6 +103,7 @@ public class QuestionEditViewController {
 
 	private void setVoteTableView() {
 		updateVoteTableViewItems();
+		votesTableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		votesTableView.setItems(votesTableList);
 		voterColumn.setCellFactory(column -> EditCell.createStringEditCell());
 		voterColumn.setCellValueFactory(cellData -> {
@@ -112,6 +114,8 @@ public class QuestionEditViewController {
     		return cellData.getValue().getRanking();
     	});
 		ballotColumn.setOnEditCommit(event -> {
+			if (!event.getRowValue().equals(votesTableView.getSelectionModel().getSelectedItem()))
+				return;
             String ballotString = event.getNewValue();
             Vote vote = ((VoteTableData) event.getTableView().getItems()
                     .get(event.getTablePosition().getRow())).getVote();
@@ -142,6 +146,7 @@ public class QuestionEditViewController {
 		votesTableList.setAll(this.questionCopy.getVotes().stream().
 				map(VoteTableData::new).
 				collect(Collectors.toList()));
+		votesTableView.sort();
 	}
 
 	private void updateQuestionDescription(String description) {
@@ -159,7 +164,7 @@ public class QuestionEditViewController {
 	}
 
 	private void updateVoteFromBallotString(String ballotString, Vote vote) {
-		Ballot updatedBallot = BallotReader.fromString(ballotString, this.nametoAlternative);
+		Ballot updatedBallot = BallotReader.fromString(ballotString, this.questionCopy.getAlternatives(), this.nametoAlternative);
 		if (updatedBallot != null)
 			vote.setRanking(updatedBallot);
 		updateVoteTableViewItems();
@@ -183,6 +188,7 @@ public class QuestionEditViewController {
 		this.questionCopy.addVote(vote);
 		this.votesTableList.add(new VoteTableData(vote));
 		this.voterComboBox.getItems().remove(voter);
+    	this.voterComboBox.getSelectionModel().selectFirst();
     }
 
     @FXML
