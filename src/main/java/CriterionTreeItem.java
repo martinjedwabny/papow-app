@@ -44,7 +44,7 @@ public class CriterionTreeItem extends TreeItem<String> {
 		if (isAnd())
 			return CRITERION_AND_MESSAGE;
 		if (isEquals())
-			return CRITERION_EQUALS_MESSAGE;
+			return ((CriterionEquals) getCriterion()).getKey() + " = " + ((CriterionEquals) getCriterion()).getValue();
 		return CRITERION_TRUE_MESSAGE;
 	}
 

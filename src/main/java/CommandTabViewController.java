@@ -114,17 +114,20 @@ public class CommandTabViewController {
 	private void setCriterionTypeComboBox() {
 		this.criterionTypeComboBox.setItems(FXCollections.observableArrayList(CriterionTreeItem.CRITERION_MESSAGES));
 		this.criterionTypeComboBox.getSelectionModel().selectFirst();
-		this.criterionFamilyComboBox.setDisable(true);
-		this.criterionCategoryComboBox.setDisable(true);
 		this.criterionTypeComboBox.setOnAction(event -> {
-			if (this.criterionTypeComboBox.getSelectionModel().getSelectedItem().equals(CriterionTreeItem.CRITERION_EQUALS_MESSAGE)) {
-				this.criterionFamilyComboBox.setDisable(false);
-				this.criterionCategoryComboBox.setDisable(false);
-			} else {
-				this.criterionFamilyComboBox.setDisable(true);
-				this.criterionCategoryComboBox.setDisable(true);
-			}
+			updateComboBoxEnabledStatus();
 		});
+		updateComboBoxEnabledStatus();
+	}
+
+	private void updateComboBoxEnabledStatus() {
+		if (this.criterionTypeComboBox.getSelectionModel().getSelectedItem().equals(CriterionTreeItem.CRITERION_EQUALS_MESSAGE)) {
+			this.criterionFamilyComboBox.setDisable(false);
+			this.criterionCategoryComboBox.setDisable(false);
+		} else {
+			this.criterionFamilyComboBox.setDisable(true);
+			this.criterionCategoryComboBox.setDisable(true);
+		}
 	}
 
     @FXML
