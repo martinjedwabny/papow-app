@@ -126,6 +126,8 @@ public class QuestionEditViewController {
     		return cellData.getValue().getCategories();
     	});
 		categoryColumn.setOnEditCommit(event -> {
+			if (!event.getRowValue().equals(votesTableView.getSelectionModel().getSelectedItem()))
+				return;
             String categoryString = event.getNewValue();
             Vote vote = ((VoteTableData) event.getTableView().getItems()
                 .get(event.getTablePosition().getRow())).getVote();

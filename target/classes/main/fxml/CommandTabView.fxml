@@ -31,6 +31,11 @@
                               <Insets top="6.0" />
                            </padding>
                         </Separator>
+                        <Label id="section-description" layoutX="26.0" layoutY="26.0" text="Select the voting rules to generate the corresponding results.">
+                           <VBox.margin>
+                              <Insets top="6.0" />
+                           </VBox.margin>
+                        </Label>
                         <ListView fx:id="votingRuleListView" prefHeight="100.0">
                            <VBox.margin>
                               <Insets top="10.0" />
@@ -46,7 +51,12 @@
                               <Insets top="6.0" />
                            </padding>
                         </Separator>
-                        <TreeView fx:id="criterionTreeView" prefHeight="300.0">
+                        <Label id="section-description" layoutX="26.0" layoutY="90.0" text="This tree displays the vote category filtering criterion to be used. Only votes that pass this criterion will be considered.">
+                           <VBox.margin>
+                              <Insets top="6.0" />
+                           </VBox.margin>
+                        </Label>
+                        <TreeView fx:id="criterionTreeView" prefHeight="260.0">
                            <VBox.margin>
                               <Insets top="10.0" />
                            </VBox.margin>

@@ -32,10 +32,6 @@ import main.java.base.rules.scoring.KApproval;
 import main.java.base.session.Session;
 
 public class CommandTabViewController {
-
-	private static final String CRITERION_OR_MESSAGE = "Any of:";
-	private static final String CRITERION_AND_MESSAGE = "All of:";
-	private static final String CRITERION_EQUALS_MESSAGE = "Equals";
 	
 	private Session session;
 
@@ -62,7 +58,7 @@ public class CommandTabViewController {
 				new VotingRuleDisplayData(new BordaOptimistic(), "Optimistic Borda"),
 				new VotingRuleDisplayData(new InstantRunoff(), "Instant Runoff"),
 				new VotingRuleDisplayData(new Copeland(), "Copeland"),
-				new VotingRuleDisplayData(new KApproval(1), "Majority"),
+				new VotingRuleDisplayData(new KApproval(1), "Plurality"),
 				new VotingRuleDisplayData(new KApproval(2), "2-approval"),
 				new VotingRuleDisplayData(new KApproval(3), "3-approval"));
 		rules.forEach(r -> possibilities.forEach(p -> {
@@ -116,13 +112,12 @@ public class CommandTabViewController {
 	}
 
 	private void setCriterionTypeComboBox() {
-		this.criterionTypeComboBox.setItems(FXCollections.observableArrayList(
-				CRITERION_OR_MESSAGE, CRITERION_AND_MESSAGE, CRITERION_EQUALS_MESSAGE));
+		this.criterionTypeComboBox.setItems(FXCollections.observableArrayList(CriterionTreeItem.CRITERION_MESSAGES));
 		this.criterionTypeComboBox.getSelectionModel().selectFirst();
 		this.criterionFamilyComboBox.setDisable(true);
 		this.criterionCategoryComboBox.setDisable(true);
 		this.criterionTypeComboBox.setOnAction(event -> {
-			if (this.criterionTypeComboBox.getSelectionModel().getSelectedItem().equals(CRITERION_EQUALS_MESSAGE)) {
+			if (this.criterionTypeComboBox.getSelectionModel().getSelectedItem().equals(CriterionTreeItem.CRITERION_EQUALS_MESSAGE)) {
 				this.criterionFamilyComboBox.setDisable(false);
 				this.criterionCategoryComboBox.setDisable(false);
 			} else {
@@ -133,16 +128,16 @@ public class CommandTabViewController {
 	}
 
     @FXML
-    void addCriterion(MouseEvent event) {
+    private void addCriterion(MouseEvent event) {
     	CriterionTreeItem item = (CriterionTreeItem) this.criterionTreeView.getSelectionModel().getSelectedItem();
     	if (item == null || !item.canHaveChlidren())
     		return;
     	Criterion criterion = null;
-    	if (this.criterionTypeComboBox.getSelectionModel().getSelectedItem() == CRITERION_OR_MESSAGE)
+    	if (this.criterionTypeComboBox.getSelectionModel().getSelectedItem().equals(CriterionTreeItem.CRITERION_OR_MESSAGE))
     		criterion = new CriterionOr();
-    	if (this.criterionTypeComboBox.getSelectionModel().getSelectedItem() == CRITERION_AND_MESSAGE)
+    	if (this.criterionTypeComboBox.getSelectionModel().getSelectedItem().equals(CriterionTreeItem.CRITERION_AND_MESSAGE))
     		criterion = new CriterionAnd();
-    	if (this.criterionTypeComboBox.getSelectionModel().getSelectedItem() == CRITERION_EQUALS_MESSAGE)
+    	if (this.criterionTypeComboBox.getSelectionModel().getSelectedItem().equals(CriterionTreeItem.CRITERION_EQUALS_MESSAGE))
     		criterion = new CriterionEquals(
     				this.criterionFamilyComboBox.getSelectionModel().getSelectedItem().getDescription(),
     				this.criterionCategoryComboBox.getSelectionModel().getSelectedItem().getDescription());
@@ -150,7 +145,7 @@ public class CommandTabViewController {
     }
 
     @FXML
-    void deleteCriterion(MouseEvent event) {
+    private void deleteCriterion(MouseEvent event) {
     	CriterionTreeItem item = (CriterionTreeItem) this.criterionTreeView.getSelectionModel().getSelectedItem();
     	if (item == null || this.criterionTreeView.getRoot() == item)
     		return;

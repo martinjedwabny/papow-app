@@ -18,7 +18,8 @@
                   <Insets top="6.0" />
                </padding>
             </Separator>
-            <JFXTreeTableView fx:id="resultTreeTableView" editable="false" layoutX="16.0" layoutY="84.0" maxHeight="1.7976931348623157E308" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="84.0">
+            <Label id="section-description" layoutX="26.0" layoutY="26.0" text="These are the voting results. Expand by double-clicking the rows. Enable or disable grouping by right-clicking the column headers." AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="80.0" />
+            <JFXTreeTableView fx:id="resultTreeTableView" editable="false" layoutX="16.0" layoutY="84.0" maxHeight="1.7976931348623157E308" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="110.0">
                <columnResizePolicy>
                   <TreeTableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>

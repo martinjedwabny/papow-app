@@ -1,5 +1,8 @@
 package main.java;
 
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Vector;
 
 import javafx.scene.control.TreeItem;
@@ -11,6 +14,14 @@ import main.java.base.criterion.CriterionTrue;
 
 public class CriterionTreeItem extends TreeItem<String> {
 
+	public static final String CRITERION_OR_MESSAGE = "Any of:";
+	public static final String CRITERION_AND_MESSAGE = "All of:";
+	public static final String CRITERION_EQUALS_MESSAGE = "Equals";
+	public static final String CRITERION_TRUE_MESSAGE = "Any";
+	
+	public static final List<String> CRITERION_MESSAGES = new ArrayList<String>(Arrays.asList(
+			CRITERION_EQUALS_MESSAGE, CRITERION_OR_MESSAGE, CRITERION_AND_MESSAGE));
+
 	private Criterion criterion;
 	
 	/**
@@ -20,22 +31,39 @@ public class CriterionTreeItem extends TreeItem<String> {
 		super();
 		this.criterion = criterion;
 		this.setExpanded(true);
-		if (criterion instanceof CriterionAnd)
+		if (isAnd())
 			addChildrenTreeItems(((CriterionAnd) criterion).getSubcriteria());
-		if (criterion instanceof CriterionOr)
+		if (isOr())
 			addChildrenTreeItems(((CriterionOr) criterion).getSubcriteria());
-		String itemText = "";
-		if (criterion instanceof CriterionTrue)
-			itemText = "Any";
-		if (criterion instanceof CriterionOr)
-			itemText = "Any of:";
-		if (criterion instanceof CriterionAnd)
-			itemText = "All of:";
-		if (criterion instanceof CriterionEquals)
-			itemText = ((CriterionEquals) criterion).getKey() + " = " + ((CriterionEquals) criterion).getValue();
-		this.setValue(itemText);
+		this.setValue(this.getMessage());
 	}
 	
+	public String getMessage() {
+		if (isOr())
+			return CRITERION_OR_MESSAGE;
+		if (isAnd())
+			return CRITERION_AND_MESSAGE;
+		if (isEquals())
+			return CRITERION_EQUALS_MESSAGE;
+		return CRITERION_TRUE_MESSAGE;
+	}
+
+	private boolean isEquals() {
+		return criterion instanceof CriterionEquals;
+	}
+
+	public boolean isAnd() {
+		return criterion instanceof CriterionAnd;
+	}
+
+	public boolean isOr() {
+		return criterion instanceof CriterionOr;
+	}
+	
+	public boolean isTrue() {
+		return criterion instanceof CriterionTrue;
+	}
+
 	/**
 	 * Add subcriteria as TreeItem children recursively
 	 * @param subcriteria
@@ -51,11 +79,11 @@ public class CriterionTreeItem extends TreeItem<String> {
 	 * @param subcriterion
 	 */
 	public void addChild(Criterion subcriterion) {
-		if (getCriterion() instanceof CriterionAnd || getCriterion() instanceof CriterionOr) {
+		if (isAnd() || isOr()) {
 			this.getChildren().add(new CriterionTreeItem(subcriterion));
-			if (getCriterion() instanceof CriterionAnd)
+			if (isAnd())
 				((CriterionAnd) getCriterion()).addCriterion(subcriterion);
-			if (getCriterion() instanceof CriterionOr)
+			if (isOr())
 				((CriterionOr) getCriterion()).addCriterion(subcriterion);
 		}		
 	}
@@ -66,11 +94,11 @@ public class CriterionTreeItem extends TreeItem<String> {
 	 * @param subcriterion
 	 */
 	public void removeChild(CriterionTreeItem subcriterion) {
-		if (getCriterion() instanceof CriterionAnd || getCriterion() instanceof CriterionOr) {
+		if (isAnd() || isOr()) {
 			this.getChildren().remove(subcriterion);
-			if (getCriterion() instanceof CriterionAnd)
+			if (isAnd())
 				((CriterionAnd) getCriterion()).getSubcriteria().remove(subcriterion.getCriterion());
-			if (getCriterion() instanceof CriterionOr)
+			if (isOr())
 				((CriterionOr) getCriterion()).getSubcriteria().remove(subcriterion.getCriterion());
 		}
 	}
@@ -79,7 +107,7 @@ public class CriterionTreeItem extends TreeItem<String> {
 	 * @return whether the item is recursive
 	 */
 	public Boolean canHaveChlidren() {
-		return this.getCriterion() instanceof CriterionAnd || this.getCriterion() instanceof CriterionOr;
+		return this.isAnd() || this.isOr();
 	}
 
 	/**
@@ -94,9 +122,9 @@ public class CriterionTreeItem extends TreeItem<String> {
 	 */
 	@Override
 	public boolean isLeaf() {
-		return getCriterion() instanceof CriterionEquals ||
-				getCriterion() instanceof CriterionTrue ||
-				(getCriterion() instanceof CriterionAnd && ((CriterionAnd) getCriterion()).getSubcriteria().isEmpty()) ||
-				(getCriterion() instanceof CriterionOr && ((CriterionOr) getCriterion()).getSubcriteria().isEmpty());
+		return isEquals() ||
+				isTrue() ||
+				(isAnd() && ((CriterionAnd) getCriterion()).getSubcriteria().isEmpty()) ||
+				(isOr() && ((CriterionOr) getCriterion()).getSubcriteria().isEmpty());
 	}
 }
