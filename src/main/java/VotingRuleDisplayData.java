@@ -19,13 +19,20 @@ public class VotingRuleDisplayData {
 	private BooleanProperty enabled;
 	/**
 	 * @param rule
+	 * @param enabled
 	 */
-	public VotingRuleDisplayData(VotingRule rule) {
+	public VotingRuleDisplayData(VotingRule rule, Boolean enabled) {
 		super();
 		this.rule = rule;
 		this.name = new SimpleStringProperty(getNameForRule(rule));
 		this.description = getDescriptionForRule(rule);
-		this.enabled = new SimpleBooleanProperty(false);
+		this.enabled = new SimpleBooleanProperty(enabled);
+	}
+	/**
+	 * @param rule
+	 */
+	public VotingRuleDisplayData(VotingRule rule) {
+		this(rule, false);
 	}
 	
 	private String getDescriptionForRule(VotingRule rule) {

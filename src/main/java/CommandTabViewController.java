@@ -65,7 +65,7 @@ public class CommandTabViewController {
 				new VotingRuleDisplayData(new KApproval(2)),
 				new VotingRuleDisplayData(new KApproval(3)));
 		rules.forEach(r -> possibilities.forEach(p -> {
-			if (p.getClass().equals(r.getClass())) {
+			if (p.getRule().getClass().equals(r.getClass())) {
 				p.setRule(r);
 				p.setEnabled(true);
 			}

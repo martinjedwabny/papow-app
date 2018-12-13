@@ -25,6 +25,8 @@ public class QuestionTreeTableData extends RecursiveTreeObject<QuestionTreeTable
 		this.rule = new SimpleStringProperty(rule.toString());
 		this.voters = new SimpleStringProperty(voters.toString());
 		this.alternativesPerRank = new LinkedHashMap<Integer, StringProperty>();
+		if (result == null)
+			return;
 		for (Integer rank : result.getRanks())
 			this.alternativesPerRank.put(rank, new SimpleStringProperty(result.getElements(rank).toString()));
 	}

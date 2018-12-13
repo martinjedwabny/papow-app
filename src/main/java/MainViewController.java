@@ -118,6 +118,8 @@ public class MainViewController implements Initializable {
 	    	inputTabViewController.setSession(session);
 	    	commandTabViewController.setSession(session);
 	    	resultTabViewController.setSession(session);
+	    	updateSessionCommand();
+	    	updateSessionResult();
 		} catch (Exception e) {
 			loadSessionError();
 		}
