@@ -42,27 +42,42 @@ public class ResultTabViewController {
     	this.session = session;
     	setResultTreeTableView();
     }
+    
+    public void updateResults() {
+    	setResultTreeTableItems();
+    	Integer columnsOld = this.rankingColumns.size();
+    	Integer columnsNew = this.session.getInput().getAlternatives().size();
+    	while (columnsNew > columnsOld) {
+    		addRankingColumnForRank(this.rankingColumns.size()+1);
+    		this.resultTreeTableView.getColumns().add(this.rankingColumns.lastElement());
+    		columnsNew--;
+    	}
+    	while (columnsNew < columnsOld) {
+    		this.resultTreeTableView.getColumns().remove(this.rankingColumns.lastElement());
+    		this.rankingColumns.remove(this.rankingColumns.size()-1);
+    		columnsNew++;
+    	}
+    }
 
 	private void setResultTreeTableView() {
-		this.resultTreeTableView.setRoot(null);
 		setResultTreeTableColumns();
 		setResultTreeTableItems();
+		this.resultTreeTableView.group(this.questionNameColumn);
 	}
 
 	@SuppressWarnings("unchecked")
-	public void setResultTreeTableItems() {
+	private void setResultTreeTableItems() {
 		Map<Question, List<Vote>> validVotes = this.session.getResult().getValidVotes();
 		Map<Question, Map<VotingRule, Ballot>> results = this.session.getResult().getResults();
 		ObservableList<QuestionTreeTableData> items = FXCollections.observableArrayList();
 		for (Question question : this.session.getInput().getQuestions())
 			for (VotingRule rule : this.session.getCommand().getRules())
-				items.add(new QuestionTreeTableData(question, rule,
+				if (!validVotes.get(question).isEmpty())
+					items.add(new QuestionTreeTableData(question, rule,
 						validVotes.get(question).stream().map(Vote::getVoter).collect(Collectors.toSet()),
 						results.get(question).get(rule)));
-		this.resultTreeTableView.setRoot(new RecursiveTreeItem<>(items, RecursiveTreeObject::getChildren));
+		this.resultTreeTableView.setRoot(new RecursiveTreeItem<QuestionTreeTableData>(items, RecursiveTreeObject::getChildren));
 		this.resultTreeTableView.setShowRoot(false);
-		this.resultTreeTableView.unGroup(this.questionNameColumn);
-		this.resultTreeTableView.group(this.questionNameColumn);
 		this.resultTreeTableView.getRoot().getChildren().forEach(item -> item.setExpanded(true));
 	}
 
@@ -75,17 +90,19 @@ public class ResultTabViewController {
 		Integer alternativeCount = this.session.getInput().getAlternatives().size();
 		rankingColumns = new Vector<JFXTreeTableColumn<QuestionTreeTableData, String>>(alternativeCount);
 		setupCellValueFactory(votersColumn, QuestionTreeTableData::getVoters);
-		for (Integer i = 1; i <= alternativeCount; i++) {
-			JFXTreeTableColumn<QuestionTreeTableData, String> rankColumn = new JFXTreeTableColumn<>(String.valueOf(i));
-			rankingColumns.add(rankColumn);
-			final Integer ii = i;
-			setupCellValueFactory(rankColumn, q -> q.getAlternativesAtRank(ii));
-		}
+		for (Integer i = 1; i <= alternativeCount; i++)
+			addRankingColumnForRank(i);
 		this.resultTreeTableView.getColumns().clear();
 		this.resultTreeTableView.getColumns().add(questionNameColumn);
 		this.resultTreeTableView.getColumns().add(ruleColumn);
 		this.resultTreeTableView.getColumns().add(votersColumn);
 		this.resultTreeTableView.getColumns().addAll(rankingColumns);
+	}
+
+	private void addRankingColumnForRank(Integer rank) {
+		JFXTreeTableColumn<QuestionTreeTableData, String> rankColumn = new JFXTreeTableColumn<>(String.valueOf(rank));
+		rankingColumns.add(rankColumn);
+		setupCellValueFactory(rankColumn, q -> q.getAlternativesAtRank(rank));
 	}
 	
 	private <S,T> void setupCellValueFactory(JFXTreeTableColumn<S, T> column, Function<S, ObservableValue<T>> mapper) {

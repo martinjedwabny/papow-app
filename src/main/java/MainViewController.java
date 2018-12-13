@@ -79,7 +79,7 @@ public class MainViewController implements Initializable {
 				this.session.getInput(), 
 				this.session.getCommand().getRules(), 
 				this.session.getCommand().getCriterion()));
-		this.resultTabViewController.setResultTreeTableItems();
+		this.resultTabViewController.updateResults();
 	}
 
 	private void updateSessionCommand() {
