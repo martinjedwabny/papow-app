@@ -11,6 +11,9 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
@@ -45,6 +48,7 @@ public class MainViewController implements Initializable {
 	@FXML private AnchorPane mainPane;
 	@FXML private TabPane tabPane;
 	@FXML private Tab resultTab;
+	@FXML private Tab commandTab;
     @FXML private JFXButton loadFileButton;
     @FXML private JFXButton saveFileButton;
 	@FXML private InputTabViewController inputTabViewController;
@@ -64,6 +68,8 @@ public class MainViewController implements Initializable {
 	        public void changed(ObservableValue<? extends Tab> obs, Tab oldTab, Tab newTab) {
 	            if (newTab.equals(resultTab))
 	            	updateSessionResult();
+	            if (newTab.equals(commandTab))
+	            	updateSessionCommand();
 	        }
 	    });
 	}
@@ -76,8 +82,13 @@ public class MainViewController implements Initializable {
 		this.resultTabViewController.setResultTreeTableItems();
 	}
 
+	private void updateSessionCommand() {
+		this.commandTabViewController.setCriterionComboBoxes(this.session.getInput().getFamilies());
+	}
+
 	@FXML
     private void loadFile(ActionEvent event) {
+		showLoadWarning();
     	FileChooser fileChooser = new FileChooser();
     	fileChooser.setTitle(FILE_CHOOSER_LOAD_MESSAGE);
     	fileChooser.getExtensionFilters().addAll(
@@ -90,6 +101,12 @@ public class MainViewController implements Initializable {
         	loadSessionError();
         }
     }
+
+	private void showLoadWarning() {
+		Alert alert = new Alert(AlertType.WARNING, "Be sure to save your changes before loading.", ButtonType.OK);
+		alert.getDialogPane().getStylesheets().setAll(this.mainPane.getStylesheets());
+		alert.showAndWait();
+	}
     
     private void loadSession(String fileInputPath) {
     	try {

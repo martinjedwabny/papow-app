@@ -87,8 +87,6 @@ public class CommandTabViewController {
 					return item.getDescription();
 				});
 			}
-
-			
 		});
 		votingRuleListView.setItems(votingRuleList);
 		votingRuleListView.prefHeightProperty().bind(Bindings.size(votingRuleListView.getItems()).multiply(28));
@@ -99,9 +97,7 @@ public class CommandTabViewController {
 		this.criterionTreeView.setRoot(root);
 	}
 
-	private void setCriterionComboBoxes(Vector<CategoryFamily> families) {
-		if (families.isEmpty())
-			return;
+	public void setCriterionComboBoxes(Vector<CategoryFamily> families) {
 		setCriterionTypeComboBox();
 		setCriterionFamiliesComboBox(families);
 		setCriterionCategoriesComboBox(this.criterionFamilyComboBox.getSelectionModel().getSelectedItem());
@@ -109,20 +105,24 @@ public class CommandTabViewController {
 
 	private void setCriterionCategoriesComboBox(CategoryFamily selectedItem) {
 		this.criterionCategoryComboBox.setItems(FXCollections.observableArrayList(selectedItem.getPossibilities()));
-		this.criterionCategoryComboBox.getSelectionModel().selectFirst();
+		if (!this.criterionCategoryComboBox.getItems().isEmpty())
+			this.criterionCategoryComboBox.getSelectionModel().selectFirst();
 	}
 
 	private void setCriterionFamiliesComboBox(Vector<CategoryFamily> families) {
 		this.criterionFamilyComboBox.setItems(FXCollections.observableArrayList(families));
-		this.criterionFamilyComboBox.getSelectionModel().selectFirst();
+		if (!this.criterionFamilyComboBox.getItems().isEmpty())
+			this.criterionFamilyComboBox.getSelectionModel().selectFirst();
 		this.criterionFamilyComboBox.setOnAction(event -> {
-			setCriterionCategoriesComboBox(this.criterionFamilyComboBox.getSelectionModel().getSelectedItem());
+			if (this.criterionFamilyComboBox.getSelectionModel().getSelectedItem() != null)
+				setCriterionCategoriesComboBox(this.criterionFamilyComboBox.getSelectionModel().getSelectedItem());
 		});
 	}
 
 	private void setCriterionTypeComboBox() {
 		this.criterionTypeComboBox.setItems(FXCollections.observableArrayList(CriterionTreeItem.CRITERION_MESSAGES));
-		this.criterionTypeComboBox.getSelectionModel().selectFirst();
+		if (!this.criterionTypeComboBox.getItems().isEmpty())
+			this.criterionTypeComboBox.getSelectionModel().selectFirst();
 		this.criterionTypeComboBox.setOnAction(event -> {
 			updateComboBoxEnabledStatus();
 		});
@@ -130,7 +130,8 @@ public class CommandTabViewController {
 	}
 
 	private void updateComboBoxEnabledStatus() {
-		if (this.criterionTypeComboBox.getSelectionModel().getSelectedItem().equals(CriterionTreeItem.CRITERION_EQUALS_MESSAGE)) {
+		if (!this.criterionTypeComboBox.getSelectionModel().isEmpty() && 
+				this.criterionTypeComboBox.getSelectionModel().getSelectedItem().equals(CriterionTreeItem.CRITERION_EQUALS_MESSAGE)) {
 			this.criterionFamilyComboBox.setDisable(false);
 			this.criterionCategoryComboBox.setDisable(false);
 		} else {

@@ -25,7 +25,7 @@
                   <fx:include fx:id="inputTabView" source="InputTabView.fxml" />
                </content>
             </Tab>
-            <Tab id="tab-pane-wrapper" text="Command">
+            <Tab id="tab-pane-wrapper" fx:id="commandTab" text="Command">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                </content>

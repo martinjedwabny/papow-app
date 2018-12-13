@@ -8,6 +8,23 @@
 	-color-secondary-2: #FF652F;
 	-color-secondary-3: #FFE400;
 }
+ 
+.dialog-pane{
+    -fx-background-color: -color-primary-1;
+}
+.dialog-pane > *.button-bar > *.container{
+    -fx-background-color: -color-primary-1;
+}
+.dialog-pane > *.label.content{
+    -fx-background-color: -color-primary-1;
+    -fx-text-fill: white;
+}
+.dialog-pane:header *.header-panel{
+    -fx-background-color: -color-primary-1;
+}
+.dialog-pane:header *.header-panel *.label{
+    -fx-text-fill: white;
+}
 
 .menu-item {
     -fx-background-color: -color-primary-1;
