@@ -10,12 +10,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.control.cell.CheckBoxListCell;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.util.Callback;
 import main.java.base.Category;
 import main.java.base.CategoryFamily;
 import main.java.base.criterion.Criterion;
@@ -53,14 +56,14 @@ public class CommandTabViewController {
 
 	private void setVotingRuleListView(List<VotingRule> rules) {
 		List<VotingRuleDisplayData> possibilities = Arrays.asList(
-				new VotingRuleDisplayData(new BordaPessimistic(), "Pessimistic Borda"),
-				new VotingRuleDisplayData(new BordaFair(), "Fair Borda"),
-				new VotingRuleDisplayData(new BordaOptimistic(), "Optimistic Borda"),
-				new VotingRuleDisplayData(new InstantRunoff(), "Instant Runoff"),
-				new VotingRuleDisplayData(new Copeland(), "Copeland"),
-				new VotingRuleDisplayData(new KApproval(1), "Plurality"),
-				new VotingRuleDisplayData(new KApproval(2), "2-approval"),
-				new VotingRuleDisplayData(new KApproval(3), "3-approval"));
+				new VotingRuleDisplayData(new BordaPessimistic()),
+				new VotingRuleDisplayData(new BordaFair()),
+				new VotingRuleDisplayData(new BordaOptimistic()),
+				new VotingRuleDisplayData(new InstantRunoff()),
+				new VotingRuleDisplayData(new Copeland()),
+				new VotingRuleDisplayData(new KApproval(1)),
+				new VotingRuleDisplayData(new KApproval(2)),
+				new VotingRuleDisplayData(new KApproval(3)));
 		rules.forEach(r -> possibilities.forEach(p -> {
 			if (p.getClass().equals(r.getClass())) {
 				p.setRule(r);
@@ -68,19 +71,25 @@ public class CommandTabViewController {
 			}
 		}));
 		votingRuleList.setAll(possibilities);
-		votingRuleListView.setCellFactory(CheckBoxListCell.forListView(item -> {
-			BooleanProperty cb = item.getEnabled();
-			cb.addListener((obs,wasSelected,nowSelected) -> {
-				if (nowSelected) {
-					if (!this.session.getCommand().getRules().contains(item.getRule())) {
-						this.session.getCommand().getRules().add(item.getRule());
-					}
-				} else {
-					this.session.getCommand().getRules().remove(item.getRule());
-				}
-			});
-			return cb;
-		}));
+		votingRuleListView.setCellFactory(new Callback<ListView<VotingRuleDisplayData>, ListCell<VotingRuleDisplayData>>() {
+			@Override
+			public ListCell<VotingRuleDisplayData> call(ListView<VotingRuleDisplayData> param) {
+				return new CheckBoxTooltipListCell<VotingRuleDisplayData>(item -> {
+					BooleanProperty cb = item.getEnabled();
+					cb.addListener((obs,wasSelected,nowSelected) -> {
+						if (nowSelected && !session.getCommand().getRules().contains(item.getRule()))
+							session.getCommand().getRules().add(item.getRule());
+						else if (!nowSelected)
+							session.getCommand().getRules().remove(item.getRule());
+					});
+					return cb;
+				}, item -> {
+					return item.getDescription();
+				});
+			}
+
+			
+		});
 		votingRuleListView.setItems(votingRuleList);
 		votingRuleListView.prefHeightProperty().bind(Bindings.size(votingRuleListView.getItems()).multiply(28));
 	}
