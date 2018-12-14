@@ -18,8 +18,9 @@ public class CheckBoxTooltipListCell<T> extends CheckBoxListCell<T> {
 	
 	@Override public void updateItem(T item, boolean empty) {
 		super.updateItem(item, empty);
-		if (getTooltipString  != null && item != null)
+		if (getTooltipString  != null && item != null) {
 			this.setTooltip(new Tooltip(getTooltipString.call(item)));
+		}
 	}
 }
 	

@@ -51,7 +51,7 @@ public class ResultTabViewController {
     	this.resultTreeTableView.setRoot(null);
     	new Thread(() -> {
     	       try {
-    	          Thread.sleep(100); // Wait for 1 sec before updating the color
+    	          Thread.sleep(100); // Wait for 100 msec before updating
     	       } catch (InterruptedException e) {
     	          e.printStackTrace();
     	       }
