@@ -8,6 +8,10 @@
 	-color-secondary-2: #FF652F;
 	-color-secondary-3: #FFE400;
 }
+
+.scroll-pane .scroll-bar:vertical {
+    -fx-unit-increment: 50 ;
+}
  
 .dialog-pane{
     -fx-background-color: -color-primary-1;

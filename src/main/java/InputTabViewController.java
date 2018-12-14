@@ -109,7 +109,11 @@ public class InputTabViewController implements Initializable {
     		return cellData.getValue().getName();
     	});
 		alternativeNameColumn.setOnEditCommit(event -> {
-            String name = event.getNewValue();
+            String name = event.getNewValue().trim();
+			if (name.isEmpty() || this.session.getInput().getAlternatives().stream().anyMatch(a -> a.getName().equals(name))) {
+	            event.getRowValue().setName(event.getOldValue());
+	            return;
+			}
             ((AlternativeTableData) event.getTableView().getItems()
                 .get(event.getTablePosition().getRow())).setName(name);
             updateQuestionTableItems();
@@ -204,7 +208,7 @@ public class InputTabViewController implements Initializable {
     @SuppressWarnings("unchecked")
 	@FXML
     void addAlternative(MouseEvent event) {
-    	Alternative a = new Alternative("Name");
+    	Alternative a = new Alternative("Alternative "+this.alternatives.size());
     	AlternativeTableData item = new AlternativeTableData(a);
         alternativesTableView.getSelectionModel().clearSelection();
         alternativesTableView.getItems().add(item);

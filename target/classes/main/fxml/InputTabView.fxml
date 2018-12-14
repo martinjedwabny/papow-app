@@ -7,6 +7,7 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
@@ -22,7 +23,7 @@
                      <children>
                         <HBox>
                            <children>
-                              <VBox prefWidth="400.0" HBox.hgrow="ALWAYS">
+                              <VBox prefWidth="350.0" HBox.hgrow="ALWAYS">
                                  <children>
                                     <Label id="section" prefHeight="48.0" prefWidth="264.0" text="Voters" />
                                     <Separator prefHeight="1.0">
@@ -63,7 +64,7 @@
                                     <Insets />
                                  </HBox.margin>
                               </VBox>
-                              <VBox prefWidth="400.0" HBox.hgrow="ALWAYS">
+                              <VBox prefWidth="350.0" HBox.hgrow="ALWAYS">
                                  <children>
                                     <Label id="section" prefHeight="48.0" prefWidth="264.0" text="Alternatives" />
                                     <Separator prefHeight="1.0">
@@ -89,6 +90,50 @@
                                     </TableView>
                                     <HBox alignment="BOTTOM_RIGHT" spacing="10.0">
                                        <children>
+                                          <JFXButton onMouseClicked="#addAlternative" text="Add" />
+                                          <JFXButton onMouseClicked="#deleteAlternative" text="Delete" />
+                                       </children>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets left="27.0" />
+                                 </HBox.margin>
+                              </VBox>
+                              <VBox layoutX="450.0" layoutY="10.0" prefWidth="500.0">
+                                 <children>
+                                    <Label id="section" prefHeight="48.0" prefWidth="264.0" text="Categories" />
+                                    <Separator prefHeight="1.0">
+                                       <padding>
+                                          <Insets top="6.0" />
+                                       </padding>
+                                    </Separator>
+                                    <Label id="section-description" text="Double-click to edit. Add and delete with buttons below.">
+                                       <VBox.margin>
+                                          <Insets top="6.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <TableView fx:id="alternativesTableView1" editable="true">
+                                       <columns>
+                                          <TableColumn fx:id="alternativeNameColumn1" prefWidth="75.0" text="Family" />
+                                          <TableColumn fx:id="alternativeNameColumn11" prefWidth="75.0" text="Category" />
+                                       </columns>
+                                       <columnResizePolicy>
+                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                       </columnResizePolicy>
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </TableView>
+                                    <HBox alignment="BOTTOM_RIGHT" spacing="10.0">
+                                       <children>
+                                          <TextField prefWidth="120.0" promptText="Family" style="-fx-background-color: #272727; -fx-border-color: #747474;" />
+                                          <TextField prefWidth="120.0" promptText="Category" style="-fx-background-color: #272727; -fx-border-color: #747474;" />
                                           <JFXButton onMouseClicked="#addAlternative" text="Add" />
                                           <JFXButton onMouseClicked="#deleteAlternative" text="Delete" />
                                        </children>
