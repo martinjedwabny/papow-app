@@ -23,7 +23,6 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import main.java.base.criterion.Criterion;
 import main.java.base.criterion.CriterionOr;
-import main.java.base.criterion.CriterionTrue;
 import main.java.base.session.Session;
 import main.java.base.session.SessionCommand;
 import main.java.base.session.SessionRunner;
@@ -117,6 +116,7 @@ public class MainViewController implements Initializable {
 			Session newSession = SessionReader.read(fileInputPath);
 			loadSessionSuccess(newSession);
 		} catch (Exception e) {
+			e.printStackTrace();
 			loadSessionError();
 		}
     }
