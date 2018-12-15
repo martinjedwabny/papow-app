@@ -38,6 +38,7 @@ import main.java.base.Category;
 import main.java.base.CategoryFamily;
 import main.java.base.Question;
 import main.java.base.Voter;
+import main.java.base.criterion.Criterion;
 import main.java.base.session.Session;
 
 /**
@@ -168,7 +169,8 @@ public class InputTabViewController implements Initializable {
 			@Override
 			public void handle(TreeTableColumn.CellEditEvent<CategoryTreeTableData, String> event) {
 				CategoryTreeTableData item = event.getTreeTablePosition().getTreeItem().getValue();
-				session.getCommand().getCriterion().updateKey(item.getFamily().getDescription(), event.getNewValue());
+				for (Criterion c : session.getCommand().getCriteria())
+					c.updateKey(item.getFamily().getDescription(), event.getNewValue());
 				item.setFamilyName(event.getNewValue());
 			}
 		});
@@ -176,7 +178,8 @@ public class InputTabViewController implements Initializable {
 			@Override
 			public void handle(TreeTableColumn.CellEditEvent<CategoryTreeTableData, String> event) {
 				CategoryTreeTableData item = event.getTreeTablePosition().getTreeItem().getValue();
-				session.getCommand().getCriterion().updateValue(item.getFamily().getDescription(), item.getCategory().getDescription(), event.getNewValue());
+				for (Criterion c : session.getCommand().getCriteria())
+					c.updateValue(item.getFamily().getDescription(), item.getCategory().getDescription(), event.getNewValue());
 				item.setCategoryName(event.getNewValue());
 			}
 		});

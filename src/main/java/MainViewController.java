@@ -2,6 +2,7 @@ package main.java;
 
 import java.io.File;
 import java.net.URL;
+import java.util.LinkedHashSet;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
@@ -20,6 +21,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
+import main.java.base.criterion.Criterion;
 import main.java.base.criterion.CriterionOr;
 import main.java.base.criterion.CriterionTrue;
 import main.java.base.session.Session;
@@ -78,13 +80,13 @@ public class MainViewController implements Initializable {
 		this.session.setResult(SessionRunner.generateResults(
 				this.session.getInput(), 
 				this.session.getCommand().getRules(), 
-				this.session.getCommand().getCriterion()));
+				this.session.getCommand().getCriteria()));
 		this.resultTabViewController.updateResults();
 	}
 
 	private void updateSessionCommand() {
 		this.commandTabViewController.setCriterionComboBoxes(this.session.getInput().getFamilies());
-		this.commandTabViewController.setCriterionTreeView(this.session.getCommand().getCriterion());
+		this.commandTabViewController.setCriterionTreeView(this.session.getCommand().getCriteria());
 	}
 
 	@FXML
@@ -127,8 +129,10 @@ public class MainViewController implements Initializable {
     }
 
 	private void setCriterionToDefault(SessionCommand command) {
-		if (command.getCriterion() == null || command.getCriterion() instanceof CriterionTrue)
-			command.setCriterion(new CriterionOr());
+		if (command.getCriteria() == null || command.getCriteria().isEmpty()) {
+			command.setCriteria(new LinkedHashSet<Criterion>());
+			command.getCriteria().add(new CriterionOr());
+		}
 	}
 
 	private void loadSessionError() {

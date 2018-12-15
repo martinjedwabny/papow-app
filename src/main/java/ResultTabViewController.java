@@ -22,6 +22,7 @@ import javafx.scene.layout.StackPane;
 import javafx.util.Callback;
 import main.java.base.Question;
 import main.java.base.Vote;
+import main.java.base.criterion.Criterion;
 import main.java.base.ordering.Ballot;
 import main.java.base.rules.VotingRule;
 import main.java.base.session.Session;
@@ -37,6 +38,7 @@ public class ResultTabViewController {
     private JFXTreeTableView<QuestionTreeTableData> resultTreeTableView;
     
     private JFXTreeTableColumn<QuestionTreeTableData, String> questionNameColumn;
+    private JFXTreeTableColumn<QuestionTreeTableData, String> criterionColumn;
     private JFXTreeTableColumn<QuestionTreeTableData, String> ruleColumn;
     private JFXTreeTableColumn<QuestionTreeTableData, String> votersColumn;
     private Vector<JFXTreeTableColumn<QuestionTreeTableData, String>> rankingColumns;
@@ -84,32 +86,41 @@ public class ResultTabViewController {
     }
 
 	private void setResultTreeTableItems() {
-		Map<Question, List<Vote>> validVotes = this.session.getResult().getValidVotes();
-		Map<Question, Map<VotingRule, Ballot>> results = this.session.getResult().getResults();
+		Map<Question, Map<Criterion, List<Vote>>> validVotes = this.session.getResult().getValidVotes();
+		Map<Question, Map<Criterion, Map<VotingRule, Ballot>>> results = this.session.getResult().getResults();
 		items = FXCollections.observableArrayList();
 		for (Question question : this.session.getInput().getQuestions())
-			for (VotingRule rule : this.session.getCommand().getRules())
-				if (!validVotes.get(question).isEmpty())
-					items.add(new QuestionTreeTableData(question, rule,
-						validVotes.get(question).stream().map(Vote::getVoter).collect(Collectors.toSet()),
-						results.get(question).get(rule)));
+			for (Criterion criterion : this.session.getCommand().getCriteria())
+				for (VotingRule rule : this.session.getCommand().getRules())
+					if (!validVotes.get(question).get(criterion).isEmpty())
+						items.add(new QuestionTreeTableData(question, criterion, rule,
+								validVotes.get(question).get(criterion).stream().map(Vote::getVoter).collect(Collectors.toSet()),
+								results.get(question).get(criterion).get(rule)));
 		this.resultTreeTableView.setRoot(new RecursiveTreeItem<QuestionTreeTableData>(items, RecursiveTreeObject::getChildren));
 		this.resultTreeTableView.setShowRoot(false);
 		this.resultTreeTableView.getRoot().getChildren().forEach(item -> item.setExpanded(true));
 	}
 
 	private void setResultTreeTableColumns() {
+		this.resultTreeTableView.getColumns().clear();
+		
 		this.questionNameColumn = new JFXTreeTableColumn<>("Question");
 		JFXTreeTableViewUtils.setupCellValueFactory(questionNameColumn, QuestionTreeTableData::getQuestionName);
+		this.resultTreeTableView.getColumns().add(questionNameColumn);
+
+		this.criterionColumn = new JFXTreeTableColumn<>("Criterion");
+		JFXTreeTableViewUtils.setupCellValueFactory(criterionColumn, QuestionTreeTableData::getCriterion);
+		this.resultTreeTableView.getColumns().add(criterionColumn);
+
 		this.ruleColumn = new JFXTreeTableColumn<>("Voting Rule");
 		JFXTreeTableViewUtils.setupCellValueFactory(ruleColumn, QuestionTreeTableData::getRule);
+		this.resultTreeTableView.getColumns().add(ruleColumn);
+		
 		this.votersColumn = new JFXTreeTableColumn<>("Voters");
 		JFXTreeTableViewUtils.setupCellValueFactory(votersColumn, QuestionTreeTableData::getVoters);
-		this.resultTreeTableView.getColumns().clear();
-		this.resultTreeTableView.getColumns().add(questionNameColumn);
-		this.resultTreeTableView.getColumns().add(ruleColumn);
 		this.resultTreeTableView.getColumns().add(votersColumn);
-		rankingColumns = new Vector<JFXTreeTableColumn<QuestionTreeTableData, String>>();
+
+		this.rankingColumns = new Vector<JFXTreeTableColumn<QuestionTreeTableData, String>>();
 		if (this.session != null) {
 			Integer alternativeCount = this.session.getInput().getAlternatives().size();
 			for (Integer i = 1; i <= alternativeCount; i++)

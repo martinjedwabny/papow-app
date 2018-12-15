@@ -1,8 +1,10 @@
 package main.java;
 
 import java.util.List;
+import java.util.Set;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Vector;
 
 import javafx.scene.control.TreeItem;
@@ -14,10 +16,10 @@ import main.java.base.criterion.CriterionTrue;
 
 public class CriterionTreeItem extends TreeItem<String> {
 
-	public static final String CRITERION_OR_MESSAGE = "Any of:";
-	public static final String CRITERION_AND_MESSAGE = "All of:";
-	public static final String CRITERION_EQUALS_MESSAGE = "Equals";
-	public static final String CRITERION_TRUE_MESSAGE = "Any";
+	public static final String CRITERION_OR_MESSAGE = "OR";
+	public static final String CRITERION_AND_MESSAGE = "AND";
+	public static final String CRITERION_EQUALS_MESSAGE = "EQUALS";
+	public static final String CRITERION_TRUE_MESSAGE = "ANY";
 	
 	public static final List<String> CRITERION_MESSAGES = new ArrayList<String>(Arrays.asList(
 			CRITERION_EQUALS_MESSAGE, CRITERION_OR_MESSAGE, CRITERION_AND_MESSAGE));
@@ -25,6 +27,24 @@ public class CriterionTreeItem extends TreeItem<String> {
 	private Criterion criterion;
 	
 	/**
+	 * Header item
+	 * @param criteria
+	 */
+	public CriterionTreeItem(Set<Criterion> criteria) {
+		super();
+		for (Criterion c : criteria) {
+			CriterionTreeItem item = new CriterionTreeItem(c);
+			item.setValue(c.toString());
+			this.getChildren().add(item);
+			item.setExpanded(true);
+		}
+		this.criterion = null;
+		this.setExpanded(true);
+		this.setValue("Criteria:");
+	}
+
+	/**
+	 * Recursive item
 	 * @param criterion
 	 */
 	public CriterionTreeItem(Criterion criterion) {
@@ -35,17 +55,7 @@ public class CriterionTreeItem extends TreeItem<String> {
 			addChildrenTreeItems(((CriterionAnd) criterion).getSubcriteria());
 		if (isOr())
 			addChildrenTreeItems(((CriterionOr) criterion).getSubcriteria());
-		this.setValue(this.getMessage());
-	}
-	
-	public String getMessage() {
-		if (isOr())
-			return CRITERION_OR_MESSAGE;
-		if (isAnd())
-			return CRITERION_AND_MESSAGE;
-		if (isEquals())
-			return ((CriterionEquals) getCriterion()).getKey() + " = " + ((CriterionEquals) getCriterion()).getValue();
-		return CRITERION_TRUE_MESSAGE;
+		this.setValue(criterion.toString());
 	}
 
 	private boolean isEquals() {
@@ -68,7 +78,7 @@ public class CriterionTreeItem extends TreeItem<String> {
 	 * Add subcriteria as TreeItem children recursively
 	 * @param subcriteria
 	 */
-	private void addChildrenTreeItems(Vector<Criterion> subcriteria) {
+	private void addChildrenTreeItems(Collection<Criterion> subcriteria) {
 		for (Criterion criterion : subcriteria)
 			this.getChildren().add(new CriterionTreeItem(criterion));
 	}
@@ -79,13 +89,14 @@ public class CriterionTreeItem extends TreeItem<String> {
 	 * @param subcriterion
 	 */
 	public void addChild(Criterion subcriterion) {
-		if (isAnd() || isOr()) {
+		if (canHaveChildren()) {
 			this.getChildren().add(new CriterionTreeItem(subcriterion));
 			if (isAnd())
 				((CriterionAnd) getCriterion()).addCriterion(subcriterion);
 			if (isOr())
 				((CriterionOr) getCriterion()).addCriterion(subcriterion);
-		}		
+		}
+		updateValueString();
 	}
 
 	/**
@@ -94,20 +105,29 @@ public class CriterionTreeItem extends TreeItem<String> {
 	 * @param subcriterion
 	 */
 	public void removeChild(CriterionTreeItem subcriterion) {
-		if (isAnd() || isOr()) {
+		if (canHaveChildren()) {
 			this.getChildren().remove(subcriterion);
 			if (isAnd())
 				((CriterionAnd) getCriterion()).getSubcriteria().remove(subcriterion.getCriterion());
 			if (isOr())
 				((CriterionOr) getCriterion()).getSubcriteria().remove(subcriterion.getCriterion());
 		}
+		updateValueString();
+	}
+	
+	private void updateValueString() {
+		if (this.isRoot())
+			return;
+		this.setValue(criterion.toString());
+		if (this.getParent() != null && (this.getParent() instanceof CriterionTreeItem))
+			((CriterionTreeItem) this.getParent()).updateValueString();
 	}
 	
 	/**
 	 * @return whether the item is recursive
 	 */
-	public Boolean canHaveChlidren() {
-		return this.isAnd() || this.isOr();
+	public Boolean canHaveChildren() {
+		return this.isAnd() || this.isOr() || this.isRoot();
 	}
 
 	/**
@@ -126,5 +146,9 @@ public class CriterionTreeItem extends TreeItem<String> {
 				isTrue() ||
 				(isAnd() && ((CriterionAnd) getCriterion()).getSubcriteria().isEmpty()) ||
 				(isOr() && ((CriterionOr) getCriterion()).getSubcriteria().isEmpty());
+	}
+
+	public boolean isRoot() {
+		return this.criterion == null;
 	}
 }

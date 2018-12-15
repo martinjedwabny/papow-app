@@ -10,18 +10,21 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import main.java.base.Question;
 import main.java.base.Voter;
+import main.java.base.criterion.Criterion;
 import main.java.base.ordering.Ballot;
 import main.java.base.rules.VotingRule;
 
 public class QuestionTreeTableData extends RecursiveTreeObject<QuestionTreeTableData> {
 	private StringProperty questionName;
+	private StringProperty criterion;
 	private StringProperty rule;
 	private StringProperty voters;
 	private Map<Integer, StringProperty> alternativesPerRank;
 	
-	public QuestionTreeTableData(Question question, VotingRule rule, Set<Voter> voters, Ballot result) {
+	public QuestionTreeTableData(Question question, Criterion criterion, VotingRule rule, Set<Voter> voters, Ballot result) {
 		super();
 		this.questionName = new SimpleStringProperty(question.getDescription());
+		this.criterion = new SimpleStringProperty(criterion.toString());
 		this.rule = new SimpleStringProperty(rule.toString());
 		this.voters = new SimpleStringProperty(voters.toString());
 		this.alternativesPerRank = new LinkedHashMap<Integer, StringProperty>();
@@ -58,6 +61,13 @@ public class QuestionTreeTableData extends RecursiveTreeObject<QuestionTreeTable
 	 */
 	public StringProperty getAlternativesAtRank(Integer rank) {
 		return this.alternativesPerRank.getOrDefault(rank, new SimpleStringProperty());
+	}
+
+	/**
+	 * @return the criterion
+	 */
+	public StringProperty getCriterion() {
+		return criterion;
 	}
 	
 	

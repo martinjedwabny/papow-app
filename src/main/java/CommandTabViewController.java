@@ -2,6 +2,7 @@ package main.java;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.Vector;
 
 import javafx.beans.binding.Bindings;
@@ -50,7 +51,7 @@ public class CommandTabViewController {
 	public void setSession(Session session) {
 		this.session = session;
 		setVotingRuleListView(session.getCommand().getRules());
-		setCriterionTreeView(session.getCommand().getCriterion());
+		setCriterionTreeView(session.getCommand().getCriteria());
 		setCriterionComboBoxes(session.getInput().getFamilies());
 	}
 
@@ -92,9 +93,10 @@ public class CommandTabViewController {
 		votingRuleListView.prefHeightProperty().bind(Bindings.size(votingRuleListView.getItems()).multiply(28));
 	}
 	
-	public void setCriterionTreeView(Criterion criterion) {
-		TreeItem<String> root = new CriterionTreeItem(criterion);
+	public void setCriterionTreeView(Set<Criterion> criteria) {
+		TreeItem<String> root = new CriterionTreeItem(criteria);
 		this.criterionTreeView.setRoot(root);
+		this.criterionTreeView.setShowRoot(true);
 	}
 
 	public void setCriterionComboBoxes(Vector<CategoryFamily> families) {
@@ -143,7 +145,7 @@ public class CommandTabViewController {
     @FXML
     private void addCriterion(MouseEvent event) {
     	CriterionTreeItem item = (CriterionTreeItem) this.criterionTreeView.getSelectionModel().getSelectedItem();
-    	if (item == null || !item.canHaveChlidren())
+    	if (item == null || !item.canHaveChildren())
     		return;
     	Criterion criterion = null;
     	if (this.criterionTypeComboBox.getSelectionModel().getSelectedItem().equals(CriterionTreeItem.CRITERION_OR_MESSAGE))
@@ -154,14 +156,18 @@ public class CommandTabViewController {
     		criterion = new CriterionEquals(
     				this.criterionFamilyComboBox.getSelectionModel().getSelectedItem().getDescription(),
     				this.criterionCategoryComboBox.getSelectionModel().getSelectedItem().getDescription());
+    	if (item.isRoot() && criterion != null)
+    		this.session.getCommand().getCriteria().add(criterion);
     	item.addChild(criterion);
     }
 
     @FXML
     private void deleteCriterion(MouseEvent event) {
     	CriterionTreeItem item = (CriterionTreeItem) this.criterionTreeView.getSelectionModel().getSelectedItem();
-    	if (item == null || this.criterionTreeView.getRoot() == item)
+    	if (item == null || item.isRoot())
     		return;
+    	if (((CriterionTreeItem) item.getParent()).isRoot())
+    		this.session.getCommand().getCriteria().remove(item.getCriterion());
     	((CriterionTreeItem) item.getParent()).removeChild(item);
     }
 
