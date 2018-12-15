@@ -1,4 +1,4 @@
-package main.java;
+package main.java.viewModel;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -14,14 +14,14 @@ import main.java.base.criterion.Criterion;
 import main.java.base.ordering.Ballot;
 import main.java.base.rules.VotingRule;
 
-public class QuestionTreeTableData extends RecursiveTreeObject<QuestionTreeTableData> {
+public class ResultViewModel extends RecursiveTreeObject<ResultViewModel> {
 	private StringProperty questionName;
 	private StringProperty criterion;
 	private StringProperty rule;
 	private StringProperty voters;
 	private Map<Integer, StringProperty> alternativesPerRank;
 	
-	public QuestionTreeTableData(Question question, Criterion criterion, VotingRule rule, Set<Voter> voters, Ballot result) {
+	public ResultViewModel(Question question, Criterion criterion, VotingRule rule, Set<Voter> voters, Ballot result) {
 		super();
 		this.questionName = new SimpleStringProperty(question.getDescription());
 		this.criterion = new SimpleStringProperty(criterion.toString());

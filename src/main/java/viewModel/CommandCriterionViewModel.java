@@ -1,4 +1,4 @@
-package main.java;
+package main.java.viewModel;
 
 import java.util.List;
 import java.util.Set;
@@ -14,7 +14,7 @@ import main.java.base.criterion.CriterionEquals;
 import main.java.base.criterion.CriterionOr;
 import main.java.base.criterion.CriterionTrue;
 
-public class CriterionTreeItem extends TreeItem<String> {
+public class CommandCriterionViewModel extends TreeItem<String> {
 
 	public static final String CRITERION_OR_MESSAGE = "OR";
 	public static final String CRITERION_AND_MESSAGE = "AND";
@@ -30,10 +30,10 @@ public class CriterionTreeItem extends TreeItem<String> {
 	 * Header item
 	 * @param criteria
 	 */
-	public CriterionTreeItem(Set<Criterion> criteria) {
+	public CommandCriterionViewModel(Set<Criterion> criteria) {
 		super();
 		for (Criterion c : criteria) {
-			CriterionTreeItem item = new CriterionTreeItem(c);
+			CommandCriterionViewModel item = new CommandCriterionViewModel(c);
 			item.setValue(c.toString());
 			this.getChildren().add(item);
 			item.setExpanded(true);
@@ -47,7 +47,7 @@ public class CriterionTreeItem extends TreeItem<String> {
 	 * Recursive item
 	 * @param criterion
 	 */
-	public CriterionTreeItem(Criterion criterion) {
+	public CommandCriterionViewModel(Criterion criterion) {
 		super();
 		this.criterion = criterion;
 		this.setExpanded(true);
@@ -80,7 +80,7 @@ public class CriterionTreeItem extends TreeItem<String> {
 	 */
 	private void addChildrenTreeItems(Collection<Criterion> subcriteria) {
 		for (Criterion criterion : subcriteria)
-			this.getChildren().add(new CriterionTreeItem(criterion));
+			this.getChildren().add(new CommandCriterionViewModel(criterion));
 	}
 	
 	/**
@@ -90,7 +90,7 @@ public class CriterionTreeItem extends TreeItem<String> {
 	 */
 	public void addChild(Criterion subcriterion) {
 		if (canHaveChildren()) {
-			this.getChildren().add(new CriterionTreeItem(subcriterion));
+			this.getChildren().add(new CommandCriterionViewModel(subcriterion));
 			if (isAnd())
 				((CriterionAnd) getCriterion()).addCriterion(subcriterion);
 			if (isOr())
@@ -104,7 +104,7 @@ public class CriterionTreeItem extends TreeItem<String> {
 	 * the parent criterion
 	 * @param subcriterion
 	 */
-	public void removeChild(CriterionTreeItem subcriterion) {
+	public void removeChild(CommandCriterionViewModel subcriterion) {
 		if (canHaveChildren()) {
 			this.getChildren().remove(subcriterion);
 			if (isAnd())
@@ -119,8 +119,8 @@ public class CriterionTreeItem extends TreeItem<String> {
 		if (this.isRoot())
 			return;
 		this.setValue(criterion.toString());
-		if (this.getParent() != null && (this.getParent() instanceof CriterionTreeItem))
-			((CriterionTreeItem) this.getParent()).updateValueString();
+		if (this.getParent() != null && (this.getParent() instanceof CommandCriterionViewModel))
+			((CommandCriterionViewModel) this.getParent()).updateValueString();
 	}
 	
 	/**

@@ -1,4 +1,4 @@
-package main.java;
+package main.java.controller;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,6 +29,8 @@ import main.java.base.Voter;
 import main.java.base.ordering.Ballot;
 import main.java.io.reader.BallotReader;
 import main.java.io.reader.CategoryReader;
+import main.java.util.EditCell;
+import main.java.viewModel.QuestionEditVoteViewModel;
 
 public class QuestionEditViewController {
 
@@ -37,13 +39,13 @@ public class QuestionEditViewController {
     @FXML
     private ListView<Alternative> alternativeListView;
     @FXML
-    private TableView<VoteTableData> votesTableView;
+    private TableView<QuestionEditVoteViewModel> votesTableView;
     @FXML
-    private TableColumn<VoteTableData, String> voterColumn;
+    private TableColumn<QuestionEditVoteViewModel, String> voterColumn;
     @FXML
-    private TableColumn<VoteTableData, String> ballotColumn;
+    private TableColumn<QuestionEditVoteViewModel, String> ballotColumn;
     @FXML
-    private TableColumn<VoteTableData, String> categoryColumn;
+    private TableColumn<QuestionEditVoteViewModel, String> categoryColumn;
     @FXML
     private ComboBox<Voter> voterComboBox;
     
@@ -52,7 +54,7 @@ public class QuestionEditViewController {
     private Vector<CategoryFamily> categories;
     private Vector<Voter> voters; 
     
-    private ObservableList<VoteTableData> votesTableList = FXCollections.observableArrayList();
+    private ObservableList<QuestionEditVoteViewModel> votesTableList = FXCollections.observableArrayList();
     
     private HashMap<String, BooleanProperty> selectedAlternativeMap = new HashMap<String, BooleanProperty>();
     
@@ -117,7 +119,7 @@ public class QuestionEditViewController {
 			if (!event.getRowValue().equals(votesTableView.getSelectionModel().getSelectedItem()))
 				return;
             String ballotString = event.getNewValue();
-            Vote vote = ((VoteTableData) event.getTableView().getItems()
+            Vote vote = ((QuestionEditVoteViewModel) event.getTableView().getItems()
                     .get(event.getTablePosition().getRow())).getVote();
             updateVoteFromBallotString(ballotString, vote);
         });
@@ -129,7 +131,7 @@ public class QuestionEditViewController {
 			if (!event.getRowValue().equals(votesTableView.getSelectionModel().getSelectedItem()))
 				return;
             String categoryString = event.getNewValue();
-            Vote vote = ((VoteTableData) event.getTableView().getItems()
+            Vote vote = ((QuestionEditVoteViewModel) event.getTableView().getItems()
                 .get(event.getTablePosition().getRow())).getVote();
             updateVoteFromCategoryString(categoryString, vote);
         });
@@ -146,7 +148,7 @@ public class QuestionEditViewController {
 
 	private void updateVoteTableViewItems() {
 		votesTableList.setAll(this.questionCopy.getVotes().stream().
-				map(VoteTableData::new).
+				map(QuestionEditVoteViewModel::new).
 				collect(Collectors.toList()));
 		votesTableView.sort();
 	}
@@ -188,14 +190,14 @@ public class QuestionEditViewController {
 		this.questionCopy.getAlternatives().forEach(a -> rankForElement.put(a, 1));
 		Vote vote = new Vote(voter, new Ballot(rankForElement), new HashMap<CategoryFamily, Category>());
 		this.questionCopy.addVote(vote);
-		this.votesTableList.add(new VoteTableData(vote));
+		this.votesTableList.add(new QuestionEditVoteViewModel(vote));
 		this.voterComboBox.getItems().remove(voter);
     	this.voterComboBox.getSelectionModel().selectFirst();
     }
 
     @FXML
     void removeVote(MouseEvent event) {
-    	VoteTableData item = this.votesTableView.getSelectionModel().getSelectedItem();
+    	QuestionEditVoteViewModel item = this.votesTableView.getSelectionModel().getSelectedItem();
     	if (item == null)
     		return;
     	Vote vote = item.getVote();

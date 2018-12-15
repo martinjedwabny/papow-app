@@ -1,7 +1,7 @@
 /**
  * 
  */
-package main.java;
+package main.java.controller;
 
 import java.io.IOException;
 import java.net.URL;
@@ -40,6 +40,13 @@ import main.java.base.Question;
 import main.java.base.Voter;
 import main.java.base.criterion.Criterion;
 import main.java.base.session.Session;
+import main.java.util.DialogBuilder;
+import main.java.util.EditCell;
+import main.java.util.JFXTreeTableViewUtils;
+import main.java.viewModel.InputAlternativeViewModel;
+import main.java.viewModel.InputCategoryViewModel;
+import main.java.viewModel.InputQuestionViewModel;
+import main.java.viewModel.InputVoterViewModel;
 
 /**
  * @author martin
@@ -55,29 +62,29 @@ public class InputTabViewController implements Initializable {
 	/**
 	 * TableView list objects
 	 */
-	private ObservableList<QuestionTableData> questions = FXCollections.observableArrayList();
-	private ObservableList<AlternativeTableData> alternatives = FXCollections.observableArrayList();
-	private ObservableList<VoterTableData> voters = FXCollections.observableArrayList();
+	private ObservableList<InputQuestionViewModel> questions = FXCollections.observableArrayList();
+	private ObservableList<InputAlternativeViewModel> alternatives = FXCollections.observableArrayList();
+	private ObservableList<InputVoterViewModel> voters = FXCollections.observableArrayList();
 
 	/**
 	 * UI objects
 	 */
     @FXML private StackPane mainPane;
     
-    @FXML private TableView<QuestionTableData> questionsTableView;
-    @FXML private TableColumn<QuestionTableData, String> questionDescriptionColumn;
-    @FXML private TableColumn<QuestionTableData, String> questionAlternativesColumn;
-    @FXML private TableColumn<QuestionTableData, String> questionVotesColumn;
+    @FXML private TableView<InputQuestionViewModel> questionsTableView;
+    @FXML private TableColumn<InputQuestionViewModel, String> questionDescriptionColumn;
+    @FXML private TableColumn<InputQuestionViewModel, String> questionAlternativesColumn;
+    @FXML private TableColumn<InputQuestionViewModel, String> questionVotesColumn;
 
-    @FXML private TableView<AlternativeTableData> alternativesTableView;
-    @FXML private TableColumn<AlternativeTableData, String> alternativeNameColumn;
+    @FXML private TableView<InputAlternativeViewModel> alternativesTableView;
+    @FXML private TableColumn<InputAlternativeViewModel, String> alternativeNameColumn;
 
-    @FXML private TableView<VoterTableData> votersTableView;
-    @FXML private TableColumn<VoterTableData, String> voterNameColumn;
+    @FXML private TableView<InputVoterViewModel> votersTableView;
+    @FXML private TableColumn<InputVoterViewModel, String> voterNameColumn;
 
-    @FXML private JFXTreeTableView<CategoryTreeTableData> categoryTreeTableView;
-    @FXML private JFXTreeTableColumn<CategoryTreeTableData, String> categoryFamilyColumn;
-    @FXML private JFXTreeTableColumn<CategoryTreeTableData, String> categoryNameColumn;
+    @FXML private JFXTreeTableView<InputCategoryViewModel> categoryTreeTableView;
+    @FXML private JFXTreeTableColumn<InputCategoryViewModel, String> categoryFamilyColumn;
+    @FXML private JFXTreeTableColumn<InputCategoryViewModel, String> categoryNameColumn;
 
     @FXML private TextField categoryFamilyTextField;
     @FXML private TextField categoryNameTextField;
@@ -102,7 +109,7 @@ public class InputTabViewController implements Initializable {
 	 */
 	private void setupQuestionTableView() {
 		questionsTableView.setRowFactory( tv -> {
-			TableRow<QuestionTableData> row = new TableRow<>();
+			TableRow<InputQuestionViewModel> row = new TableRow<>();
 			row.setOnMouseClicked(event -> {
 				if(event.getButton().equals(MouseButton.PRIMARY)){
 		            if(event.getClickCount() == 2) {
@@ -136,7 +143,7 @@ public class InputTabViewController implements Initializable {
 	            event.getRowValue().setName(event.getOldValue());
 	            return;
 			}
-            ((AlternativeTableData) event.getTableView().getItems()
+            ((InputAlternativeViewModel) event.getTableView().getItems()
                 .get(event.getTablePosition().getRow())).setName(name);
             updateQuestionTableItems();
         });
@@ -150,7 +157,7 @@ public class InputTabViewController implements Initializable {
     	});
 		voterNameColumn.setOnEditCommit(event -> {
             String name = event.getNewValue();
-            ((VoterTableData) event.getTableView().getItems()
+            ((InputVoterViewModel) event.getTableView().getItems()
                 .get(event.getTablePosition().getRow())).setName(name);
         });
 		votersTableView.getSortOrder().add(voterNameColumn);
@@ -161,23 +168,23 @@ public class InputTabViewController implements Initializable {
 		categoryFamilyColumn.setEditable(true);
 		categoryNameColumn.setEditable(true);
 		categoryTreeTableView.setShowRoot(false);
-		categoryFamilyColumn.setCellFactory(column -> new GenericEditableTreeTableCell<CategoryTreeTableData, String>());
-		categoryNameColumn.setCellFactory(column -> new GenericEditableTreeTableCell<CategoryTreeTableData, String>());
-		JFXTreeTableViewUtils.setupCellValueFactory(categoryFamilyColumn, CategoryTreeTableData::getFamilyName);
-		JFXTreeTableViewUtils.setupCellValueFactory(categoryNameColumn, CategoryTreeTableData::getCategoryName);
-		categoryFamilyColumn.setOnEditCommit(new EventHandler<TreeTableColumn.CellEditEvent<CategoryTreeTableData,String>>() {
+		categoryFamilyColumn.setCellFactory(column -> new GenericEditableTreeTableCell<InputCategoryViewModel, String>());
+		categoryNameColumn.setCellFactory(column -> new GenericEditableTreeTableCell<InputCategoryViewModel, String>());
+		JFXTreeTableViewUtils.setupCellValueFactory(categoryFamilyColumn, InputCategoryViewModel::getFamilyName);
+		JFXTreeTableViewUtils.setupCellValueFactory(categoryNameColumn, InputCategoryViewModel::getCategoryName);
+		categoryFamilyColumn.setOnEditCommit(new EventHandler<TreeTableColumn.CellEditEvent<InputCategoryViewModel,String>>() {
 			@Override
-			public void handle(TreeTableColumn.CellEditEvent<CategoryTreeTableData, String> event) {
-				CategoryTreeTableData item = event.getTreeTablePosition().getTreeItem().getValue();
+			public void handle(TreeTableColumn.CellEditEvent<InputCategoryViewModel, String> event) {
+				InputCategoryViewModel item = event.getTreeTablePosition().getTreeItem().getValue();
 				for (Criterion c : session.getCommand().getCriteria())
 					c.updateKey(item.getFamily().getDescription(), event.getNewValue());
 				item.setFamilyName(event.getNewValue());
 			}
 		});
-		categoryNameColumn.setOnEditCommit(new EventHandler<TreeTableColumn.CellEditEvent<CategoryTreeTableData,String>>() {
+		categoryNameColumn.setOnEditCommit(new EventHandler<TreeTableColumn.CellEditEvent<InputCategoryViewModel,String>>() {
 			@Override
-			public void handle(TreeTableColumn.CellEditEvent<CategoryTreeTableData, String> event) {
-				CategoryTreeTableData item = event.getTreeTablePosition().getTreeItem().getValue();
+			public void handle(TreeTableColumn.CellEditEvent<InputCategoryViewModel, String> event) {
+				InputCategoryViewModel item = event.getTreeTablePosition().getTreeItem().getValue();
 				for (Criterion c : session.getCommand().getCriteria())
 					c.updateValue(item.getFamily().getDescription(), item.getCategory().getDescription(), event.getNewValue());
 				item.setCategoryName(event.getNewValue());
@@ -230,11 +237,11 @@ public class InputTabViewController implements Initializable {
 	}
 
 	private void updateCategoryItems() {
-		ObservableList<CategoryTreeTableData> items = FXCollections.observableArrayList();
+		ObservableList<InputCategoryViewModel> items = FXCollections.observableArrayList();
 		for (CategoryFamily f : this.session.getInput().getFamilies())
 			for (Category c : f.getPossibilities())
-				items.add(new CategoryTreeTableData(f, c));
-		TreeItem<CategoryTreeTableData> root = new RecursiveTreeItem<CategoryTreeTableData>(items, RecursiveTreeObject::getChildren);
+				items.add(new InputCategoryViewModel(f, c));
+		TreeItem<InputCategoryViewModel> root = new RecursiveTreeItem<InputCategoryViewModel>(items, RecursiveTreeObject::getChildren);
 		root.setExpanded(true);
     	categoryTreeTableView.setRoot(root);
 		categoryTreeTableView.unGroup(categoryNameColumn);
@@ -246,21 +253,21 @@ public class InputTabViewController implements Initializable {
 	private void updateVoterTableItems() {
 		voters.clear();
 		this.session.getInput().getVoters().forEach(voter -> {
-			this.voters.add(new VoterTableData(voter));
+			this.voters.add(new InputVoterViewModel(voter));
 		});
 	}
 
 	private void updateAlternativeTableItems() {
 		alternatives.clear();
 		this.session.getInput().getAlternatives().forEach(alternative -> {
-			this.alternatives.add(new AlternativeTableData(alternative));
+			this.alternatives.add(new InputAlternativeViewModel(alternative));
 		});
 	}
 
 	private void updateQuestionTableItems() {
 		questions.clear();
 		this.session.getInput().getQuestions().forEach(question -> {
-			this.questions.add(new QuestionTableData(question));
+			this.questions.add(new InputQuestionViewModel(question));
 		});
 	}
 
@@ -275,7 +282,7 @@ public class InputTabViewController implements Initializable {
 	@FXML
     void addAlternative(MouseEvent event) {
     	Alternative a = new Alternative("Alternative "+this.alternatives.size());
-    	AlternativeTableData item = new AlternativeTableData(a);
+    	InputAlternativeViewModel item = new InputAlternativeViewModel(a);
         alternativesTableView.getSelectionModel().clearSelection();
         alternativesTableView.getItems().add(item);
         alternativesTableView.getSelectionModel().select(
@@ -287,7 +294,7 @@ public class InputTabViewController implements Initializable {
 
     @FXML
     void deleteAlternative(MouseEvent event) {
-    	ObservableList<AlternativeTableData> selectedItems = alternativesTableView.getSelectionModel().getSelectedItems();
+    	ObservableList<InputAlternativeViewModel> selectedItems = alternativesTableView.getSelectionModel().getSelectedItems();
     	selectedItems.stream().forEach(item -> this.session.getInput().removeAlternative(item.getAlternative()));
 		alternativesTableView.getItems().removeAll(selectedItems);
     	updateQuestionTableItems();
@@ -297,7 +304,7 @@ public class InputTabViewController implements Initializable {
 	@FXML
     void addQuestion(MouseEvent event) {
     	Question q = new Question("Name");
-    	QuestionTableData item = new QuestionTableData(q);
+    	InputQuestionViewModel item = new InputQuestionViewModel(q);
         questionsTableView.getSelectionModel().clearSelection();
         questionsTableView.getItems().add(item);
         questionsTableView.getSelectionModel().select(
@@ -309,7 +316,7 @@ public class InputTabViewController implements Initializable {
 
     @FXML
     void deleteQuestion(MouseEvent event) {
-    	ObservableList<QuestionTableData> selectedItems = questionsTableView.getSelectionModel().getSelectedItems();
+    	ObservableList<InputQuestionViewModel> selectedItems = questionsTableView.getSelectionModel().getSelectedItems();
     	selectedItems.stream().forEach(item -> this.session.getInput().removeQuestion(item.getQuestion()));
     	questionsTableView.getItems().removeAll(selectedItems);
     }
@@ -318,7 +325,7 @@ public class InputTabViewController implements Initializable {
 	@FXML
     void addVoter(MouseEvent event) {
     	Voter v = new Voter("Name");
-		VoterTableData item = new VoterTableData(v);
+		InputVoterViewModel item = new InputVoterViewModel(v);
         votersTableView.getSelectionModel().clearSelection();
         votersTableView.getItems().add(item);
         votersTableView.getSelectionModel().select(
@@ -330,7 +337,7 @@ public class InputTabViewController implements Initializable {
 
     @FXML
     void deleteVoter(MouseEvent event) {
-    	ObservableList<VoterTableData> selectedItems = votersTableView.getSelectionModel().getSelectedItems();
+    	ObservableList<InputVoterViewModel> selectedItems = votersTableView.getSelectionModel().getSelectedItems();
     	selectedItems.stream().forEach(item -> this.session.getInput().removeVoter(item.getVoter()));
 		votersTableView.getItems().removeAll(selectedItems);
     	updateQuestionTableItems();
@@ -361,7 +368,7 @@ public class InputTabViewController implements Initializable {
 
     @FXML
     private void deleteCategory(MouseEvent event) {
-    	TreeItem<CategoryTreeTableData> item = this.categoryTreeTableView.getSelectionModel().getSelectedItem();
+    	TreeItem<InputCategoryViewModel> item = this.categoryTreeTableView.getSelectionModel().getSelectedItem();
     	if (item == null)
     		return;
     	if (item.getChildren().isEmpty()) {

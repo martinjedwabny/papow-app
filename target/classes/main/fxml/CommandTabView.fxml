@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<StackPane fx:id="mainPane" maxHeight="1.7976931348623157E308" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.CommandTabViewController">
+<StackPane fx:id="mainPane" maxHeight="1.7976931348623157E308" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.controller.CommandTabViewController">
    <children>
       <AnchorPane maxHeight="1.7976931348623157E308" stylesheets="/main/css/Main.css">
          <children>

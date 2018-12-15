@@ -1,4 +1,4 @@
-package main.java;
+package main.java.util;
 
 import javafx.event.Event;
 import javafx.scene.control.ContentDisplay;

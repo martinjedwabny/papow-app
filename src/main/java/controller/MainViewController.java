@@ -1,4 +1,4 @@
-package main.java;
+package main.java.controller;
 
 import java.io.File;
 import java.net.URL;

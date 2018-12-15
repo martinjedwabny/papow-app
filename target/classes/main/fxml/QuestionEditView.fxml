@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<StackPane prefWidth="600.0" style="-fx-background-color: black;" stylesheets="/main/css/Main.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.QuestionEditViewController">
+<StackPane prefWidth="600.0" style="-fx-background-color: black;" stylesheets="/main/css/Main.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.controller.QuestionEditViewController">
    <children>
       <VBox id="tab-pane-wrapper" prefWidth="600.0">
          <padding>

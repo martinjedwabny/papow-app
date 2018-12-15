@@ -1,4 +1,4 @@
-package main.java;
+package main.java.controller;
 
 import java.util.Arrays;
 import java.util.List;
@@ -34,15 +34,18 @@ import main.java.base.rules.scoring.BordaPessimistic;
 import main.java.base.rules.scoring.Copeland;
 import main.java.base.rules.scoring.KApproval;
 import main.java.base.session.Session;
+import main.java.util.CheckBoxTooltipListCell;
+import main.java.viewModel.CommandCriterionViewModel;
+import main.java.viewModel.CommandVotingRuleViewModel;
 
 public class CommandTabViewController {
 	
 	private Session session;
 
-    private ObservableList<VotingRuleDisplayData> votingRuleList = FXCollections.observableArrayList();
+    private ObservableList<CommandVotingRuleViewModel> votingRuleList = FXCollections.observableArrayList();
 
     @FXML private StackPane mainPane;
-    @FXML private ListView<VotingRuleDisplayData> votingRuleListView;
+    @FXML private ListView<CommandVotingRuleViewModel> votingRuleListView;
     @FXML private TreeView<String> criterionTreeView;
     @FXML private ComboBox<String> criterionTypeComboBox;
     @FXML private ComboBox<CategoryFamily> criterionFamilyComboBox;
@@ -56,15 +59,15 @@ public class CommandTabViewController {
 	}
 
 	private void setVotingRuleListView(List<VotingRule> rules) {
-		List<VotingRuleDisplayData> possibilities = Arrays.asList(
-				new VotingRuleDisplayData(new BordaPessimistic()),
-				new VotingRuleDisplayData(new BordaFair()),
-				new VotingRuleDisplayData(new BordaOptimistic()),
-				new VotingRuleDisplayData(new InstantRunoff()),
-				new VotingRuleDisplayData(new Copeland()),
-				new VotingRuleDisplayData(new KApproval(1)),
-				new VotingRuleDisplayData(new KApproval(2)),
-				new VotingRuleDisplayData(new KApproval(3)));
+		List<CommandVotingRuleViewModel> possibilities = Arrays.asList(
+				new CommandVotingRuleViewModel(new BordaPessimistic()),
+				new CommandVotingRuleViewModel(new BordaFair()),
+				new CommandVotingRuleViewModel(new BordaOptimistic()),
+				new CommandVotingRuleViewModel(new InstantRunoff()),
+				new CommandVotingRuleViewModel(new Copeland()),
+				new CommandVotingRuleViewModel(new KApproval(1)),
+				new CommandVotingRuleViewModel(new KApproval(2)),
+				new CommandVotingRuleViewModel(new KApproval(3)));
 		rules.forEach(r -> possibilities.forEach(p -> {
 			if (p.getRule().getClass().equals(r.getClass())) {
 				p.setRule(r);
@@ -72,10 +75,10 @@ public class CommandTabViewController {
 			}
 		}));
 		votingRuleList.setAll(possibilities);
-		votingRuleListView.setCellFactory(new Callback<ListView<VotingRuleDisplayData>, ListCell<VotingRuleDisplayData>>() {
+		votingRuleListView.setCellFactory(new Callback<ListView<CommandVotingRuleViewModel>, ListCell<CommandVotingRuleViewModel>>() {
 			@Override
-			public ListCell<VotingRuleDisplayData> call(ListView<VotingRuleDisplayData> param) {
-				return new CheckBoxTooltipListCell<VotingRuleDisplayData>(item -> {
+			public ListCell<CommandVotingRuleViewModel> call(ListView<CommandVotingRuleViewModel> param) {
+				return new CheckBoxTooltipListCell<CommandVotingRuleViewModel>(item -> {
 					BooleanProperty cb = item.getEnabled();
 					cb.addListener((obs,wasSelected,nowSelected) -> {
 						if (nowSelected && !session.getCommand().getRules().contains(item.getRule()))
@@ -94,7 +97,7 @@ public class CommandTabViewController {
 	}
 	
 	public void setCriterionTreeView(Set<Criterion> criteria) {
-		TreeItem<String> root = new CriterionTreeItem(criteria);
+		TreeItem<String> root = new CommandCriterionViewModel(criteria);
 		this.criterionTreeView.setRoot(root);
 		this.criterionTreeView.setShowRoot(true);
 	}
@@ -124,7 +127,7 @@ public class CommandTabViewController {
 	}
 
 	private void setCriterionTypeComboBox() {
-		this.criterionTypeComboBox.setItems(FXCollections.observableArrayList(CriterionTreeItem.CRITERION_MESSAGES));
+		this.criterionTypeComboBox.setItems(FXCollections.observableArrayList(CommandCriterionViewModel.CRITERION_MESSAGES));
 		if (!this.criterionTypeComboBox.getItems().isEmpty())
 			this.criterionTypeComboBox.getSelectionModel().selectFirst();
 		this.criterionTypeComboBox.setOnAction(event -> {
@@ -135,7 +138,7 @@ public class CommandTabViewController {
 
 	private void updateComboBoxEnabledStatus() {
 		if (!this.criterionTypeComboBox.getSelectionModel().isEmpty() && 
-				this.criterionTypeComboBox.getSelectionModel().getSelectedItem().equals(CriterionTreeItem.CRITERION_EQUALS_MESSAGE)) {
+				this.criterionTypeComboBox.getSelectionModel().getSelectedItem().equals(CommandCriterionViewModel.CRITERION_EQUALS_MESSAGE)) {
 			this.criterionFamilyComboBox.setDisable(false);
 			this.criterionCategoryComboBox.setDisable(false);
 		} else {
@@ -146,15 +149,15 @@ public class CommandTabViewController {
 
     @FXML
     private void addCriterion(MouseEvent event) {
-    	CriterionTreeItem item = (CriterionTreeItem) this.criterionTreeView.getSelectionModel().getSelectedItem();
+    	CommandCriterionViewModel item = (CommandCriterionViewModel) this.criterionTreeView.getSelectionModel().getSelectedItem();
     	if (item == null || !item.canHaveChildren())
     		return;
     	Criterion criterion = null;
-    	if (this.criterionTypeComboBox.getSelectionModel().getSelectedItem().equals(CriterionTreeItem.CRITERION_OR_MESSAGE))
+    	if (this.criterionTypeComboBox.getSelectionModel().getSelectedItem().equals(CommandCriterionViewModel.CRITERION_OR_MESSAGE))
     		criterion = new CriterionOr();
-    	if (this.criterionTypeComboBox.getSelectionModel().getSelectedItem().equals(CriterionTreeItem.CRITERION_AND_MESSAGE))
+    	if (this.criterionTypeComboBox.getSelectionModel().getSelectedItem().equals(CommandCriterionViewModel.CRITERION_AND_MESSAGE))
     		criterion = new CriterionAnd();
-    	if (this.criterionTypeComboBox.getSelectionModel().getSelectedItem().equals(CriterionTreeItem.CRITERION_EQUALS_MESSAGE))
+    	if (this.criterionTypeComboBox.getSelectionModel().getSelectedItem().equals(CommandCriterionViewModel.CRITERION_EQUALS_MESSAGE))
     		criterion = new CriterionEquals(
     				this.criterionFamilyComboBox.getSelectionModel().getSelectedItem().getDescription(),
     				this.criterionCategoryComboBox.getSelectionModel().getSelectedItem().getDescription());
@@ -165,12 +168,12 @@ public class CommandTabViewController {
 
     @FXML
     private void deleteCriterion(MouseEvent event) {
-    	CriterionTreeItem item = (CriterionTreeItem) this.criterionTreeView.getSelectionModel().getSelectedItem();
+    	CommandCriterionViewModel item = (CommandCriterionViewModel) this.criterionTreeView.getSelectionModel().getSelectedItem();
     	if (item == null || item.isRoot())
     		return;
-    	if (((CriterionTreeItem) item.getParent()).isRoot())
+    	if (((CommandCriterionViewModel) item.getParent()).isRoot())
     		this.session.getCommand().getCriteria().remove(item.getCriterion());
-    	((CriterionTreeItem) item.getParent()).removeChild(item);
+    	((CommandCriterionViewModel) item.getParent()).removeChild(item);
     }
 
 }

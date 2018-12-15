@@ -1,4 +1,4 @@
-package main.java;
+package main.java.viewModel;
 
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 
@@ -7,13 +7,13 @@ import javafx.beans.property.StringProperty;
 import main.java.base.Category;
 import main.java.base.CategoryFamily;
 
-public class CategoryTreeTableData extends RecursiveTreeObject<CategoryTreeTableData> {
+public class InputCategoryViewModel extends RecursiveTreeObject<InputCategoryViewModel> {
 	private CategoryFamily family;
 	private Category category;
 	private StringProperty familyName;
 	private StringProperty categoryName;
 	
-	public CategoryTreeTableData(CategoryFamily family, Category category) {
+	public InputCategoryViewModel(CategoryFamily family, Category category) {
 		super();
 		this.family = family;
 		this.category = category;

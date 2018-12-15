@@ -1,14 +1,14 @@
-package main.java;
+package main.java.viewModel;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import main.java.base.Voter;
 
-public class VoterTableData {
+public class InputVoterViewModel {
 	private Voter voter;
 	public StringProperty name;
 
-	public VoterTableData (Voter voter) {
+	public InputVoterViewModel (Voter voter) {
 		this.voter = voter;
 		this.name = new SimpleStringProperty(voter.getName());
 	}

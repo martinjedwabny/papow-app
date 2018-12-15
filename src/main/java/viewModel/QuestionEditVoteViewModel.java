@@ -1,16 +1,16 @@
-package main.java;
+package main.java.viewModel;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import main.java.base.Vote;
 
-public class VoteTableData {
+public class QuestionEditVoteViewModel {
 	Vote vote;
 	private StringProperty voter;
 	private StringProperty ranking;
 	private StringProperty categories;
 	
-	public VoteTableData(Vote vote) {
+	public QuestionEditVoteViewModel(Vote vote) {
 		this.vote = vote;
 		this.voter = new SimpleStringProperty(vote.getVoter().getName());
 		this.ranking = new SimpleStringProperty(vote.getRanking().toString());

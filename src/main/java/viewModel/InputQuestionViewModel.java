@@ -1,16 +1,16 @@
-package main.java;
+package main.java.viewModel;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import main.java.base.Question;
 
-public class QuestionTableData {
+public class InputQuestionViewModel {
 	private Question question;
     private StringProperty description;
     private StringProperty alternatives;
     private StringProperty votes;
 
-	public QuestionTableData(Question question) {
+	public InputQuestionViewModel(Question question) {
 		this.question = question;
 		this.description = new SimpleStringProperty(question.getDescription());
 		this.alternatives = new SimpleStringProperty(question.getAlternatives().toString());

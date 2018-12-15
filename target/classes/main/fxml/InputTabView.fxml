@@ -17,7 +17,7 @@
 <?import javafx.scene.control.TreeTableColumn?>
 <?import javafx.scene.control.TreeTableView?>
 
-<StackPane fx:id="mainPane" maxHeight="1.7976931348623157E308" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.InputTabViewController">
+<StackPane fx:id="mainPane" maxHeight="1.7976931348623157E308" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.controller.InputTabViewController">
    <children>
       <AnchorPane stylesheets="/main/css/Main.css">
          <children>

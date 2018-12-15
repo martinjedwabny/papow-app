@@ -1,14 +1,14 @@
-package main.java;
+package main.java.viewModel;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import main.java.base.Alternative;
 
-public class AlternativeTableData {
+public class InputAlternativeViewModel {
 	private Alternative alternative; 
 	private StringProperty name;
 
-	public AlternativeTableData (Alternative alternative) {
+	public InputAlternativeViewModel (Alternative alternative) {
 		this.alternative = alternative;
 		this.name = new SimpleStringProperty(alternative.getName());
 	}

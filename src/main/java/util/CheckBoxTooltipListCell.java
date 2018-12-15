@@ -1,4 +1,4 @@
-package main.java;
+package main.java.util;
 
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Tooltip;

@@ -1,4 +1,4 @@
-package main.java;
+package main.java.viewModel;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -12,7 +12,7 @@ import main.java.base.rules.scoring.BordaPessimistic;
 import main.java.base.rules.scoring.Copeland;
 import main.java.base.rules.scoring.KApproval;
 
-public class VotingRuleDisplayData {
+public class CommandVotingRuleViewModel {
 	private VotingRule rule;
 	private StringProperty name;
 	private String description;
@@ -21,7 +21,7 @@ public class VotingRuleDisplayData {
 	 * @param rule
 	 * @param enabled
 	 */
-	public VotingRuleDisplayData(VotingRule rule, Boolean enabled) {
+	public CommandVotingRuleViewModel(VotingRule rule, Boolean enabled) {
 		super();
 		this.rule = rule;
 		this.name = new SimpleStringProperty(getNameForRule(rule));
@@ -31,7 +31,7 @@ public class VotingRuleDisplayData {
 	/**
 	 * @param rule
 	 */
-	public VotingRuleDisplayData(VotingRule rule) {
+	public CommandVotingRuleViewModel(VotingRule rule) {
 		this(rule, false);
 	}
 	
