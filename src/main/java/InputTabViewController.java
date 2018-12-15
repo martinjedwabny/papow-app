@@ -290,7 +290,6 @@ public class InputTabViewController implements Initializable {
     	ObservableList<AlternativeTableData> selectedItems = alternativesTableView.getSelectionModel().getSelectedItems();
     	selectedItems.stream().forEach(item -> this.session.getInput().removeAlternative(item.getAlternative()));
 		alternativesTableView.getItems().removeAll(selectedItems);
-    	alternativesTableView.getSelectionModel().clearSelection();
     	updateQuestionTableItems();
     }
 
@@ -313,7 +312,6 @@ public class InputTabViewController implements Initializable {
     	ObservableList<QuestionTableData> selectedItems = questionsTableView.getSelectionModel().getSelectedItems();
     	selectedItems.stream().forEach(item -> this.session.getInput().removeQuestion(item.getQuestion()));
     	questionsTableView.getItems().removeAll(selectedItems);
-    	questionsTableView.getSelectionModel().clearSelection();
     }
 
     @SuppressWarnings("unchecked")
@@ -335,7 +333,6 @@ public class InputTabViewController implements Initializable {
     	ObservableList<VoterTableData> selectedItems = votersTableView.getSelectionModel().getSelectedItems();
     	selectedItems.stream().forEach(item -> this.session.getInput().removeVoter(item.getVoter()));
 		votersTableView.getItems().removeAll(selectedItems);
-    	votersTableView.getSelectionModel().clearSelection();
     	updateQuestionTableItems();
     }
 

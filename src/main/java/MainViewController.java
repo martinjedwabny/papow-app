@@ -60,7 +60,8 @@ public class MainViewController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		//@TODO get this out, just for testing
-    	loadSession("src/main/json/sample.json");
+		loadSession("src/main/ses/food_waste.ses");
+//    	loadSessionSuccess(new Session());
     	setTabPaneChange();
 	}
 
@@ -114,19 +115,23 @@ public class MainViewController implements Initializable {
     private void loadSession(String fileInputPath) {
     	try {
 			Session newSession = SessionReader.read(fileInputPath);
-			session.setInput(newSession.getInput());
-			session.setCommand(newSession.getCommand());
-			session.setResult(newSession.getResult());
-			setCriterionToDefault(newSession.getCommand());
-	    	inputTabViewController.setSession(session);
-	    	commandTabViewController.setSession(session);
-	    	resultTabViewController.setSession(session);
-	    	updateSessionCommand();
-	    	updateSessionResult();
+			loadSessionSuccess(newSession);
 		} catch (Exception e) {
 			loadSessionError();
 		}
     }
+
+	private void loadSessionSuccess(Session newSession) {
+		session.setInput(newSession.getInput());
+		session.setCommand(newSession.getCommand());
+		session.setResult(newSession.getResult());
+		setCriterionToDefault(newSession.getCommand());
+		inputTabViewController.setSession(session);
+		commandTabViewController.setSession(session);
+		resultTabViewController.setSession(session);
+		updateSessionCommand();
+		updateSessionResult();
+	}
 
 	private void setCriterionToDefault(SessionCommand command) {
 		if (command.getCriteria() == null || command.getCriteria().isEmpty()) {

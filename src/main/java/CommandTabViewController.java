@@ -106,6 +106,8 @@ public class CommandTabViewController {
 	}
 
 	private void setCriterionCategoriesComboBox(CategoryFamily selectedItem) {
+		if (selectedItem == null)
+			return;
 		this.criterionCategoryComboBox.setItems(FXCollections.observableArrayList(selectedItem.getPossibilities()));
 		if (!this.criterionCategoryComboBox.getItems().isEmpty())
 			this.criterionCategoryComboBox.getSelectionModel().selectFirst();
