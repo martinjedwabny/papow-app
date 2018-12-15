@@ -100,11 +100,11 @@ public class ResultTabViewController {
 
 	private void setResultTreeTableColumns() {
 		this.questionNameColumn = new JFXTreeTableColumn<>("Question");
-		setupCellValueFactory(questionNameColumn, QuestionTreeTableData::getQuestionName);
+		JFXTreeTableViewUtils.setupCellValueFactory(questionNameColumn, QuestionTreeTableData::getQuestionName);
 		this.ruleColumn = new JFXTreeTableColumn<>("Voting Rule");
-		setupCellValueFactory(ruleColumn, QuestionTreeTableData::getRule);
+		JFXTreeTableViewUtils.setupCellValueFactory(ruleColumn, QuestionTreeTableData::getRule);
 		this.votersColumn = new JFXTreeTableColumn<>("Voters");
-		setupCellValueFactory(votersColumn, QuestionTreeTableData::getVoters);
+		JFXTreeTableViewUtils.setupCellValueFactory(votersColumn, QuestionTreeTableData::getVoters);
 		this.resultTreeTableView.getColumns().clear();
 		this.resultTreeTableView.getColumns().add(questionNameColumn);
 		this.resultTreeTableView.getColumns().add(ruleColumn);
@@ -121,15 +121,8 @@ public class ResultTabViewController {
 	private void addRankingColumnForRank(Integer rank) {
 		JFXTreeTableColumn<QuestionTreeTableData, String> rankColumn = new JFXTreeTableColumn<>(String.valueOf(rank));
 		rankingColumns.add(rankColumn);
-		setupCellValueFactory(rankColumn, q -> q.getAlternativesAtRank(rank));
+		JFXTreeTableViewUtils.setupCellValueFactory(rankColumn, q -> q.getAlternativesAtRank(rank));
 	}
 	
-	private <S,T> void setupCellValueFactory(JFXTreeTableColumn<S, T> column, Function<S, ObservableValue<T>> mapper) {
-        column.setCellValueFactory((TreeTableColumn.CellDataFeatures<S, T> param) -> {
-            if (column.validateValue(param))
-                return mapper.apply(param.getValue().getValue());
-            else
-                return column.getComputedValue(param);
-        });
-    }
+	
 }

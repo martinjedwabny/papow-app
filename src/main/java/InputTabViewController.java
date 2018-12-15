@@ -6,7 +6,15 @@ package main.java;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.Vector;
+
+import com.jfoenix.controls.JFXTreeTableColumn;
+import com.jfoenix.controls.JFXTreeTableView;
+import com.jfoenix.controls.RecursiveTreeItem;
+import com.jfoenix.controls.cells.editors.base.GenericEditableTreeTableCell;
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,10 +26,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeTableColumn;
+import javafx.scene.control.TreeTableColumn.CellEditEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import main.java.base.Alternative;
+import main.java.base.Category;
 import main.java.base.CategoryFamily;
 import main.java.base.Question;
 import main.java.base.Voter;
@@ -60,6 +73,13 @@ public class InputTabViewController implements Initializable {
 
     @FXML private TableView<VoterTableData> votersTableView;
     @FXML private TableColumn<VoterTableData, String> voterNameColumn;
+
+    @FXML private JFXTreeTableView<CategoryTreeTableData> categoryTreeTableView;
+    @FXML private JFXTreeTableColumn<CategoryTreeTableData, String> categoryFamilyColumn;
+    @FXML private JFXTreeTableColumn<CategoryTreeTableData, String> categoryNameColumn;
+
+    @FXML private TextField categoryFamilyTextField;
+    @FXML private TextField categoryNameTextField;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -69,6 +89,7 @@ public class InputTabViewController implements Initializable {
     	setupQuestionTableView();
     	setupAlternativeTableView();
     	setupVotersTableView();
+    	setupCategoryTreeTableView();
 	}
 
 	/**
@@ -134,6 +155,33 @@ public class InputTabViewController implements Initializable {
 		votersTableView.getSortOrder().add(voterNameColumn);
 	}
 
+	private void setupCategoryTreeTableView() {
+		categoryTreeTableView.setEditable(true);
+		categoryFamilyColumn.setEditable(true);
+		categoryNameColumn.setEditable(true);
+		categoryTreeTableView.setShowRoot(false);
+		categoryFamilyColumn.setCellFactory(column -> new GenericEditableTreeTableCell<CategoryTreeTableData, String>());
+		categoryNameColumn.setCellFactory(column -> new GenericEditableTreeTableCell<CategoryTreeTableData, String>());
+		JFXTreeTableViewUtils.setupCellValueFactory(categoryFamilyColumn, CategoryTreeTableData::getFamilyName);
+		JFXTreeTableViewUtils.setupCellValueFactory(categoryNameColumn, CategoryTreeTableData::getCategoryName);
+		categoryFamilyColumn.setOnEditCommit(new EventHandler<TreeTableColumn.CellEditEvent<CategoryTreeTableData,String>>() {
+			@Override
+			public void handle(TreeTableColumn.CellEditEvent<CategoryTreeTableData, String> event) {
+				CategoryTreeTableData item = event.getTreeTablePosition().getTreeItem().getValue();
+				session.getCommand().getCriterion().updateKey(item.getFamily().getDescription(), event.getNewValue());
+				item.setFamilyName(event.getNewValue());
+			}
+		});
+		categoryNameColumn.setOnEditCommit(new EventHandler<TreeTableColumn.CellEditEvent<CategoryTreeTableData,String>>() {
+			@Override
+			public void handle(TreeTableColumn.CellEditEvent<CategoryTreeTableData, String> event) {
+				CategoryTreeTableData item = event.getTreeTablePosition().getTreeItem().getValue();
+				session.getCommand().getCriterion().updateValue(item.getFamily().getDescription(), item.getCategory().getDescription(), event.getNewValue());
+				item.setCategoryName(event.getNewValue());
+			}
+		});
+	}
+
 	/**
 	 * 
 	 * 
@@ -175,6 +223,21 @@ public class InputTabViewController implements Initializable {
 		updateQuestionTableItems();
 		updateAlternativeTableItems();
 		updateVoterTableItems();
+		updateCategoryItems();
+	}
+
+	private void updateCategoryItems() {
+		ObservableList<CategoryTreeTableData> items = FXCollections.observableArrayList();
+		for (CategoryFamily f : this.session.getInput().getFamilies())
+			for (Category c : f.getPossibilities())
+				items.add(new CategoryTreeTableData(f, c));
+		TreeItem<CategoryTreeTableData> root = new RecursiveTreeItem<CategoryTreeTableData>(items, RecursiveTreeObject::getChildren);
+		root.setExpanded(true);
+    	categoryTreeTableView.setRoot(root);
+		categoryTreeTableView.unGroup(categoryNameColumn);
+		categoryTreeTableView.unGroup(categoryFamilyColumn);
+		categoryTreeTableView.group(categoryFamilyColumn);
+		categoryTreeTableView.getRoot().getChildren().forEach(item -> item.setExpanded(true));
 	}
 
 	private void updateVoterTableItems() {
@@ -271,6 +334,47 @@ public class InputTabViewController implements Initializable {
 		votersTableView.getItems().removeAll(selectedItems);
     	votersTableView.getSelectionModel().clearSelection();
     	updateQuestionTableItems();
+    }
+
+	@FXML
+    private void addCategory(MouseEvent event) {
+		String familyName = this.categoryFamilyTextField.getText().trim();
+		String categoryName = this.categoryNameTextField.getText().trim();
+		for (CategoryFamily f : this.session.getInput().getFamilies()) {
+			if (f.getDescription().equals(familyName)) {
+				for (Category c : f.getPossibilities()) {
+					if (c.getDescription().equals(categoryName)) {
+						updateCategoryItems();
+						return;
+					}
+				}
+				f.getPossibilities().add(new Category(categoryName));
+				updateCategoryItems();
+				return;
+			}
+		}
+		CategoryFamily f = new CategoryFamily(familyName);
+		f.getPossibilities().add(new Category(categoryName));
+		this.session.getInput().getFamilies().add(f);
+		updateCategoryItems();
+    }
+
+    @FXML
+    private void deleteCategory(MouseEvent event) {
+    	TreeItem<CategoryTreeTableData> item = this.categoryTreeTableView.getSelectionModel().getSelectedItem();
+    	if (item == null)
+    		return;
+    	if (item.getChildren().isEmpty()) {
+    		CategoryFamily familyDeleted = item.getValue().getFamily();
+    		Category categoryDeleted = item.getValue().getCategory();
+    		this.session.getCommand().removeCategory(familyDeleted, categoryDeleted);
+    		this.session.getInput().removeCategory(familyDeleted, categoryDeleted);
+    	} else {
+    		CategoryFamily familyDeleted = item.getChildren().get(0).getValue().getFamily();
+    		this.session.getCommand().removeFamily(familyDeleted);
+    		this.session.getInput().removeFamily(familyDeleted);
+    	}
+    	updateCategoryItems();
     }
 
 }

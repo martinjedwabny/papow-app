@@ -1,5 +1,7 @@
 package main.java;
 
+import javax.swing.ImageIcon;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,12 +11,19 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
+	private final static String MAIN_VIEW_FXML_PATH = "/main/fxml/MainView.fxml";
+	private final static String APP_TITLE = "PAPOW!";
+	private final static String ICON_PATH = "/main/img/logo-only.png";
+
+	@SuppressWarnings("restriction")
 	@Override
     public void start(Stage stage) throws Exception {
-		Parent root = FXMLLoader.load(getClass().getResource("/main/fxml/MainView.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource(MAIN_VIEW_FXML_PATH));
         Scene scene = new Scene(root);
-        stage.setTitle("PAPOW!");
-        stage.getIcons().add(new Image("/main/img/logo-only.png"));
+        stage.setTitle(APP_TITLE);
+		stage.getIcons().add(new Image(ICON_PATH));
+		if (com.apple.eawt.Application.getApplication() != null)
+			com.apple.eawt.Application.getApplication().setDockIconImage(new ImageIcon(getClass().getResource(ICON_PATH)).getImage());
         stage.setScene(scene);
         stage.show();
     }

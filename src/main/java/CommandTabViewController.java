@@ -92,7 +92,7 @@ public class CommandTabViewController {
 		votingRuleListView.prefHeightProperty().bind(Bindings.size(votingRuleListView.getItems()).multiply(28));
 	}
 	
-	private void setCriterionTreeView(Criterion criterion) {
+	public void setCriterionTreeView(Criterion criterion) {
 		TreeItem<String> root = new CriterionTreeItem(criterion);
 		this.criterionTreeView.setRoot(root);
 	}

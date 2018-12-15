@@ -84,6 +84,7 @@ public class MainViewController implements Initializable {
 
 	private void updateSessionCommand() {
 		this.commandTabViewController.setCriterionComboBoxes(this.session.getInput().getFamilies());
+		this.commandTabViewController.setCriterionTreeView(this.session.getCommand().getCriterion());
 	}
 
 	@FXML
