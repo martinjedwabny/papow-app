@@ -78,6 +78,7 @@ public class VoteEditViewController implements Initializable {
 		rankForElement.clear();
 		for (Alternative a : vote.getRanking().getElements())
 			rankForElement.put(a, vote.getRanking().getRank(a));
+		ballotTableView.getSortOrder().add(alternativeColumn);
 	}
 
 	@Override

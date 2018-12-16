@@ -12,7 +12,7 @@
    <children>
       <VBox id="tab-pane-wrapper" prefWidth="600.0">
          <padding>
-            <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
+            <Insets bottom="66.0" left="16.0" right="16.0" top="16.0" />
          </padding>
          <children>
             <Label id="section" prefHeight="48.0" prefWidth="264.0" text="Vote edit" />

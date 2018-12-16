@@ -34,7 +34,7 @@ import main.java.base.rules.scoring.BordaPessimistic;
 import main.java.base.rules.scoring.Copeland;
 import main.java.base.rules.scoring.KApproval;
 import main.java.base.session.Session;
-import main.java.util.CheckBoxTooltipListCell;
+import main.java.util.CheckBoxBiLabeledListCell;
 import main.java.viewModel.CommandCriterionViewModel;
 import main.java.viewModel.CommandVotingRuleViewModel;
 
@@ -80,7 +80,7 @@ public class CommandTabViewController {
 		votingRuleListView.setCellFactory(new Callback<ListView<CommandVotingRuleViewModel>, ListCell<CommandVotingRuleViewModel>>() {
 			@Override
 			public ListCell<CommandVotingRuleViewModel> call(ListView<CommandVotingRuleViewModel> param) {
-				return new CheckBoxTooltipListCell<CommandVotingRuleViewModel>(item -> {
+				return new CheckBoxBiLabeledListCell<CommandVotingRuleViewModel>(item -> {
 					BooleanProperty cb = item.getEnabled();
 					cb.addListener((obs,wasSelected,nowSelected) -> {
 						if (nowSelected && !session.getCommand().getRules().contains(item.getRule()))

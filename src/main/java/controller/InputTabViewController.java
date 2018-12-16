@@ -138,13 +138,14 @@ public class InputTabViewController implements Initializable {
     		return cellData.getValue().getName();
     	});
 		alternativeNameColumn.setOnEditCommit(event -> {
-            String name = event.getNewValue().trim();
-			if (name.isEmpty() || this.session.getInput().getAlternatives().stream().anyMatch(a -> a.getName().equals(name))) {
-	            event.getRowValue().setName(event.getOldValue());
-	            return;
+			String newVal = event.getNewValue().trim();
+			if (newVal == null || newVal.isEmpty()) {
+				alternativeNameColumn.setVisible(false);
+				alternativeNameColumn.setVisible(true);
+				return;
 			}
             ((InputAlternativeViewModel) event.getTableView().getItems()
-                .get(event.getTablePosition().getRow())).setName(name);
+                .get(event.getTablePosition().getRow())).setName(newVal);
             updateQuestionTableItems();
         });
 		alternativesTableView.getSortOrder().add(alternativeNameColumn);
@@ -156,39 +157,37 @@ public class InputTabViewController implements Initializable {
     		return cellData.getValue().getName();
     	});
 		voterNameColumn.setOnEditCommit(event -> {
-            String name = event.getNewValue();
+			String newVal = event.getNewValue().trim();
+			if (newVal == null || newVal.isEmpty()) {
+				voterNameColumn.setVisible(false);
+				voterNameColumn.setVisible(true);
+				return;
+			}
             ((InputVoterViewModel) event.getTableView().getItems()
-                .get(event.getTablePosition().getRow())).setName(name);
+                .get(event.getTablePosition().getRow())).setName(newVal);
         });
 		votersTableView.getSortOrder().add(voterNameColumn);
 	}
 
 	private void setupCategoryTreeTableView() {
 		categoryTreeTableView.setEditable(true);
-		categoryFamilyColumn.setEditable(true);
+		categoryFamilyColumn.setEditable(false);
 		categoryNameColumn.setEditable(true);
 		categoryTreeTableView.setShowRoot(false);
-		categoryFamilyColumn.setCellFactory(column -> new GenericEditableTreeTableCell<InputCategoryViewModel, String>());
 		categoryNameColumn.setCellFactory(column -> new GenericEditableTreeTableCell<InputCategoryViewModel, String>());
 		JFXTreeTableViewUtils.setupCellValueFactory(categoryFamilyColumn, InputCategoryViewModel::getFamilyName);
 		JFXTreeTableViewUtils.setupCellValueFactory(categoryNameColumn, InputCategoryViewModel::getCategoryName);
-		categoryFamilyColumn.setOnEditCommit(new EventHandler<TreeTableColumn.CellEditEvent<InputCategoryViewModel,String>>() {
-			@Override
-			public void handle(TreeTableColumn.CellEditEvent<InputCategoryViewModel, String> event) {
-				InputCategoryViewModel item = event.getTreeTablePosition().getTreeItem().getValue();
-				for (Criterion c : session.getCommand().getCriteria())
-					c.updateKey(item.getFamily().getDescription(), event.getNewValue());
-				item.setFamilyName(event.getNewValue());
+		categoryNameColumn.setOnEditCommit(event -> {
+			InputCategoryViewModel item = event.getTreeTablePosition().getTreeItem().getValue();
+			String newVal = event.getNewValue().trim();
+			if (newVal == null || newVal.isEmpty()) {
+				categoryNameColumn.setVisible(false);
+				categoryNameColumn.setVisible(true);
+				return;
 			}
-		});
-		categoryNameColumn.setOnEditCommit(new EventHandler<TreeTableColumn.CellEditEvent<InputCategoryViewModel,String>>() {
-			@Override
-			public void handle(TreeTableColumn.CellEditEvent<InputCategoryViewModel, String> event) {
-				InputCategoryViewModel item = event.getTreeTablePosition().getTreeItem().getValue();
-				for (Criterion c : session.getCommand().getCriteria())
-					c.updateValue(item.getFamily().getDescription(), item.getCategory().getDescription(), event.getNewValue());
-				item.setCategoryName(event.getNewValue());
-			}
+			for (Criterion c : session.getCommand().getCriteria())
+				c.updateValue(item.getFamily().getDescription(), item.getCategory().getDescription(), newVal);
+			item.setCategoryName(newVal);
 		});
 	}
 
@@ -281,7 +280,7 @@ public class InputTabViewController implements Initializable {
     @SuppressWarnings("unchecked")
 	@FXML
     void addAlternative(MouseEvent event) {
-    	Alternative a = new Alternative("Alternative "+this.alternatives.size());
+    	Alternative a = new Alternative("Alternative "+(this.alternatives.size()+1));
     	InputAlternativeViewModel item = new InputAlternativeViewModel(a);
         alternativesTableView.getSelectionModel().clearSelection();
         alternativesTableView.getItems().add(item);
@@ -303,7 +302,7 @@ public class InputTabViewController implements Initializable {
     @SuppressWarnings("unchecked")
 	@FXML
     void addQuestion(MouseEvent event) {
-    	Question q = new Question("Name");
+    	Question q = new Question("Question "+(this.session.getInput().getQuestions().size()+1));
     	InputQuestionViewModel item = new InputQuestionViewModel(q);
         questionsTableView.getSelectionModel().clearSelection();
         questionsTableView.getItems().add(item);
@@ -324,7 +323,7 @@ public class InputTabViewController implements Initializable {
     @SuppressWarnings("unchecked")
 	@FXML
     void addVoter(MouseEvent event) {
-    	Voter v = new Voter("Name");
+    	Voter v = new Voter("Voter "+(this.session.getInput().getVoters().size()+1));
 		InputVoterViewModel item = new InputVoterViewModel(v);
         votersTableView.getSelectionModel().clearSelection();
         votersTableView.getItems().add(item);
@@ -347,6 +346,8 @@ public class InputTabViewController implements Initializable {
     private void addCategory(MouseEvent event) {
 		String familyName = this.categoryFamilyTextField.getText().trim();
 		String categoryName = this.categoryNameTextField.getText().trim();
+		if (familyName == null || categoryName == null || familyName.isEmpty() || categoryName.isEmpty())
+			return;
 		for (CategoryFamily f : this.session.getInput().getFamilies()) {
 			if (f.getDescription().equals(familyName)) {
 				for (Category c : f.getPossibilities()) {

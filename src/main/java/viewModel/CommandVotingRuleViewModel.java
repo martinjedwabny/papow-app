@@ -37,30 +37,25 @@ public class CommandVotingRuleViewModel {
 	
 	private String getDescriptionForRule(VotingRule rule) {
 		if (rule instanceof BordaPessimistic)
-			return "Takes the amount of alternatives that are lesser, greater and equally ranked as itself\n" + 
-					"as well as the rank of the alternative as outputs the score:\n" + 
-					"score = (amount of lesser ranked alternatives)";
+			return "Takes the amount of alternatives that are lesser, greater and equally ranked as itself as well as the rank of the alternative as outputs the score:\n" + 
+					"score = (amount of lesser ranked alternatives).";
 		if (rule instanceof BordaFair)
-			return "Takes the amount of alternatives that are lesser, greater and equally ranked as itself\n" + 
-					"as well as the rank of the alternative as outputs the score:\n" + 
-					"score = (amount of lesser ranked alternatives) + (1 / (amount of equally ranked alternatives))";
+			return "Takes the amount of alternatives that are lesser, greater and equally ranked as itself as well as the rank of the alternative as outputs the score:\n" + 
+					"score = (amount of lesser ranked alternatives) + (1 / (amount of equally ranked alternatives)).";
 		if (rule instanceof BordaOptimistic)
-			return "Takes the amount of alternatives that are lesser, greater and equally ranked as itself\n" + 
-					"as well as the rank of the alternative as outputs the score:\n" + 
-					"score = (amount of lesser ranked alternatives) + (amount of equally ranked alternatives) - 1";
+			return "Takes the amount of alternatives that are lesser, greater and equally ranked as itself as well as the rank of the alternative as outputs the score:\n" + 
+					"score = (amount of lesser ranked alternatives) + (amount of equally ranked alternatives) - 1.";
 		if (rule instanceof InstantRunoff)
 			return "For each iteration step, eliminate the alternatives (set) with the lowest amount of first places.\n" + 
-					"When there are no more alternatives left, return the alternatives sorted by the reverse order in which\n" + 
-					"they were eliminated.";
+					"When there are no more alternatives left, return the alternatives sorted by the reverse order in which they were eliminated.";
 		if (rule instanceof Copeland)
-			return "The score of each alternative is calculated as the amount of alternatives to which\n" + 
-					"it is superior minus the amount to which it is inferior.";
+			return "The score of each alternative is calculated as the amount of alternatives to which it is superior minus the amount to which it is inferior.";
 		if (rule instanceof KApproval && ((KApproval) this.rule).getK() == 1)
-			return "Largest amount of 1st places";
+			return "Largest amount of 1st places.";
 		if (rule instanceof KApproval && ((KApproval) this.rule).getK() == 2)
-			return "Largest amount of top 2 places";
+			return "Largest amount of top 2 places.";
 		if (rule instanceof KApproval && ((KApproval) this.rule).getK() == 3)
-			return "Largest amount of top 3 places";
+			return "Largest amount of top 3 places.";
 		return null;
 	}
 

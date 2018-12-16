@@ -13,9 +13,9 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<StackPane fx:id="mainPane" prefWidth="600.0" style="-fx-background-color: black;" stylesheets="/main/css/Main.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.controller.QuestionEditViewController">
+<StackPane fx:id="mainPane" prefWidth="1000.0" style="-fx-background-color: black;" stylesheets="/main/css/Main.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.controller.QuestionEditViewController">
    <children>
-      <VBox id="tab-pane-wrapper" prefWidth="600.0">
+      <VBox id="tab-pane-wrapper" prefWidth="1000.0">
          <padding>
             <Insets bottom="66.0" left="16.0" right="16.0" top="16.0" />
          </padding>
