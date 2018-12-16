@@ -1,5 +1,6 @@
 package main.java.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
@@ -12,14 +13,19 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.CheckBoxListCell;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 import main.java.base.Alternative;
 import main.java.base.Category;
 import main.java.base.CategoryFamily;
@@ -29,11 +35,14 @@ import main.java.base.Voter;
 import main.java.base.ordering.Ballot;
 import main.java.io.reader.BallotReader;
 import main.java.io.reader.CategoryReader;
+import main.java.util.DialogBuilder;
 import main.java.util.EditCell;
 import main.java.viewModel.QuestionEditVoteViewModel;
 
 public class QuestionEditViewController {
 
+    @FXML
+    private StackPane mainPane;
     @FXML
     private JFXTextField descriptionTextField;
     @FXML
@@ -107,35 +116,43 @@ public class QuestionEditViewController {
 		updateVoteTableViewItems();
 		votesTableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		votesTableView.setItems(votesTableList);
-		voterColumn.setCellFactory(column -> EditCell.createStringEditCell());
 		voterColumn.setCellValueFactory(cellData -> {
     		return cellData.getValue().getVoter();
     	});
-		ballotColumn.setCellFactory(column -> EditCell.createStringEditCell());
 		ballotColumn.setCellValueFactory(cellData -> {
     		return cellData.getValue().getRanking();
     	});
-		ballotColumn.setOnEditCommit(event -> {
-			if (!event.getRowValue().equals(votesTableView.getSelectionModel().getSelectedItem()))
-				return;
-            String ballotString = event.getNewValue();
-            Vote vote = ((QuestionEditVoteViewModel) event.getTableView().getItems()
-                    .get(event.getTablePosition().getRow())).getVote();
-            updateVoteFromBallotString(ballotString, vote);
-        });
-		categoryColumn.setCellFactory(column -> EditCell.createStringEditCell());
 		categoryColumn.setCellValueFactory(cellData -> {
     		return cellData.getValue().getCategories();
     	});
-		categoryColumn.setOnEditCommit(event -> {
-			if (!event.getRowValue().equals(votesTableView.getSelectionModel().getSelectedItem()))
-				return;
-            String categoryString = event.getNewValue();
-            Vote vote = ((QuestionEditVoteViewModel) event.getTableView().getItems()
-                .get(event.getTablePosition().getRow())).getVote();
-            updateVoteFromCategoryString(categoryString, vote);
-        });
 		votesTableView.getSortOrder().add(voterColumn);
+		votesTableView.setOnMouseClicked(event -> {
+			if(event.getButton().equals(MouseButton.PRIMARY)){
+	            if(event.getClickCount() == 2 && votesTableView.getSelectionModel().getSelectedItem() != null) {
+					showVoteEditDialog(votesTableView.getSelectionModel().getSelectedItem().getVote());
+	            }
+	        }
+		});
+	}
+
+	private void showVoteEditDialog(Vote vote) {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/fxml/VoteEditView.fxml"));
+			StackPane content = loader.load();
+			VoteEditViewController controller = (VoteEditViewController) loader.getController();
+			controller.setupView(vote, categories);
+			DialogBuilder.showConfirmCancelDialog(content, this.mainPane, new EventHandler<ActionEvent>() {
+			    @Override public void handle(ActionEvent e) {
+			    	if (controller.getBallot() != null && controller.getCategories() != null) {
+			    		vote.setRanking(controller.getBallot());
+			    		vote.setCategories(controller.getCategories());
+			    		updateVoteTableViewItems();
+			    	}
+			    }
+			});
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void setVoterComboBox() {
