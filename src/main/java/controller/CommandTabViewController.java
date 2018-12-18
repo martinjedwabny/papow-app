@@ -107,12 +107,17 @@ public class CommandTabViewController {
 	public void setCriterionComboBoxes(Vector<CategoryFamily> families) {
 		setCriterionTypeComboBox();
 		setCriterionFamiliesComboBox(families);
-		setCriterionCategoriesComboBox(this.criterionFamilyComboBox.getSelectionModel().getSelectedItem());
+		if (families.isEmpty())
+			setCriterionCategoriesComboBox(null);
+		else
+			setCriterionCategoriesComboBox(this.criterionFamilyComboBox.getSelectionModel().getSelectedItem());
 	}
 
 	private void setCriterionCategoriesComboBox(CategoryFamily selectedItem) {
-		if (selectedItem == null)
+		if (selectedItem == null) {
+			this.criterionCategoryComboBox.setItems(FXCollections.observableArrayList());
 			return;
+		}
 		this.criterionCategoryComboBox.setItems(FXCollections.observableArrayList(selectedItem.getPossibilities()));
 		if (!this.criterionCategoryComboBox.getItems().isEmpty())
 			this.criterionCategoryComboBox.getSelectionModel().selectFirst();
@@ -159,10 +164,17 @@ public class CommandTabViewController {
     		criterion = new CriterionOr();
     	if (this.criterionTypeComboBox.getSelectionModel().getSelectedItem().equals(CommandCriterionViewModel.CRITERION_AND_MESSAGE))
     		criterion = new CriterionAnd();
-    	if (this.criterionTypeComboBox.getSelectionModel().getSelectedItem().equals(CommandCriterionViewModel.CRITERION_EQUALS_MESSAGE))
-    		criterion = new CriterionEquals(
+    	if (this.criterionTypeComboBox.getSelectionModel().getSelectedItem().equals(CommandCriterionViewModel.CRITERION_EQUALS_MESSAGE)) {
+    		if (this.criterionFamilyComboBox.getSelectionModel().getSelectedItem() == null ||
+    				this.criterionFamilyComboBox.getSelectionModel().getSelectedItem().getDescription().isEmpty() ||
+    				this.criterionCategoryComboBox.getSelectionModel().getSelectedItem() == null ||
+    	    		this.criterionCategoryComboBox.getSelectionModel().getSelectedItem().getDescription().isEmpty())
+    			return;
+    		else
+    			criterion = new CriterionEquals(
     				this.criterionFamilyComboBox.getSelectionModel().getSelectedItem().getDescription(),
     				this.criterionCategoryComboBox.getSelectionModel().getSelectedItem().getDescription());
+    	}
     	if (item.isRoot() && criterion != null)
     		this.session.getCommand().getCriteria().add(criterion);
     	item.addChild(criterion);
