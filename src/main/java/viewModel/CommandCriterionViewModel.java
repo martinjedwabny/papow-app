@@ -5,7 +5,6 @@ import java.util.Set;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Vector;
 
 import javafx.scene.control.TreeItem;
 import main.java.base.criterion.Criterion;
@@ -14,7 +13,7 @@ import main.java.base.criterion.CriterionEquals;
 import main.java.base.criterion.CriterionOr;
 import main.java.base.criterion.CriterionTrue;
 
-public class CommandCriterionViewModel extends TreeItem<String> {
+public class CommandCriterionViewModel extends TreeItem<Criterion> {
 
 	public static final String CRITERION_OR_MESSAGE = "OR";
 	public static final String CRITERION_AND_MESSAGE = "AND";
@@ -34,13 +33,12 @@ public class CommandCriterionViewModel extends TreeItem<String> {
 		super();
 		for (Criterion c : criteria) {
 			CommandCriterionViewModel item = new CommandCriterionViewModel(c);
-			item.setValue(c.toString());
+			item.setValue(c);
 			this.getChildren().add(item);
 			item.setExpanded(true);
 		}
 		this.criterion = null;
 		this.setExpanded(true);
-		this.setValue("Criteria:");
 	}
 
 	/**
@@ -55,7 +53,7 @@ public class CommandCriterionViewModel extends TreeItem<String> {
 			addChildrenTreeItems(((CriterionAnd) criterion).getSubcriteria());
 		if (isOr())
 			addChildrenTreeItems(((CriterionOr) criterion).getSubcriteria());
-		this.setValue(criterion.toString());
+		this.setValue(criterion);
 	}
 
 	private boolean isEquals() {
@@ -118,7 +116,7 @@ public class CommandCriterionViewModel extends TreeItem<String> {
 	private void updateValueString() {
 		if (this.isRoot())
 			return;
-		this.setValue(criterion.toString());
+		this.setValue(criterion);
 		if (this.getParent() != null && (this.getParent() instanceof CommandCriterionViewModel))
 			((CommandCriterionViewModel) this.getParent()).updateValueString();
 	}

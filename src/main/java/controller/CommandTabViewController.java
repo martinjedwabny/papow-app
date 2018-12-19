@@ -13,10 +13,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.control.Tooltip;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
-import javafx.scene.control.cell.CheckBoxListCell;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.util.Callback;
@@ -35,6 +33,7 @@ import main.java.base.rules.scoring.Copeland;
 import main.java.base.rules.scoring.KApproval;
 import main.java.base.session.Session;
 import main.java.util.CheckBoxBiLabeledListCell;
+import main.java.util.CriterionTreeCell;
 import main.java.viewModel.CommandCriterionViewModel;
 import main.java.viewModel.CommandVotingRuleViewModel;
 
@@ -46,7 +45,7 @@ public class CommandTabViewController {
 
     @FXML private StackPane mainPane;
     @FXML private ListView<CommandVotingRuleViewModel> votingRuleListView;
-    @FXML private TreeView<String> criterionTreeView;
+    @FXML private TreeView<Criterion> criterionTreeView;
     @FXML private ComboBox<String> criterionTypeComboBox;
     @FXML private ComboBox<CategoryFamily> criterionFamilyComboBox;
     @FXML private ComboBox<Category> criterionCategoryComboBox;
@@ -99,7 +98,8 @@ public class CommandTabViewController {
 	}
 	
 	public void setCriterionTreeView(Set<Criterion> criteria) {
-		TreeItem<String> root = new CommandCriterionViewModel(criteria);
+		TreeItem<Criterion> root = new CommandCriterionViewModel(criteria);
+		this.criterionTreeView.setCellFactory(tableView -> new CriterionTreeCell());
 		this.criterionTreeView.setRoot(root);
 		this.criterionTreeView.setShowRoot(true);
 	}
