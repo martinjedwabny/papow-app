@@ -8,13 +8,11 @@ public class QuestionEditVoteViewModel {
 	Vote vote;
 	private StringProperty voter;
 	private StringProperty ranking;
-	private StringProperty categories;
 	
 	public QuestionEditVoteViewModel(Vote vote) {
 		this.vote = vote;
 		this.voter = new SimpleStringProperty(vote.getVoter().getName());
 		this.ranking = new SimpleStringProperty(vote.getRanking().toString());
-		this.categories = new SimpleStringProperty(vote.getCategories().toString());
 	}
 
 	/**
@@ -50,20 +48,6 @@ public class QuestionEditVoteViewModel {
 	 */
 	public void setRanking(StringProperty ranking) {
 		this.ranking = ranking;
-	}
-
-	/**
-	 * @return the categories
-	 */
-	public StringProperty getCategories() {
-		return categories;
-	}
-
-	/**
-	 * @param categories the categories to set
-	 */
-	public void setCategories(StringProperty categories) {
-		this.categories = categories;
 	}
 	
 	

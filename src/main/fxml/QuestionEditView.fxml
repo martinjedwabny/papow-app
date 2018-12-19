@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<StackPane fx:id="mainPane" prefWidth="1000.0" style="-fx-background-color: black;" stylesheets="/main/css/Main.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.controller.QuestionEditViewController">
+<StackPane fx:id="mainPane" prefWidth="1000.0" style="-fx-background-color: black;" stylesheets="/main/css/Main.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.controller.QuestionEditViewController">
    <children>
       <VBox id="tab-pane-wrapper" prefWidth="1000.0">
          <padding>
@@ -55,7 +55,6 @@
                <columns>
                   <TableColumn fx:id="voterColumn" editable="false" prefWidth="75.0" text="Voter" />
                   <TableColumn fx:id="ballotColumn" prefWidth="75.0" text="Ballot" />
-                  <TableColumn fx:id="categoryColumn" prefWidth="75.0" text="Categories" />
                </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

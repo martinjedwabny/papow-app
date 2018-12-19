@@ -1,8 +1,8 @@
 package main.java.viewModel;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 
@@ -21,7 +21,7 @@ public class ResultViewModel extends RecursiveTreeObject<ResultViewModel> {
 	private StringProperty voters;
 	private Map<Integer, StringProperty> alternativesPerRank;
 	
-	public ResultViewModel(Question question, Criterion criterion, VotingRule rule, Set<Voter> voters, Ballot result) {
+	public ResultViewModel(Question question, Criterion criterion, VotingRule rule, List<Voter> voters, Ballot result) {
 		super();
 		this.questionName = new SimpleStringProperty(question.getDescription());
 		this.criterion = new SimpleStringProperty(criterion.toString());

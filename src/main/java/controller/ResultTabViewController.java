@@ -22,6 +22,7 @@ import javafx.scene.layout.StackPane;
 import javafx.util.Callback;
 import main.java.base.Question;
 import main.java.base.Vote;
+import main.java.base.Voter;
 import main.java.base.criterion.Criterion;
 import main.java.base.ordering.Ballot;
 import main.java.base.rules.VotingRule;
@@ -88,15 +89,15 @@ public class ResultTabViewController {
     }
 
 	private void setResultTreeTableItems() {
-		Map<Question, Map<Criterion, List<Vote>>> validVotes = this.session.getResult().getValidVotes();
+		Map<Criterion, List<Voter>> validVoters = this.session.getResult().getValidVoters();
 		Map<Question, Map<Criterion, Map<VotingRule, Ballot>>> results = this.session.getResult().getResults();
 		items = FXCollections.observableArrayList();
 		for (Question question : this.session.getInput().getQuestions())
 			for (Criterion criterion : this.session.getCommand().getCriteria())
 				for (VotingRule rule : this.session.getCommand().getRules())
-					if (!validVotes.get(question).get(criterion).isEmpty())
+					if (!validVoters.get(criterion).isEmpty())
 						items.add(new ResultViewModel(question, criterion, rule,
-								validVotes.get(question).get(criterion).stream().map(Vote::getVoter).collect(Collectors.toSet()),
+								validVoters.get(criterion),
 								results.get(question).get(criterion).get(rule)));
 		this.resultTreeTableView.setRoot(new RecursiveTreeItem<ResultViewModel>(items, RecursiveTreeObject::getChildren));
 		this.resultTreeTableView.setShowRoot(false);

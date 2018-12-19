@@ -1,16 +1,21 @@
 package main.java.viewModel;
 
+import java.util.Map;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import main.java.base.Category;
+import main.java.base.CategoryFamily;
 import main.java.base.Voter;
 
 public class InputVoterViewModel {
 	private Voter voter;
 	public StringProperty name;
+	public StringProperty categories;
 
-	public InputVoterViewModel (Voter voter) {
-		this.voter = voter;
-		this.name = new SimpleStringProperty(voter.getName());
+	public InputVoterViewModel(Voter voter) {
+		super();
+		setVoter(voter);
 	}
 
 	/**
@@ -25,6 +30,8 @@ public class InputVoterViewModel {
 	 */
 	public void setVoter(Voter voter) {
 		this.voter = voter;
+		this.name = new SimpleStringProperty(voter.getName());
+		this.categories = new SimpleStringProperty(voter.getCategories().toString());
 	}
 
 	/**
@@ -40,6 +47,21 @@ public class InputVoterViewModel {
 	public void setName(String name) {
 		this.voter.setName(name);
 		this.name.set(name);
+	}
+
+	/**
+	 * @return the categories
+	 */
+	public StringProperty getCategories() {
+		return categories;
+	}
+
+	/**
+	 * @param categories to set
+	 */
+	public void setCategories(Map<CategoryFamily, Category> categories) {
+		this.voter.setCategories(categories);
+		this.categories.set(categories.toString());;
 	}
 	
 }

@@ -16,6 +16,7 @@ import com.jfoenix.controls.RecursiveTreeItem;
 import com.jfoenix.controls.cells.editors.base.GenericEditableTreeTableCell;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -23,6 +24,8 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.SelectionMode;
+import javafx.scene.control.SelectionModel;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
@@ -37,6 +40,7 @@ import main.java.base.Alternative;
 import main.java.base.Category;
 import main.java.base.CategoryFamily;
 import main.java.base.Question;
+import main.java.base.Vote;
 import main.java.base.Voter;
 import main.java.base.criterion.Criterion;
 import main.java.base.session.Session;
@@ -152,21 +156,48 @@ public class InputTabViewController implements Initializable {
 	}
 	
 	private void setupVotersTableView() {
-		voterNameColumn.setCellFactory(column -> EditCell.createStringEditCell());
-		voterNameColumn.setCellValueFactory(cellData -> {
-    		return cellData.getValue().getName();
-    	});
-		voterNameColumn.setOnEditCommit(event -> {
-			String newVal = event.getNewValue().trim();
-			if (newVal == null || newVal.isEmpty()) {
-				voterNameColumn.setVisible(false);
-				voterNameColumn.setVisible(true);
-				return;
-			}
-            ((InputVoterViewModel) event.getTableView().getItems()
-                .get(event.getTablePosition().getRow())).setName(newVal);
-        });
+		votersTableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+		votersTableView.getColumns().clear();
+		votersTableView.getColumns().add(voterNameColumn);
+		for (CategoryFamily family : this.session.getInput().getFamilies()) {
+			TableColumn<InputVoterViewModel, String> familyColumn = new TableColumn<>(family.getDescription());
+			familyColumn.setCellValueFactory(cellData -> {
+				if (cellData.getValue().getVoter().getCategories().containsKey(family))
+					return new SimpleStringProperty(cellData.getValue().getVoter().getCategories().get(family).getDescription());
+				return new SimpleStringProperty("NONE");
+			});
+			votersTableView.getColumns().add(familyColumn);
+		}
+		voterNameColumn.setCellValueFactory(cellData -> cellData.getValue().getName());
+		votersTableView.setOnMouseClicked(event -> {
+			if(event.getButton().equals(MouseButton.PRIMARY)){
+	            if(event.getClickCount() == 2 && votersTableView.getSelectionModel().getSelectedItem() != null) {
+					showVoteEditDialog(votersTableView.getSelectionModel().getSelectedItem().getVoter());
+	            }
+	        }
+		});
 		votersTableView.getSortOrder().add(voterNameColumn);
+	}
+
+	private void showVoteEditDialog(Voter voter) {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/fxml/VoterEditView.fxml"));
+			StackPane content = loader.load();
+			VoterEditViewController controller = (VoterEditViewController) loader.getController();
+			controller.setupView(voter, this.session.getInput().getFamilies());
+			DialogBuilder.showConfirmCancelDialog(content, this.mainPane, new EventHandler<ActionEvent>() {
+			    @Override public void handle(ActionEvent e) {
+			    	if (controller.getVoterName() != null)
+			    		voter.setName(controller.getVoterName());
+			    	if (controller.getVoterCategories() != null)
+			    		voter.setCategories(controller.getVoterCategories());
+			    	if (controller.getVoterName() != null || controller.getVoterCategories() != null)
+			    		updateVoterTableItems();
+			    }
+			});
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void setupCategoryTreeTableView() {
@@ -254,6 +285,7 @@ public class InputTabViewController implements Initializable {
 		this.session.getInput().getVoters().forEach(voter -> {
 			this.voters.add(new InputVoterViewModel(voter));
 		});
+		setupVotersTableView();
 	}
 
 	private void updateAlternativeTableItems() {
@@ -365,6 +397,7 @@ public class InputTabViewController implements Initializable {
 		f.getPossibilities().add(new Category(categoryName));
 		this.session.getInput().getFamilies().add(f);
 		updateCategoryItems();
+    	updateVoterTableItems();
     }
 
     @FXML
@@ -383,6 +416,7 @@ public class InputTabViewController implements Initializable {
     		this.session.getInput().removeFamily(familyDeleted);
     	}
     	updateCategoryItems();
+    	updateVoterTableItems();
     }
 
 }

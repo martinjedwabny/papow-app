@@ -13,7 +13,7 @@
     -fx-unit-increment: 50 ;
 }
  
-.dialog-pane{
+.dialog-pane {
     -fx-background-color: -color-primary-1;
 }
 .dialog-pane > *.button-bar > *.container{

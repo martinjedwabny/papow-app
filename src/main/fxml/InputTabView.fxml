@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTreeTableColumn?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -8,16 +10,13 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TreeTableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import com.jfoenix.controls.JFXTreeTableView?>
-<?import com.jfoenix.controls.JFXTreeTableColumn?>
-<?import javafx.scene.control.TreeTableColumn?>
-<?import javafx.scene.control.TreeTableView?>
 
-<StackPane fx:id="mainPane" maxHeight="1.7976931348623157E308" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.controller.InputTabViewController">
+<StackPane fx:id="mainPane" maxHeight="1.7976931348623157E308" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.controller.InputTabViewController">
    <children>
       <AnchorPane stylesheets="/main/css/Main.css">
          <children>
@@ -27,7 +26,7 @@
                      <children>
                         <HBox>
                            <children>
-                              <VBox prefWidth="350.0" HBox.hgrow="ALWAYS">
+                              <VBox prefWidth="450.0" HBox.hgrow="ALWAYS">
                                  <children>
                                     <Label id="section" prefHeight="48.0" prefWidth="264.0" text="Voters" />
                                     <Separator prefHeight="1.0">
@@ -68,7 +67,11 @@
                                     <Insets />
                                  </HBox.margin>
                               </VBox>
-                              <VBox prefWidth="350.0" HBox.hgrow="ALWAYS">
+                           </children>
+                        </HBox>
+                        <HBox>
+                           <children>
+                              <VBox prefWidth="300.0" HBox.hgrow="ALWAYS">
                                  <children>
                                     <Label id="section" prefHeight="48.0" prefWidth="264.0" text="Alternatives" />
                                     <Separator prefHeight="1.0">
@@ -106,10 +109,10 @@
                                     </HBox>
                                  </children>
                                  <HBox.margin>
-                                    <Insets left="27.0" />
+                                    <Insets />
                                  </HBox.margin>
                               </VBox>
-                              <VBox layoutX="450.0" layoutY="10.0" prefWidth="500.0">
+                              <VBox layoutX="450.0" layoutY="10.0" prefWidth="450.0">
                                  <children>
                                     <Label id="section" prefHeight="48.0" prefWidth="264.0" text="Categories" />
                                     <Separator prefHeight="1.0">
@@ -154,6 +157,9 @@
                                  </HBox.margin>
                               </VBox>
                            </children>
+                           <VBox.margin>
+                              <Insets top="40.0" />
+                           </VBox.margin>
                         </HBox>
                         <Label id="section" prefHeight="48.0" prefWidth="264.0" text="Questions">
                            <VBox.margin>

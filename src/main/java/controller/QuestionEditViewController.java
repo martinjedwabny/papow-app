@@ -54,8 +54,6 @@ public class QuestionEditViewController {
     @FXML
     private TableColumn<QuestionEditVoteViewModel, String> ballotColumn;
     @FXML
-    private TableColumn<QuestionEditVoteViewModel, String> categoryColumn;
-    @FXML
     private ComboBox<Voter> voterComboBox;
     
     private Question questionCopy;
@@ -122,9 +120,6 @@ public class QuestionEditViewController {
 		ballotColumn.setCellValueFactory(cellData -> {
     		return cellData.getValue().getRanking();
     	});
-		categoryColumn.setCellValueFactory(cellData -> {
-    		return cellData.getValue().getCategories();
-    	});
 		votesTableView.getSortOrder().add(voterColumn);
 		votesTableView.setOnMouseClicked(event -> {
 			if(event.getButton().equals(MouseButton.PRIMARY)){
@@ -140,12 +135,11 @@ public class QuestionEditViewController {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/fxml/VoteEditView.fxml"));
 			StackPane content = loader.load();
 			VoteEditViewController controller = (VoteEditViewController) loader.getController();
-			controller.setupView(vote, categories);
+			controller.setupView(vote);
 			DialogBuilder.showConfirmCancelDialog(content, this.mainPane, new EventHandler<ActionEvent>() {
 			    @Override public void handle(ActionEvent e) {
-			    	if (controller.getBallot() != null && controller.getCategories() != null) {
+			    	if (controller.getBallot() != null) {
 			    		vote.setRanking(controller.getBallot());
-			    		vote.setCategories(controller.getCategories());
 			    		updateVoteTableViewItems();
 			    	}
 			    }
@@ -190,13 +184,6 @@ public class QuestionEditViewController {
 			vote.setRanking(updatedBallot);
 		updateVoteTableViewItems();
 	}
-
-	private void updateVoteFromCategoryString(String categoryString, Vote vote) {
-		Map<CategoryFamily, Category> updatedCategories = CategoryReader.updateAndGetFromString(this.categories, categoryString);
-		if (updatedCategories != null)
-			vote.setCategories(updatedCategories);
-		updateVoteTableViewItems();
-	}
 	
 	@FXML
     void addVote(MouseEvent event) {
@@ -205,7 +192,7 @@ public class QuestionEditViewController {
 			return;
 		Map<Alternative, Integer> rankForElement = new HashMap<Alternative, Integer>();
 		this.questionCopy.getAlternatives().forEach(a -> rankForElement.put(a, 1));
-		Vote vote = new Vote(voter, new Ballot(rankForElement), new HashMap<CategoryFamily, Category>());
+		Vote vote = new Vote(voter, new Ballot(rankForElement));
 		this.questionCopy.addVote(vote);
 		this.votesTableList.add(new QuestionEditVoteViewModel(vote));
 		this.voterComboBox.getItems().remove(voter);
