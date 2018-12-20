@@ -18,6 +18,9 @@ import main.java.viewModel.CommandCriterionViewModel;
 
 public class CriterionTreeCell extends TreeCell<Criterion> {
 
+	private static final String ROOT_MESSAGE = "Criteria: ";
+	private static final String SELECTED_TOKEN = "> ";
+	
 	private static final String FONT = "Fira Sans";
 	private static final Integer FONT_SIZE = 13;
 	private static final Color FAMILY_TEXT_COLOR = Color.web("#FF652F");
@@ -29,15 +32,37 @@ public class CriterionTreeCell extends TreeCell<Criterion> {
 	@Override
 	protected void updateItem(Criterion item, boolean empty) {
 		super.updateItem(item, empty);
-		if (item != null) {
-			TextFlow textFlow = new TextFlow();
-			textFlow.getChildren().addAll(getFormattedTextForCriterion(item));
-			setGraphic(textFlow);
-		} else if (this.getTreeItem() != null && ((CommandCriterionViewModel)this.getTreeItem()).isRoot()) {
-			setGraphic(plainText("Criteria: "));
+		if (empty) {
+			setGraphic(null);
+			return;
 		}
+		if (item != null) {
+			updateNonRoot(item);
+		} else if (this.getTreeItem() != null && ((CommandCriterionViewModel)this.getTreeItem()).isRoot()) {
+			updateRoot();
+		}
+		updateSelectedToken();
+	}
+	
+	@Override
+	public void updateSelected(boolean selected) {
+		super.updateSelected(selected);
+		this.updateItem(this.getItem(), false);
+	}
+
+	private void updateSelectedToken() {
 		if (isSelected() && this.getGraphic() instanceof TextFlow)
-			((TextFlow)this.getGraphic()).getChildren().add(0, plainText("> "));
+			((TextFlow)this.getGraphic()).getChildren().add(0, plainText(SELECTED_TOKEN));
+	}
+
+	private void updateRoot() {
+		setGraphic(plainText(ROOT_MESSAGE));
+	}
+
+	private void updateNonRoot(Criterion item) {
+		TextFlow textFlow = new TextFlow();
+		textFlow.getChildren().addAll(getFormattedTextForCriterion(item));
+		setGraphic(textFlow);
 	}
 
 	private List<Text> getFormattedTextForCriterion(Criterion item) {
@@ -99,11 +124,5 @@ public class CriterionTreeCell extends TreeCell<Criterion> {
 		text1.setFill(color);
 		text1.setFont(Font.font(FONT, FONT_SIZE));
 		return text1;
-	}
-	
-	@Override
-	public void updateSelected(boolean selected) {
-		super.updateSelected(selected);
-//		this.updateItem(this.getItem(), false);
 	}
 }
