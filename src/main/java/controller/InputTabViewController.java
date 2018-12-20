@@ -335,7 +335,11 @@ public class InputTabViewController implements Initializable {
 	@FXML
     void addQuestion(MouseEvent event) {
     	Question q = new Question("Question "+(this.session.getInput().getQuestions().size()+1));
-    	InputQuestionViewModel item = new InputQuestionViewModel(q);
+    	addQuetionAndUpdateTable(q);
+    }
+
+	private void addQuetionAndUpdateTable(Question q) {
+		InputQuestionViewModel item = new InputQuestionViewModel(q);
         questionsTableView.getSelectionModel().clearSelection();
         questionsTableView.getItems().add(item);
         questionsTableView.getSelectionModel().select(
@@ -343,6 +347,16 @@ public class InputTabViewController implements Initializable {
         		questionsTableView.getFocusModel().getFocusedCell().getTableColumn());
         questionsTableView.scrollTo(item);
         this.session.getInput().addQuestion(q);
+	}
+	
+    @FXML
+    private void duplicateQuestion(MouseEvent event) {
+    	InputQuestionViewModel item = questionsTableView.getSelectionModel().getSelectedItem();
+    	if (item == null)
+    		return;
+    	Question q = new Question(item.getQuestion());
+    	q.setDescription("Question "+(this.session.getInput().getQuestions().size()+1));
+    	addQuetionAndUpdateTable(q);
     }
 
     @FXML
@@ -356,15 +370,18 @@ public class InputTabViewController implements Initializable {
 	@FXML
     void addVoter(MouseEvent event) {
     	Voter v = new Voter("Voter "+(this.session.getInput().getVoters().size()+1));
+		addVoterToSessionAndUpdateTable(v);
+    }
+
+	private void addVoterToSessionAndUpdateTable(Voter v) {
 		InputVoterViewModel item = new InputVoterViewModel(v);
-        votersTableView.getSelectionModel().clearSelection();
         votersTableView.getItems().add(item);
         votersTableView.getSelectionModel().select(
         		votersTableView.getItems().size() - 1, 
         		votersTableView.getFocusModel().getFocusedCell().getTableColumn());
         votersTableView.scrollTo(item);
         this.session.getInput().addVoter(v);
-    }
+	}
 
     @FXML
     void deleteVoter(MouseEvent event) {
@@ -372,6 +389,16 @@ public class InputTabViewController implements Initializable {
     	selectedItems.stream().forEach(item -> this.session.getInput().removeVoter(item.getVoter()));
 		votersTableView.getItems().removeAll(selectedItems);
     	updateQuestionTableItems();
+    }
+    
+    @FXML
+    private void duplicateVoter(MouseEvent event) {
+    	InputVoterViewModel item = votersTableView.getSelectionModel().getSelectedItem();
+    	if (item == null)
+    		return;
+    	Voter v = new Voter(item.getVoter());
+    	v.setName("Voter "+(this.session.getInput().getVoters().size()+1));
+		addVoterToSessionAndUpdateTable(v);
     }
 
 	@FXML
