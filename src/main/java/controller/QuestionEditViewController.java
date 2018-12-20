@@ -193,11 +193,25 @@ public class QuestionEditViewController {
 		Map<Alternative, Integer> rankForElement = new HashMap<Alternative, Integer>();
 		this.questionCopy.getAlternatives().forEach(a -> rankForElement.put(a, 1));
 		Vote vote = new Vote(voter, new Ballot(rankForElement));
+		addVoteWithVoterAndUpdateView(voter, vote);
+    }
+	
+	@FXML
+    void duplicateVote(MouseEvent event) {
+		Voter voter = this.voterComboBox.getSelectionModel().getSelectedItem();
+		QuestionEditVoteViewModel voteModel = this.votesTableView.getSelectionModel().getSelectedItem();
+		if (voter == null || voteModel == null)
+			return;
+		Vote vote = new Vote(voter, new Ballot(voteModel.getVote().getRanking()));
+		addVoteWithVoterAndUpdateView(voter, vote);
+    }
+
+	private void addVoteWithVoterAndUpdateView(Voter voter, Vote vote) {
 		this.questionCopy.addVote(vote);
 		this.votesTableList.add(new QuestionEditVoteViewModel(vote));
 		this.voterComboBox.getItems().remove(voter);
     	this.voterComboBox.getSelectionModel().selectFirst();
-    }
+	}
 
     @FXML
     void removeVote(MouseEvent event) {

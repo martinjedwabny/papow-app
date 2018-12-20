@@ -19,7 +19,7 @@ import main.java.viewModel.CommandCriterionViewModel;
 public class CriterionTreeCell extends TreeCell<Criterion> {
 
 	private static final String ROOT_MESSAGE = "Criteria: ";
-	private static final String SELECTED_TOKEN = "> ";
+	private static final String SELECTED_TOKEN = " <";
 	
 	private static final String FONT = "Fira Sans";
 	private static final Integer FONT_SIZE = 13;
@@ -52,7 +52,7 @@ public class CriterionTreeCell extends TreeCell<Criterion> {
 
 	private void updateSelectedToken() {
 		if (isSelected() && this.getGraphic() instanceof TextFlow)
-			((TextFlow)this.getGraphic()).getChildren().add(0, plainText(SELECTED_TOKEN));
+			((TextFlow)this.getGraphic()).getChildren().add(plainText(SELECTED_TOKEN));
 	}
 
 	private void updateRoot() {

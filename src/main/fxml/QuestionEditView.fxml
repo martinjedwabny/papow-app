@@ -71,6 +71,7 @@
                   <Label text="Voter:" textFill="WHITE" />
                   <ComboBox fx:id="voterComboBox" prefWidth="150.0" />
                   <JFXButton onMouseClicked="#addVote" text="Add" />
+                  <JFXButton layoutX="815.0" layoutY="10.0" onMouseClicked="#duplicateVote" text="Duplicate" />
                   <JFXButton layoutX="512.0" layoutY="10.0" onMouseClicked="#removeVote" text="Delete" />
                </children>
             </HBox>
