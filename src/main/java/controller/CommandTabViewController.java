@@ -24,6 +24,7 @@ import main.java.base.criterion.Criterion;
 import main.java.base.criterion.CriterionAnd;
 import main.java.base.criterion.CriterionEquals;
 import main.java.base.criterion.CriterionOr;
+import main.java.base.criterion.CriterionTrue;
 import main.java.base.rules.VotingRule;
 import main.java.base.rules.iterative.InstantRunoff;
 import main.java.base.rules.scoring.BordaFair;
@@ -164,6 +165,8 @@ public class CommandTabViewController {
     		criterion = new CriterionOr();
     	if (this.criterionTypeComboBox.getSelectionModel().getSelectedItem().equals(CommandCriterionViewModel.CRITERION_AND_MESSAGE))
     		criterion = new CriterionAnd();
+    	if (this.criterionTypeComboBox.getSelectionModel().getSelectedItem().equals(CommandCriterionViewModel.CRITERION_TRUE_MESSAGE))
+    		criterion = new CriterionTrue();
     	if (this.criterionTypeComboBox.getSelectionModel().getSelectedItem().equals(CommandCriterionViewModel.CRITERION_EQUALS_MESSAGE)) {
     		if (this.criterionFamilyComboBox.getSelectionModel().getSelectedItem() == null ||
     				this.criterionFamilyComboBox.getSelectionModel().getSelectedItem().getDescription().isEmpty() ||

@@ -21,7 +21,7 @@ public class CommandCriterionViewModel extends TreeItem<Criterion> {
 	public static final String CRITERION_TRUE_MESSAGE = "ANY";
 	
 	public static final List<String> CRITERION_MESSAGES = new ArrayList<String>(Arrays.asList(
-			CRITERION_EQUALS_MESSAGE, CRITERION_OR_MESSAGE, CRITERION_AND_MESSAGE));
+			CRITERION_EQUALS_MESSAGE, CRITERION_OR_MESSAGE, CRITERION_AND_MESSAGE, CRITERION_TRUE_MESSAGE));
 
 	private Criterion criterion;
 	

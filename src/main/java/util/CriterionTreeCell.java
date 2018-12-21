@@ -14,6 +14,7 @@ import main.java.base.criterion.Criterion;
 import main.java.base.criterion.CriterionAnd;
 import main.java.base.criterion.CriterionEquals;
 import main.java.base.criterion.CriterionOr;
+import main.java.base.criterion.CriterionTrue;
 import main.java.viewModel.CommandCriterionViewModel;
 
 public class CriterionTreeCell extends TreeCell<Criterion> {
@@ -72,6 +73,8 @@ public class CriterionTreeCell extends TreeCell<Criterion> {
 			return getFormattedTextForCriterionRecursive(((CriterionOr) item).getSubcriteria(), "OR");
 		if (item instanceof CriterionAnd)
 			return getFormattedTextForCriterionRecursive(((CriterionAnd) item).getSubcriteria(), "AND");
+		if (item instanceof CriterionTrue)
+			return Arrays.asList(plainText("ANY"));
 		return null;
 	}
 
