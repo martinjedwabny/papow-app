@@ -11,6 +11,7 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -51,8 +52,6 @@ public class QuestionEditViewController {
     private TableView<QuestionEditVoteViewModel> votesTableView;
     @FXML
     private TableColumn<QuestionEditVoteViewModel, String> voterColumn;
-    @FXML
-    private TableColumn<QuestionEditVoteViewModel, String> ballotColumn;
     @FXML
     private ComboBox<Voter> voterComboBox;
     
@@ -117,9 +116,6 @@ public class QuestionEditViewController {
 		voterColumn.setCellValueFactory(cellData -> {
     		return cellData.getValue().getVoter();
     	});
-		ballotColumn.setCellValueFactory(cellData -> {
-    		return cellData.getValue().getRanking();
-    	});
 		votesTableView.getSortOrder().add(voterColumn);
 		votesTableView.setOnMouseClicked(event -> {
 			if(event.getButton().equals(MouseButton.PRIMARY)){
@@ -128,6 +124,21 @@ public class QuestionEditViewController {
 	            }
 	        }
 		});
+		updateBallotColumns();
+	}
+
+	private void updateBallotColumns() {
+		votesTableView.getColumns().clear();
+		votesTableView.getColumns().add(voterColumn);
+		for (Alternative alternative : this.questionCopy.getAlternatives()) {
+			TableColumn<QuestionEditVoteViewModel, String> altColumn = new TableColumn<QuestionEditVoteViewModel, String>(alternative.getName());
+			altColumn.setCellValueFactory(cellData -> {
+				if (cellData == null || cellData.getValue() == null)
+					return new SimpleStringProperty();
+				return new SimpleStringProperty(cellData.getValue().getVote().getRanking().getRank(alternative).toString());
+			});
+			votesTableView.getColumns().add(altColumn);
+		}
 	}
 
 	private void showVoteEditDialog(Vote vote) {
@@ -170,11 +181,13 @@ public class QuestionEditViewController {
 
 	private void addAlternativeToQuestion(String alternative) {
 		this.questionCopy.addAlternative(this.nametoAlternative.get(alternative));
+		updateBallotColumns();
 		updateVoteTableViewItems();
 	}
 	
 	private void removeAlternativeFromQuestion(String alternative) {
 		this.questionCopy.removeAlternative(this.nametoAlternative.get(alternative));
+		updateBallotColumns();
 		updateVoteTableViewItems();
 	}
 
