@@ -1,7 +1,5 @@
 package main.java;
 
-import javax.swing.ImageIcon;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

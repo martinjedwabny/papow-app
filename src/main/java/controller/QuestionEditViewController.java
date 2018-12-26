@@ -28,16 +28,13 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import main.java.base.Alternative;
-import main.java.base.Category;
 import main.java.base.CategoryFamily;
 import main.java.base.Question;
 import main.java.base.Vote;
 import main.java.base.Voter;
 import main.java.base.ordering.Ballot;
 import main.java.io.reader.BallotReader;
-import main.java.io.reader.CategoryReader;
 import main.java.util.DialogBuilder;
-import main.java.util.EditCell;
 import main.java.viewModel.QuestionEditVoteViewModel;
 
 public class QuestionEditViewController {

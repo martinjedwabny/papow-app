@@ -3,7 +3,6 @@ package main.java.util;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
-import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.CheckBoxListCell;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;

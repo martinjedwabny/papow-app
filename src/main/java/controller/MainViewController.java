@@ -59,7 +59,7 @@ public class MainViewController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		//@TODO get this out, just for testing
-//		loadSession("src/main/ses/food_waste.ses");
+//		loadSession("src/main/ses/sample-1.ses");
     	loadSessionSuccess(new Session());
     	setTabPaneChange();
 	}

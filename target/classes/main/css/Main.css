@@ -344,6 +344,18 @@
 	-fx-text-fill: -color-secondary-1;
 }
 
+/* Result Tree Table View */
+
+#result-tree-table-view .tree-table-cell {
+	-fx-text-fill: white;
+	-fx-font-size: 8pt;
+	-fx-text-alignment: center;
+}
+
+#result-tree-table-view .tree-table-row-cell {
+	-fx-cell-size: 80px;
+}
+
 .combo-box-popup .list-cell {    
     -fx-background-color: -color-primary-1;    
     -fx-text-fill: white;

@@ -3,31 +3,25 @@ package main.java.controller;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-
 import com.jfoenix.controls.JFXTreeTableColumn;
 import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.RecursiveTreeItem;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 
 import javafx.application.Platform;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeTableColumn;
 import javafx.scene.layout.StackPane;
-import javafx.util.Callback;
+import javafx.scene.paint.Color;
 import main.java.base.Question;
-import main.java.base.Vote;
 import main.java.base.Voter;
 import main.java.base.criterion.Criterion;
 import main.java.base.ordering.Ballot;
 import main.java.base.rules.VotingRule;
 import main.java.base.session.Session;
 import main.java.util.JFXTreeTableViewUtils;
+import main.java.util.TableViewUtils;
 import main.java.viewModel.ResultViewModel;
 
 public class ResultTabViewController {
@@ -110,6 +104,7 @@ public class ResultTabViewController {
 		this.questionNameColumn = new JFXTreeTableColumn<>("Question");
 		JFXTreeTableViewUtils.setupCellValueFactory(questionNameColumn, ResultViewModel::getQuestionName);
 		this.resultTreeTableView.getColumns().add(questionNameColumn);
+		this.questionNameColumn.setMinWidth(80.0);
 
 		this.criterionColumn = new JFXTreeTableColumn<>("Criterion");
 		JFXTreeTableViewUtils.setupCellValueFactory(criterionColumn, ResultViewModel::getCriterion);
@@ -130,6 +125,8 @@ public class ResultTabViewController {
 				addRankingColumnForRank(i);
 			this.resultTreeTableView.getColumns().addAll(rankingColumns);
 		}
+		
+		JFXTreeTableViewUtils.setupMultilineCellFactory(this.resultTreeTableView, 40);
 	}
 
 	private void addRankingColumnForRank(Integer rank) {

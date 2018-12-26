@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Vector;
 
 import javafx.scene.control.TreeCell;
-import javafx.scene.control.TreeView;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
