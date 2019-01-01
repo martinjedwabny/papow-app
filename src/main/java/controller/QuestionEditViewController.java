@@ -6,6 +6,13 @@ import java.util.Map;
 import java.util.Vector;
 import java.util.stream.Collectors;
 
+import com.github.martinjedwabny.main.java.base.Alternative;
+import com.github.martinjedwabny.main.java.base.CategoryFamily;
+import com.github.martinjedwabny.main.java.base.Question;
+import com.github.martinjedwabny.main.java.base.Vote;
+import com.github.martinjedwabny.main.java.base.Voter;
+import com.github.martinjedwabny.main.java.base.ordering.Ballot;
+import com.github.martinjedwabny.main.java.io.reader.BallotReader;
 import com.jfoenix.controls.JFXTextField;
 
 import javafx.beans.binding.Bindings;
@@ -27,13 +34,6 @@ import javafx.scene.control.cell.CheckBoxListCell;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
-import main.java.base.Alternative;
-import main.java.base.CategoryFamily;
-import main.java.base.Question;
-import main.java.base.Vote;
-import main.java.base.Voter;
-import main.java.base.ordering.Ballot;
-import main.java.io.reader.BallotReader;
 import main.java.util.DialogBuilder;
 import main.java.viewModel.QuestionEditVoteViewModel;
 

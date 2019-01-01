@@ -1,8 +1,9 @@
 package main.java.viewModel;
 
+import com.github.martinjedwabny.main.java.base.Question;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import main.java.base.Question;
 
 public class InputQuestionViewModel {
 	private Question question;

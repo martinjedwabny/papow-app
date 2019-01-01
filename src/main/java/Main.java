@@ -1,5 +1,7 @@
 package main.java;
 
+import javax.swing.ImageIcon;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -20,9 +22,9 @@ public class Main extends Application {
         Scene scene = new Scene(root);
         stage.setTitle(APP_TITLE);
 		stage.getIcons().add(new Image(ICON_PATH));
-//		if (com.apple.eawt.Application.getApplication() != null) {
-//			com.apple.eawt.Application.getApplication().setDockIconImage(new ImageIcon(getClass().getResource(ICON_PATH)).getImage());
-//		}
+		if (com.apple.eawt.Application.getApplication() != null) {
+			com.apple.eawt.Application.getApplication().setDockIconImage(new ImageIcon(getClass().getResource(ICON_PATH)).getImage());
+		}
         stage.setScene(scene);
         stage.show();
     }

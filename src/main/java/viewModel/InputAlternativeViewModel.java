@@ -1,8 +1,9 @@
 package main.java.viewModel;
 
+import com.github.martinjedwabny.main.java.base.Alternative;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import main.java.base.Alternative;
 
 public class InputAlternativeViewModel {
 	private Alternative alternative; 

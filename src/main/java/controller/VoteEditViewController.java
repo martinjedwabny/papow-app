@@ -7,6 +7,10 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import com.github.martinjedwabny.main.java.base.Alternative;
+import com.github.martinjedwabny.main.java.base.Vote;
+import com.github.martinjedwabny.main.java.base.ordering.Ballot;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,9 +18,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import main.java.base.Alternative;
-import main.java.base.Vote;
-import main.java.base.ordering.Ballot;
 import main.java.util.ComboBoxTableCell;
 
 public class VoteEditViewController implements Initializable {

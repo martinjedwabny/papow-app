@@ -1,11 +1,11 @@
 package main.java.viewModel;
 
+import com.github.martinjedwabny.main.java.base.Category;
+import com.github.martinjedwabny.main.java.base.CategoryFamily;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import main.java.base.Category;
-import main.java.base.CategoryFamily;
 
 public class InputCategoryViewModel extends RecursiveTreeObject<InputCategoryViewModel> {
 	private CategoryFamily family;

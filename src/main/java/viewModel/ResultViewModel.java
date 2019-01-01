@@ -4,15 +4,15 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.github.martinjedwabny.main.java.base.Question;
+import com.github.martinjedwabny.main.java.base.Voter;
+import com.github.martinjedwabny.main.java.base.criterion.Criterion;
+import com.github.martinjedwabny.main.java.base.ordering.Ballot;
+import com.github.martinjedwabny.main.java.base.rules.VotingRule;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import main.java.base.Question;
-import main.java.base.Voter;
-import main.java.base.criterion.Criterion;
-import main.java.base.ordering.Ballot;
-import main.java.base.rules.VotingRule;
 
 public class ResultViewModel extends RecursiveTreeObject<ResultViewModel> {
 	private StringProperty questionName;

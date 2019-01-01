@@ -6,6 +6,9 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Vector;
 
+import com.github.martinjedwabny.main.java.base.Category;
+import com.github.martinjedwabny.main.java.base.CategoryFamily;
+import com.github.martinjedwabny.main.java.base.Voter;
 import com.jfoenix.controls.JFXTextField;
 
 import javafx.beans.property.SimpleStringProperty;
@@ -15,9 +18,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import main.java.base.Category;
-import main.java.base.CategoryFamily;
-import main.java.base.Voter;
 import main.java.util.ComboBoxTableCell;
 
 public class VoterEditViewController implements Initializable {

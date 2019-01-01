@@ -5,6 +5,13 @@ import java.net.URL;
 import java.util.LinkedHashSet;
 import java.util.ResourceBundle;
 
+import com.github.martinjedwabny.main.java.base.criterion.Criterion;
+import com.github.martinjedwabny.main.java.base.criterion.CriterionOr;
+import com.github.martinjedwabny.main.java.base.session.Session;
+import com.github.martinjedwabny.main.java.base.session.SessionCommand;
+import com.github.martinjedwabny.main.java.base.session.SessionRunner;
+import com.github.martinjedwabny.main.java.io.reader.SessionReader;
+import com.github.martinjedwabny.main.java.io.writer.SessionWriter;
 import com.jfoenix.controls.JFXButton;
 
 import javafx.beans.value.ChangeListener;
@@ -21,13 +28,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
-import main.java.base.criterion.Criterion;
-import main.java.base.criterion.CriterionOr;
-import main.java.base.session.Session;
-import main.java.base.session.SessionCommand;
-import main.java.base.session.SessionRunner;
-import main.java.io.reader.SessionReader;
-import main.java.io.writer.SessionWriter;
 
 public class MainViewController implements Initializable {
 	/**

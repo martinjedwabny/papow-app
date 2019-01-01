@@ -4,16 +4,17 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
 
+import com.github.martinjedwabny.main.java.base.criterion.Criterion;
+import com.github.martinjedwabny.main.java.base.criterion.CriterionAnd;
+import com.github.martinjedwabny.main.java.base.criterion.CriterionEquals;
+import com.github.martinjedwabny.main.java.base.criterion.CriterionOr;
+import com.github.martinjedwabny.main.java.base.criterion.CriterionTrue;
+
 import javafx.scene.control.TreeCell;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
-import main.java.base.criterion.Criterion;
-import main.java.base.criterion.CriterionAnd;
-import main.java.base.criterion.CriterionEquals;
-import main.java.base.criterion.CriterionOr;
-import main.java.base.criterion.CriterionTrue;
 import main.java.viewModel.CommandCriterionViewModel;
 
 public class CriterionTreeCell extends TreeCell<Criterion> {

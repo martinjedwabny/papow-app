@@ -2,11 +2,12 @@ package main.java.viewModel;
 
 import java.util.Map;
 
+import com.github.martinjedwabny.main.java.base.Category;
+import com.github.martinjedwabny.main.java.base.CategoryFamily;
+import com.github.martinjedwabny.main.java.base.Voter;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import main.java.base.Category;
-import main.java.base.CategoryFamily;
-import main.java.base.Voter;
 
 public class InputVoterViewModel {
 	private Voter voter;

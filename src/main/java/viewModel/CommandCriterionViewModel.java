@@ -2,16 +2,18 @@ package main.java.viewModel;
 
 import java.util.List;
 import java.util.Set;
+
+import com.github.martinjedwabny.main.java.base.criterion.Criterion;
+import com.github.martinjedwabny.main.java.base.criterion.CriterionAnd;
+import com.github.martinjedwabny.main.java.base.criterion.CriterionEquals;
+import com.github.martinjedwabny.main.java.base.criterion.CriterionOr;
+import com.github.martinjedwabny.main.java.base.criterion.CriterionTrue;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
 import javafx.scene.control.TreeItem;
-import main.java.base.criterion.Criterion;
-import main.java.base.criterion.CriterionAnd;
-import main.java.base.criterion.CriterionEquals;
-import main.java.base.criterion.CriterionOr;
-import main.java.base.criterion.CriterionTrue;
 
 public class CommandCriterionViewModel extends TreeItem<Criterion> {
 
