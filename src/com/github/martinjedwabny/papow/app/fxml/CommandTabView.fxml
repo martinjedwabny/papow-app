@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane fx:id="mainPane" maxHeight="1.7976931348623157E308" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.martinjedwabny.papow.app.java.controller.CommandTabViewController">
+   <children>
+      <AnchorPane>
+         <children>
+            <VBox layoutX="16.0" layoutY="16.0" prefHeight="280.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="16.0">
+               <children>
+                  <Label id="section" prefHeight="48.0" prefWidth="264.0" text="Voting rules" />
+                  <Separator prefHeight="1.0" prefWidth="854.0">
+                     <padding>
+                        <Insets top="6.0" />
+                     </padding>
+                  </Separator>
+                  <Label id="section-description" text="Select the voting rules to generate the corresponding results.">
+                     <VBox.margin>
+                        <Insets top="6.0" />
+                     </VBox.margin>
+                  </Label>
+                  <ListView fx:id="votingRuleListView" prefHeight="224.0">
+                     <VBox.margin>
+                        <Insets top="6.0" />
+                     </VBox.margin>
+                  </ListView>
+               </children>
+            </VBox>
+            <AnchorPane stylesheets="/com/github/martinjedwabny/papow/app/css/Main.css" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="314.0">
+               <children>
+                  <VBox layoutX="16.0" layoutY="314.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label id="section" prefHeight="48.0" prefWidth="340.0" text="Filtering criteria" />
+                        <Separator prefHeight="1.0" prefWidth="854.0">
+                           <padding>
+                              <Insets top="6.0" />
+                           </padding>
+                        </Separator>
+                        <Label id="section-description" text="This tree displays the vote category filtering criterion to be used. Only votes that pass this criterion will be considered.">
+                           <VBox.margin>
+                              <Insets top="6.0" />
+                           </VBox.margin>
+                        </Label>
+                        <TreeView fx:id="criterionTreeView">
+                           <VBox.margin>
+                              <Insets top="6.0" />
+                           </VBox.margin>
+                        </TreeView>
+                     </children>
+                  </VBox>
+                  <HBox alignment="BOTTOM_RIGHT" layoutX="16.0" layoutY="818.0" minHeight="24.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                     <children>
+                        <ComboBox fx:id="criterionTypeComboBox" prefWidth="150.0" />
+                        <ComboBox fx:id="criterionFamilyComboBox" layoutX="581.0" layoutY="10.0" prefWidth="150.0" />
+                        <Label alignment="TOP_CENTER" contentDisplay="TOP" text="=" textFill="WHITE">
+                           <padding>
+                              <Insets bottom="4.0" />
+                           </padding>
+                        </Label>
+                        <ComboBox fx:id="criterionCategoryComboBox" layoutX="560.0" layoutY="10.0" prefWidth="150.0" />
+                        <JFXButton onMouseClicked="#addCriterion" text="Add" />
+                        <JFXButton onMouseClicked="#deleteCriterion" text="Delete" />
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </HBox>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>
