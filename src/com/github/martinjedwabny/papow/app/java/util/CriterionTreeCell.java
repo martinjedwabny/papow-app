@@ -11,11 +11,11 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
 import com.github.martinjedwabny.papow.app.java.viewModel.CommandCriterionViewModel;
-import com.github.martinjedwabny.papow.main.java.base.criterion.Criterion;
-import com.github.martinjedwabny.papow.main.java.base.criterion.CriterionAnd;
-import com.github.martinjedwabny.papow.main.java.base.criterion.CriterionEquals;
-import com.github.martinjedwabny.papow.main.java.base.criterion.CriterionOr;
-import com.github.martinjedwabny.papow.main.java.base.criterion.CriterionTrue;
+import main.java.base.criterion.Criterion;
+import main.java.base.criterion.CriterionAnd;
+import main.java.base.criterion.CriterionEquals;
+import main.java.base.criterion.CriterionOr;
+import main.java.base.criterion.CriterionTrue;
 
 public class CriterionTreeCell extends TreeCell<Criterion> {
 

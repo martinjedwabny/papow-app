@@ -17,9 +17,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
 import com.github.martinjedwabny.papow.app.java.util.ComboBoxTableCell;
-import com.github.martinjedwabny.papow.main.java.base.Category;
-import com.github.martinjedwabny.papow.main.java.base.CategoryFamily;
-import com.github.martinjedwabny.papow.main.java.base.Voter;
+import main.java.base.Category;
+import main.java.base.CategoryFamily;
+import main.java.base.Voter;
 
 public class VoterEditViewController implements Initializable {
 	

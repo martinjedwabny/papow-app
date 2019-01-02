@@ -23,21 +23,21 @@ import com.github.martinjedwabny.papow.app.java.util.CheckBoxBiLabeledListCell;
 import com.github.martinjedwabny.papow.app.java.util.CriterionTreeCell;
 import com.github.martinjedwabny.papow.app.java.viewModel.CommandCriterionViewModel;
 import com.github.martinjedwabny.papow.app.java.viewModel.CommandVotingRuleViewModel;
-import com.github.martinjedwabny.papow.main.java.base.Category;
-import com.github.martinjedwabny.papow.main.java.base.CategoryFamily;
-import com.github.martinjedwabny.papow.main.java.base.criterion.Criterion;
-import com.github.martinjedwabny.papow.main.java.base.criterion.CriterionAnd;
-import com.github.martinjedwabny.papow.main.java.base.criterion.CriterionEquals;
-import com.github.martinjedwabny.papow.main.java.base.criterion.CriterionOr;
-import com.github.martinjedwabny.papow.main.java.base.criterion.CriterionTrue;
-import com.github.martinjedwabny.papow.main.java.base.rules.VotingRule;
-import com.github.martinjedwabny.papow.main.java.base.rules.iterative.InstantRunoff;
-import com.github.martinjedwabny.papow.main.java.base.rules.scoring.BordaFair;
-import com.github.martinjedwabny.papow.main.java.base.rules.scoring.BordaOptimistic;
-import com.github.martinjedwabny.papow.main.java.base.rules.scoring.BordaPessimistic;
-import com.github.martinjedwabny.papow.main.java.base.rules.scoring.Copeland;
-import com.github.martinjedwabny.papow.main.java.base.rules.scoring.KApproval;
-import com.github.martinjedwabny.papow.main.java.base.session.Session;
+import main.java.base.Category;
+import main.java.base.CategoryFamily;
+import main.java.base.criterion.Criterion;
+import main.java.base.criterion.CriterionAnd;
+import main.java.base.criterion.CriterionEquals;
+import main.java.base.criterion.CriterionOr;
+import main.java.base.criterion.CriterionTrue;
+import main.java.base.rules.VotingRule;
+import main.java.base.rules.iterative.InstantRunoff;
+import main.java.base.rules.scoring.BordaFair;
+import main.java.base.rules.scoring.BordaOptimistic;
+import main.java.base.rules.scoring.BordaPessimistic;
+import main.java.base.rules.scoring.Copeland;
+import main.java.base.rules.scoring.KApproval;
+import main.java.base.session.Session;
 
 public class CommandTabViewController {
 	

@@ -1,7 +1,7 @@
 package com.github.martinjedwabny.papow.app.java.viewModel;
 
-import com.github.martinjedwabny.papow.main.java.base.Category;
-import com.github.martinjedwabny.papow.main.java.base.CategoryFamily;
+import main.java.base.Category;
+import main.java.base.CategoryFamily;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 
 import javafx.beans.property.SimpleStringProperty;

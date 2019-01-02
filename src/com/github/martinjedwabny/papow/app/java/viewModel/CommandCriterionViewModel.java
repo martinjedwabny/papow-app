@@ -3,11 +3,11 @@ package com.github.martinjedwabny.papow.app.java.viewModel;
 import java.util.List;
 import java.util.Set;
 
-import com.github.martinjedwabny.papow.main.java.base.criterion.Criterion;
-import com.github.martinjedwabny.papow.main.java.base.criterion.CriterionAnd;
-import com.github.martinjedwabny.papow.main.java.base.criterion.CriterionEquals;
-import com.github.martinjedwabny.papow.main.java.base.criterion.CriterionOr;
-import com.github.martinjedwabny.papow.main.java.base.criterion.CriterionTrue;
+import main.java.base.criterion.Criterion;
+import main.java.base.criterion.CriterionAnd;
+import main.java.base.criterion.CriterionEquals;
+import main.java.base.criterion.CriterionOr;
+import main.java.base.criterion.CriterionTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;

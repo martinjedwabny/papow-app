@@ -1,12 +1,12 @@
 package com.github.martinjedwabny.papow.app.java.viewModel;
 
-import com.github.martinjedwabny.papow.main.java.base.rules.VotingRule;
-import com.github.martinjedwabny.papow.main.java.base.rules.iterative.InstantRunoff;
-import com.github.martinjedwabny.papow.main.java.base.rules.scoring.BordaFair;
-import com.github.martinjedwabny.papow.main.java.base.rules.scoring.BordaOptimistic;
-import com.github.martinjedwabny.papow.main.java.base.rules.scoring.BordaPessimistic;
-import com.github.martinjedwabny.papow.main.java.base.rules.scoring.Copeland;
-import com.github.martinjedwabny.papow.main.java.base.rules.scoring.KApproval;
+import main.java.base.rules.VotingRule;
+import main.java.base.rules.iterative.InstantRunoff;
+import main.java.base.rules.scoring.BordaFair;
+import main.java.base.rules.scoring.BordaOptimistic;
+import main.java.base.rules.scoring.BordaPessimistic;
+import main.java.base.rules.scoring.Copeland;
+import main.java.base.rules.scoring.KApproval;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;

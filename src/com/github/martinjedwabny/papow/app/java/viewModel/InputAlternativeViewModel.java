@@ -1,6 +1,6 @@
 package com.github.martinjedwabny.papow.app.java.viewModel;
 
-import com.github.martinjedwabny.papow.main.java.base.Alternative;
+import main.java.base.Alternative;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;

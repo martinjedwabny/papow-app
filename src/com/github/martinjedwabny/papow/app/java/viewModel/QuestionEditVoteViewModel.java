@@ -1,6 +1,6 @@
 package com.github.martinjedwabny.papow.app.java.viewModel;
 
-import com.github.martinjedwabny.papow.main.java.base.Vote;
+import main.java.base.Vote;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;

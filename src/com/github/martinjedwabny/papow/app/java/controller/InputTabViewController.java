@@ -39,13 +39,13 @@ import com.github.martinjedwabny.papow.app.java.viewModel.InputAlternativeViewMo
 import com.github.martinjedwabny.papow.app.java.viewModel.InputCategoryViewModel;
 import com.github.martinjedwabny.papow.app.java.viewModel.InputQuestionViewModel;
 import com.github.martinjedwabny.papow.app.java.viewModel.InputVoterViewModel;
-import com.github.martinjedwabny.papow.main.java.base.Alternative;
-import com.github.martinjedwabny.papow.main.java.base.Category;
-import com.github.martinjedwabny.papow.main.java.base.CategoryFamily;
-import com.github.martinjedwabny.papow.main.java.base.Question;
-import com.github.martinjedwabny.papow.main.java.base.Voter;
-import com.github.martinjedwabny.papow.main.java.base.criterion.Criterion;
-import com.github.martinjedwabny.papow.main.java.base.session.Session;
+import main.java.base.Alternative;
+import main.java.base.Category;
+import main.java.base.CategoryFamily;
+import main.java.base.Question;
+import main.java.base.Voter;
+import main.java.base.criterion.Criterion;
+import main.java.base.session.Session;
 
 /**
  * @author martin

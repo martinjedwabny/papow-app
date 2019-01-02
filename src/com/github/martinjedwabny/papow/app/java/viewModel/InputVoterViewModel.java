@@ -2,9 +2,9 @@ package com.github.martinjedwabny.papow.app.java.viewModel;
 
 import java.util.Map;
 
-import com.github.martinjedwabny.papow.main.java.base.Category;
-import com.github.martinjedwabny.papow.main.java.base.CategoryFamily;
-import com.github.martinjedwabny.papow.main.java.base.Voter;
+import main.java.base.Category;
+import main.java.base.CategoryFamily;
+import main.java.base.Voter;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;

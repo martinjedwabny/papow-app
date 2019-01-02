@@ -30,13 +30,13 @@ import javafx.scene.layout.StackPane;
 
 import com.github.martinjedwabny.papow.app.java.util.DialogBuilder;
 import com.github.martinjedwabny.papow.app.java.viewModel.QuestionEditVoteViewModel;
-import com.github.martinjedwabny.papow.main.java.base.Alternative;
-import com.github.martinjedwabny.papow.main.java.base.CategoryFamily;
-import com.github.martinjedwabny.papow.main.java.base.Question;
-import com.github.martinjedwabny.papow.main.java.base.Vote;
-import com.github.martinjedwabny.papow.main.java.base.Voter;
-import com.github.martinjedwabny.papow.main.java.base.ordering.Ballot;
-import com.github.martinjedwabny.papow.main.java.io.reader.BallotReader;
+import main.java.base.Alternative;
+import main.java.base.CategoryFamily;
+import main.java.base.Question;
+import main.java.base.Vote;
+import main.java.base.Voter;
+import main.java.base.ordering.Ballot;
+import main.java.io.reader.BallotReader;
 
 public class QuestionEditViewController {
 

@@ -17,12 +17,12 @@ import javafx.scene.layout.StackPane;
 
 import com.github.martinjedwabny.papow.app.java.util.JFXTreeTableViewUtils;
 import com.github.martinjedwabny.papow.app.java.viewModel.ResultViewModel;
-import com.github.martinjedwabny.papow.main.java.base.Question;
-import com.github.martinjedwabny.papow.main.java.base.Voter;
-import com.github.martinjedwabny.papow.main.java.base.criterion.Criterion;
-import com.github.martinjedwabny.papow.main.java.base.ordering.Ballot;
-import com.github.martinjedwabny.papow.main.java.base.rules.VotingRule;
-import com.github.martinjedwabny.papow.main.java.base.session.Session;
+import main.java.base.Question;
+import main.java.base.Voter;
+import main.java.base.criterion.Criterion;
+import main.java.base.ordering.Ballot;
+import main.java.base.rules.VotingRule;
+import main.java.base.session.Session;
 
 public class ResultTabViewController {
 	
