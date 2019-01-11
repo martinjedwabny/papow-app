@@ -72,6 +72,50 @@
                         </HBox>
                         <HBox>
                            <children>
+                           <VBox HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label id="section" prefHeight="48.0" prefWidth="264.0" text="Voter features" />
+                                    <Separator prefHeight="1.0">
+                                       <padding>
+                                          <Insets top="6.0" />
+                                       </padding>
+                                    </Separator>
+                                    <Label id="section-description" text="Double-click to edit. Add and delete with buttons below.">
+                                       <VBox.margin>
+                                          <Insets top="6.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <JFXTreeTableView fx:id="categoryTreeTableView" editable="true">
+                                       <columns>
+                                          <JFXTreeTableColumn fx:id="categoryFamilyColumn" prefWidth="75.0" text="Property Name" />
+                                          <JFXTreeTableColumn fx:id="categoryNameColumn" prefWidth="75.0" text="Value Set" />
+                                       </columns>
+                                       <columnResizePolicy>
+                                          <TreeTableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                       </columnResizePolicy>
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </JFXTreeTableView>
+                                    <HBox alignment="BOTTOM_RIGHT" spacing="10.0">
+                                       <children>
+                                          <TextField fx:id="categoryFamilyTextField" promptText="Family" style="-fx-background-color: #272727; -fx-border-color: #747474;" />
+                                          <TextField fx:id="categoryNameTextField" promptText="Category" style="-fx-background-color: #272727; -fx-border-color: #747474;" />
+                                          <JFXButton minWidth="40.0" onMouseClicked="#addCategory" text="Add" />
+                                          <JFXButton minWidth="60.0" onMouseClicked="#deleteCategory" text="Delete" />
+                                       </children>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets left="0.0" />
+                                 </HBox.margin>
+                              </VBox>
                               <VBox HBox.hgrow="ALWAYS">
                                  <children>
                                     <Label id="section" prefHeight="48.0" prefWidth="264.0" text="Alternatives" />
@@ -110,59 +154,15 @@
                                     </HBox>
                                  </children>
                                  <HBox.margin>
-                                    <Insets />
-                                 </HBox.margin>
-                              </VBox>
-                              <VBox HBox.hgrow="ALWAYS">
-                                 <children>
-                                    <Label id="section" prefHeight="48.0" prefWidth="264.0" text="Categories" />
-                                    <Separator prefHeight="1.0">
-                                       <padding>
-                                          <Insets top="6.0" />
-                                       </padding>
-                                    </Separator>
-                                    <Label id="section-description" text="Double-click to edit. Add and delete with buttons below.">
-                                       <VBox.margin>
-                                          <Insets top="6.0" />
-                                       </VBox.margin>
-                                    </Label>
-                                    <JFXTreeTableView fx:id="categoryTreeTableView" editable="true">
-                                       <columns>
-                                          <JFXTreeTableColumn fx:id="categoryFamilyColumn" prefWidth="75.0" text="Family" />
-                                          <JFXTreeTableColumn fx:id="categoryNameColumn" prefWidth="75.0" text="Category" />
-                                       </columns>
-                                       <columnResizePolicy>
-                                          <TreeTableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                       </columnResizePolicy>
-                                       <VBox.margin>
-                                          <Insets top="10.0" />
-                                       </VBox.margin>
-                                    </JFXTreeTableView>
-                                    <HBox alignment="BOTTOM_RIGHT" spacing="10.0">
-                                       <children>
-                                          <TextField fx:id="categoryFamilyTextField" promptText="Family" style="-fx-background-color: #272727; -fx-border-color: #747474;" />
-                                          <TextField fx:id="categoryNameTextField" promptText="Category" style="-fx-background-color: #272727; -fx-border-color: #747474;" />
-                                          <JFXButton minWidth="40.0" onMouseClicked="#addCategory" text="Add" />
-                                          <JFXButton minWidth="60.0" onMouseClicked="#deleteCategory" text="Delete" />
-                                       </children>
-                                       <opaqueInsets>
-                                          <Insets />
-                                       </opaqueInsets>
-                                       <VBox.margin>
-                                          <Insets top="10.0" />
-                                       </VBox.margin>
-                                    </HBox>
-                                 </children>
-                                 <HBox.margin>
                                     <Insets left="27.0" />
                                  </HBox.margin>
-                              </VBox>
+                              </VBox>                              
                            </children>
                            <VBox.margin>
                               <Insets top="40.0" />
                            </VBox.margin>
                         </HBox>
-                        <Label id="section" prefHeight="48.0" prefWidth="264.0" text="Questions">
+                        <Label id="section" prefHeight="48.0" prefWidth="264.0" text="Voting sessions">
                            <VBox.margin>
                               <Insets top="40.0" />
                            </VBox.margin>

@@ -40,7 +40,7 @@
                <children>
                   <VBox layoutX="16.0" layoutY="314.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Label id="section" prefHeight="48.0" prefWidth="340.0" text="Filtering criteria" />
+                        <Label id="section" prefHeight="48.0" prefWidth="680.0" text="Filters over voter features" />
                         <Separator prefHeight="1.0" prefWidth="854.0">
                            <padding>
                               <Insets top="6.0" />

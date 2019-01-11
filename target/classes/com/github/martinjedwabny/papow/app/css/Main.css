@@ -107,6 +107,11 @@
     -fx-text-fill: -color-secondary-1;
 }
 
+#subsection {
+    -fx-font-size: 18px;
+    -fx-text-fill: -color-secondary-2;
+}
+
 #section-description {
     -fx-font-size: 14px;
     -fx-text-fill: -color-primary-3;

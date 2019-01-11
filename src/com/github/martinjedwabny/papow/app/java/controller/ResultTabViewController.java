@@ -101,12 +101,12 @@ public class ResultTabViewController {
 	private void setResultTreeTableColumns() {
 		this.resultTreeTableView.getColumns().clear();
 		
-		this.questionNameColumn = new JFXTreeTableColumn<>("Question");
+		this.questionNameColumn = new JFXTreeTableColumn<>("Voting session");
 		JFXTreeTableViewUtils.setupCellValueFactory(questionNameColumn, ResultViewModel::getQuestionName);
 		this.resultTreeTableView.getColumns().add(questionNameColumn);
 		this.questionNameColumn.setMinWidth(80.0);
 
-		this.criterionColumn = new JFXTreeTableColumn<>("Criterion");
+		this.criterionColumn = new JFXTreeTableColumn<>("Filter");
 		JFXTreeTableViewUtils.setupCellValueFactory(criterionColumn, ResultViewModel::getCriterion);
 		this.resultTreeTableView.getColumns().add(criterionColumn);
 
