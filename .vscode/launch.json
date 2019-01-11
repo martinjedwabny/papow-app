@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - UIMain",
+            "request": "launch",
+            "mainClass": "main.java.UIMain",
+            "projectName": "PAPOW-APP"
+        },
+        {
+            "type": "java",
             "name": "Debug (Launch) - Current File",
             "request": "launch",
             "mainClass": "${file}"
@@ -14,7 +21,7 @@
             "type": "java",
             "name": "Debug (Launch)-Main<PAPOW-APP>",
             "request": "launch",
-            "mainClass": "com.github.martinjedwabny.papow.app.java.Main",
+            "mainClass": "main.java.UIMain",
             "projectName": "PAPOW-APP"
         }
     ]
