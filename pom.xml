@@ -9,7 +9,7 @@
 		<dependency>
 			<groupId>com.jfoenix</groupId>
 			<artifactId>jfoenix</artifactId>
-			<version>8.0.4</version>
+			<version>9.0.10</version>
 		</dependency>
 		<dependency>
 			<groupId>com.github.martinjedwabny</groupId>
@@ -71,6 +71,26 @@
 						</manifest>
 					</archive>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<shadedArtifactAttached>true</shadedArtifactAttached>
+							<transformers>
+								<transformer implementation=
+								"org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+									<mainClass>main.java.Main</mainClass>
+							</transformer>
+						</transformers>
+					</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
