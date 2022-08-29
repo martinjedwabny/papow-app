@@ -6,6 +6,6 @@ It is also publicly available as a library [here](https://mvnrepository.com/arti
 
 ## Pictures:
 
-<img src="images/snap-command.png" width="30%"></img> 
-<img src="images/snap-input.png" width="30%"></img> 
-<img src="images/snap-result.png" width="30%"></img> 
+<img src="images/snap-command.png" width="90%"></img> 
+<img src="images/snap-input.png" width="90%"></img> 
+<img src="images/snap-result.png" width="90%"></img> 
