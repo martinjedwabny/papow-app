@@ -4,6 +4,8 @@ PAPOW APP is a voting application based on JavaFX and JFoenix for the PAPOW proj
 
 It is also publicly available as a library [here](https://mvnrepository.com/artifact/com.github.martinjedwabny/papow).
 
+Presented in the AAMAS conference as a [Demo paper](https://www.ifaamas.org/Proceedings/aamas2019/pdfs/p2363.pdf).
+
 ## Pictures:
 
 <img src="images/snap-command.png" width="90%"></img> 
